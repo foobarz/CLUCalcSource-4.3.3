@@ -1,0 +1,1137 @@
+CLUScriptEditor.o CLUScriptEditor.o: CLUScriptEditor.cpp \
+  CLUScriptEditor.h StdAfx.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/clu.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CLUDebug.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CLUException.h \
+  /usr/include/c++/4.0.2/string \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++config.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/os_defines.h \
+  /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/gnu/stubs.h /usr/include/c++/4.0.2/bits/stringfwd.h \
+  /usr/include/c++/4.0.2/bits/char_traits.h \
+  /usr/include/c++/4.0.2/cstring /usr/include/c++/4.0.2/cstddef \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/stddef.h \
+  /usr/include/string.h /usr/include/xlocale.h \
+  /usr/include/c++/4.0.2/bits/stl_algobase.h \
+  /usr/include/c++/4.0.2/climits \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/limits.h \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/syslimits.h \
+  /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+  /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+  /usr/include/bits/stdio_lim.h /usr/include/c++/4.0.2/cstdlib \
+  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/types.h \
+  /usr/include/bits/types.h /usr/include/bits/wordsize.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h /usr/include/alloca.h \
+  /usr/include/c++/4.0.2/iosfwd \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++locale.h \
+  /usr/include/c++/4.0.2/cstdio /usr/include/stdio.h /usr/include/libio.h \
+  /usr/include/_G_config.h /usr/include/wchar.h /usr/include/bits/wchar.h \
+  /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/stdarg.h \
+  /usr/include/bits/sys_errlist.h /usr/include/c++/4.0.2/clocale \
+  /usr/include/locale.h /usr/include/bits/locale.h \
+  /usr/include/langinfo.h /usr/include/nl_types.h /usr/include/iconv.h \
+  /usr/include/libintl.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++io.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/gthr.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/gthr-default.h \
+  /usr/include/pthread.h /usr/include/sched.h /usr/include/signal.h \
+  /usr/include/bits/initspin.h /usr/include/bits/sigthread.h \
+  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
+  /usr/include/bits/environments.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h /usr/include/c++/4.0.2/cctype \
+  /usr/include/ctype.h /usr/include/c++/4.0.2/bits/postypes.h \
+  /usr/include/c++/4.0.2/cwchar /usr/include/c++/4.0.2/ctime \
+  /usr/include/stdint.h /usr/include/c++/4.0.2/bits/functexcept.h \
+  /usr/include/c++/4.0.2/exception_defines.h \
+  /usr/include/c++/4.0.2/bits/stl_pair.h \
+  /usr/include/c++/4.0.2/bits/cpp_type_traits.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator_base_types.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/4.0.2/bits/concept_check.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator.h \
+  /usr/include/c++/4.0.2/debug/debug.h /usr/include/c++/4.0.2/cassert \
+  /usr/include/assert.h /usr/include/c++/4.0.2/memory \
+  /usr/include/c++/4.0.2/bits/allocator.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++allocator.h \
+  /usr/include/c++/4.0.2/ext/new_allocator.h /usr/include/c++/4.0.2/new \
+  /usr/include/c++/4.0.2/exception \
+  /usr/include/c++/4.0.2/bits/stl_construct.h \
+  /usr/include/c++/4.0.2/bits/stl_uninitialized.h \
+  /usr/include/c++/4.0.2/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/4.0.2/limits \
+  /usr/include/c++/4.0.2/bits/stl_function.h \
+  /usr/include/c++/4.0.2/bits/basic_string.h \
+  /usr/include/c++/4.0.2/bits/atomicity.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/atomic_word.h \
+  /usr/include/c++/4.0.2/algorithm /usr/include/c++/4.0.2/bits/stl_algo.h \
+  /usr/include/c++/4.0.2/bits/stl_heap.h \
+  /usr/include/c++/4.0.2/bits/stl_tempbuf.h \
+  /usr/include/c++/4.0.2/bits/basic_string.tcc \
+  /usr/include/c++/4.0.2/sstream /usr/include/c++/4.0.2/istream \
+  /usr/include/c++/4.0.2/ios /usr/include/c++/4.0.2/bits/localefwd.h \
+  /usr/include/c++/4.0.2/bits/ios_base.h \
+  /usr/include/c++/4.0.2/bits/locale_classes.h \
+  /usr/include/c++/4.0.2/streambuf \
+  /usr/include/c++/4.0.2/bits/streambuf.tcc \
+  /usr/include/c++/4.0.2/bits/basic_ios.h \
+  /usr/include/c++/4.0.2/bits/streambuf_iterator.h \
+  /usr/include/c++/4.0.2/bits/locale_facets.h \
+  /usr/include/c++/4.0.2/cwctype /usr/include/wctype.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_base.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_inline.h \
+  /usr/include/c++/4.0.2/bits/codecvt.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/time_members.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/messages_members.h \
+  /usr/include/c++/4.0.2/bits/basic_ios.tcc \
+  /usr/include/c++/4.0.2/bits/istream.tcc /usr/include/c++/4.0.2/locale \
+  /usr/include/c++/4.0.2/bits/locale_facets.tcc \
+  /usr/include/c++/4.0.2/typeinfo /usr/include/c++/4.0.2/ostream \
+  /usr/include/c++/4.0.2/bits/ostream.tcc \
+  /usr/include/c++/4.0.2/bits/sstream.tcc \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/xgaext2.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/xgalib2.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/cga.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/base.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/cstr.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/mem.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/MemBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/makestr.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/blade.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/bladelist.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/dynlist.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/mvs.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/multiv.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/memobj.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/xmalib.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/matrix.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/mathelp.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/tensor.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/rand.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/statistic.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/clu.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/StaticArray.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Point.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Array2DObj.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Array2D.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/matinst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/tensinst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ringbuf.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/cgainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/MVInfo.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/pga.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/xutlib.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/MessageList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/StrMessageList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Notify.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ringbinst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/sta.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/e3ga.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/GA1p2m.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/confga.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Cl22.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/el2ga.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/pgainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/stainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/e3gainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/GA1p2mInst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/confgainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/el2gainst.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/xoplib.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Macopt.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/MinFuncBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/cludraw.h \
+  /usr/include/GL/gl.h /usr/include/GL/glext.h /usr/include/GL/glu.h \
+  /usr/include/GL/gl.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CLUDrawBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLColor.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseElement.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLLight.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMaterial.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/IOGLWinBase.h \
+  /usr/include/c++/4.0.2/vector /usr/include/c++/4.0.2/bits/stl_vector.h \
+  /usr/include/c++/4.0.2/bits/stl_bvector.h \
+  /usr/include/c++/4.0.2/bits/vector.tcc \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMVFilterBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVertex.h \
+  /usr/include/math.h /usr/include/bits/huge_val.h \
+  /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+  /usr/include/bits/inf.h /usr/include/bits/nan.h \
+  /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVertexList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLDisplayList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterE3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListE3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterP2.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListP2.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterP3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListP3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterN3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListN3.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMVFilter.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterEl2.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLLatexText.h \
+  /usr/include/c++/4.0.2/map /usr/include/c++/4.0.2/bits/stl_tree.h \
+  /usr/include/c++/4.0.2/bits/stl_map.h \
+  /usr/include/c++/4.0.2/bits/stl_multimap.h \
+  /usr/include/c++/4.0.2/fstream \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/basic_file.h \
+  /usr/include/c++/4.0.2/bits/fstream.tcc \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBitmap.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilut.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/config.h \
+  /usr/include/GL/glu.h /usr/include/sys/stat.h /usr/include/bits/stat.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBitmapText.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLObjColorCube.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseElementList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseTransform.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/cluparsing.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Stack.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeElement.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeElementList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeVar.h \
+  /usr/include/c++/4.0.2/list /usr/include/c++/4.0.2/bits/stl_list.h \
+  /usr/include/c++/4.0.2/bits/list.tcc \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/VarList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ImageRepository.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ImageReference.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/TensorData.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/TensorIdx.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeVarList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CLUCodeBase.h \
+  /usr/include/sys/timeb.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/XML.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/XMLdom.h \
+  /usr/include/libxml2/libxml/xmlmemory.h \
+  /usr/include/libxml2/libxml/xmlversion.h \
+  /usr/include/libxml2/libxml/xmlexports.h \
+  /usr/include/libxml2/libxml/threads.h \
+  /usr/include/libxml2/libxml/globals.h \
+  /usr/include/libxml2/libxml/parser.h /usr/include/libxml2/libxml/tree.h \
+  /usr/include/libxml2/libxml/xmlstring.h \
+  /usr/include/libxml2/libxml/xmlregexp.h \
+  /usr/include/libxml2/libxml/dict.h /usr/include/libxml2/libxml/hash.h \
+  /usr/include/libxml2/libxml/valid.h \
+  /usr/include/libxml2/libxml/xmlerror.h \
+  /usr/include/libxml2/libxml/list.h \
+  /usr/include/libxml2/libxml/xmlautomata.h \
+  /usr/include/libxml2/libxml/entities.h \
+  /usr/include/libxml2/libxml/encoding.h \
+  /usr/include/libxml2/libxml/xmlIO.h /usr/include/libxml2/libxml/SAX.h \
+  /usr/include/libxml2/libxml/xlink.h /usr/include/libxml2/libxml/SAX2.h \
+  /usr/include/c++/4.0.2/iostream /usr/include/c++/4.0.2/stack \
+  /usr/include/c++/4.0.2/deque /usr/include/c++/4.0.2/bits/stl_deque.h \
+  /usr/include/c++/4.0.2/bits/deque.tcc \
+  /usr/include/c++/4.0.2/bits/stl_stack.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/XMLTree.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/XMLElement.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeErrorList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ParseMessageList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CLUParse.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCIDSymDef.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/Parse.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ParseBase.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/ObjectClass.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeFunction.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCLabel.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCNumber.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCString.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCObjSepSym.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenRoundBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeCreateRefVarList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseRoundBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpComma.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenSquareBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeCreateVarList.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseSquareBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenCurlyBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseCurlyBracket.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordIf.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordThen.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordElse.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordLoop.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordBreak.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpStd.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OCOperator.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/CodeOperator.h OGLWin.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Enumerations.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Export.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Group.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Widget.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Double_Window.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Window.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Group.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_ask.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Chooser.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Window.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Choice.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Item.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Image.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Preferences.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Tile.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Browser.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser_.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Scrollbar.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Slider.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Valuator.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Icon.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/filename.H \
+  /usr/include/dirent.h /usr/include/bits/dirent.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Box.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Check_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Light_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Input.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input_.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Return_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Bar.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Buffer.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Display.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_draw.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Buffer.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_ask.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Hold_Browser.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/OGLWinFLTK.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/glut.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/gl.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Gl_Window.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Single_Window.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Pack.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Scroll.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Value_Slider.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Round_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Help_View.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Shared_Image.H \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/FLTKToolBox.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Counter.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Light_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Repeat_Button.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Value_Input.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input.H \
+  FLTKEditor.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Editor.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Display.H \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/mem.h \
+  /home/xray/chp/progs/CLUProjectCVS/include/clu/memobj.h FLTKOutput.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Help_Dialog.H \
+  /home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Color_Chooser.H
+
+CLUScriptEditor.h:
+
+StdAfx.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/clu.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CLUDebug.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CLUException.h:
+
+/usr/include/c++/4.0.2/string:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++config.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/os_defines.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/c++/4.0.2/bits/stringfwd.h:
+
+/usr/include/c++/4.0.2/bits/char_traits.h:
+
+/usr/include/c++/4.0.2/cstring:
+
+/usr/include/c++/4.0.2/cstddef:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/stddef.h:
+
+/usr/include/string.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/c++/4.0.2/bits/stl_algobase.h:
+
+/usr/include/c++/4.0.2/climits:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/limits.h:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/c++/4.0.2/cstdlib:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/4.0.2/iosfwd:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++locale.h:
+
+/usr/include/c++/4.0.2/cstdio:
+
+/usr/include/stdio.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/gconv.h:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/stdarg.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/c++/4.0.2/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/langinfo.h:
+
+/usr/include/nl_types.h:
+
+/usr/include/iconv.h:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++io.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/gthr.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/initspin.h:
+
+/usr/include/bits/sigthread.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/c++/4.0.2/cctype:
+
+/usr/include/ctype.h:
+
+/usr/include/c++/4.0.2/bits/postypes.h:
+
+/usr/include/c++/4.0.2/cwchar:
+
+/usr/include/c++/4.0.2/ctime:
+
+/usr/include/stdint.h:
+
+/usr/include/c++/4.0.2/bits/functexcept.h:
+
+/usr/include/c++/4.0.2/exception_defines.h:
+
+/usr/include/c++/4.0.2/bits/stl_pair.h:
+
+/usr/include/c++/4.0.2/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.0.2/bits/concept_check.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator.h:
+
+/usr/include/c++/4.0.2/debug/debug.h:
+
+/usr/include/c++/4.0.2/cassert:
+
+/usr/include/assert.h:
+
+/usr/include/c++/4.0.2/memory:
+
+/usr/include/c++/4.0.2/bits/allocator.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++allocator.h:
+
+/usr/include/c++/4.0.2/ext/new_allocator.h:
+
+/usr/include/c++/4.0.2/new:
+
+/usr/include/c++/4.0.2/exception:
+
+/usr/include/c++/4.0.2/bits/stl_construct.h:
+
+/usr/include/c++/4.0.2/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.0.2/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/4.0.2/limits:
+
+/usr/include/c++/4.0.2/bits/stl_function.h:
+
+/usr/include/c++/4.0.2/bits/basic_string.h:
+
+/usr/include/c++/4.0.2/bits/atomicity.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/atomic_word.h:
+
+/usr/include/c++/4.0.2/algorithm:
+
+/usr/include/c++/4.0.2/bits/stl_algo.h:
+
+/usr/include/c++/4.0.2/bits/stl_heap.h:
+
+/usr/include/c++/4.0.2/bits/stl_tempbuf.h:
+
+/usr/include/c++/4.0.2/bits/basic_string.tcc:
+
+/usr/include/c++/4.0.2/sstream:
+
+/usr/include/c++/4.0.2/istream:
+
+/usr/include/c++/4.0.2/ios:
+
+/usr/include/c++/4.0.2/bits/localefwd.h:
+
+/usr/include/c++/4.0.2/bits/ios_base.h:
+
+/usr/include/c++/4.0.2/bits/locale_classes.h:
+
+/usr/include/c++/4.0.2/streambuf:
+
+/usr/include/c++/4.0.2/bits/streambuf.tcc:
+
+/usr/include/c++/4.0.2/bits/basic_ios.h:
+
+/usr/include/c++/4.0.2/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.0.2/bits/locale_facets.h:
+
+/usr/include/c++/4.0.2/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_base.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_inline.h:
+
+/usr/include/c++/4.0.2/bits/codecvt.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/time_members.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/messages_members.h:
+
+/usr/include/c++/4.0.2/bits/basic_ios.tcc:
+
+/usr/include/c++/4.0.2/bits/istream.tcc:
+
+/usr/include/c++/4.0.2/locale:
+
+/usr/include/c++/4.0.2/bits/locale_facets.tcc:
+
+/usr/include/c++/4.0.2/typeinfo:
+
+/usr/include/c++/4.0.2/ostream:
+
+/usr/include/c++/4.0.2/bits/ostream.tcc:
+
+/usr/include/c++/4.0.2/bits/sstream.tcc:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/xgaext2.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/xgalib2.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/cga.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/base.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/cstr.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/mem.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/MemBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/makestr.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/blade.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/bladelist.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/dynlist.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/mvs.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/multiv.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/memobj.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/xmalib.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/matrix.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/mathelp.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/tensor.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/rand.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/statistic.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/clu.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/StaticArray.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Point.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Array2DObj.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Array2D.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/matinst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/tensinst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ringbuf.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/cgainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/MVInfo.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/pga.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/xutlib.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/MessageList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/StrMessageList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Notify.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ringbinst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/sta.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/e3ga.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/GA1p2m.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/confga.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Cl22.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/el2ga.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/pgainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/stainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/e3gainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/GA1p2mInst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/confgainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/el2gainst.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/xoplib.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Macopt.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/MinFuncBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/cludraw.h:
+
+/usr/include/GL/gl.h:
+
+/usr/include/GL/glext.h:
+
+/usr/include/GL/glu.h:
+
+/usr/include/GL/gl.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CLUDrawBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLColor.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseElement.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLLight.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMaterial.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/IOGLWinBase.h:
+
+/usr/include/c++/4.0.2/vector:
+
+/usr/include/c++/4.0.2/bits/stl_vector.h:
+
+/usr/include/c++/4.0.2/bits/stl_bvector.h:
+
+/usr/include/c++/4.0.2/bits/vector.tcc:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMVFilterBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVertex.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVertexList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLDisplayList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterE3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListE3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterP2.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListP2.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterP3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListP3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterN3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLVexListN3.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLMVFilter.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLFilterEl2.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLLatexText.h:
+
+/usr/include/c++/4.0.2/map:
+
+/usr/include/c++/4.0.2/bits/stl_tree.h:
+
+/usr/include/c++/4.0.2/bits/stl_map.h:
+
+/usr/include/c++/4.0.2/bits/stl_multimap.h:
+
+/usr/include/c++/4.0.2/fstream:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/basic_file.h:
+
+/usr/include/c++/4.0.2/bits/fstream.tcc:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBitmap.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilut.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/config.h:
+
+/usr/include/GL/glu.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBitmapText.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLObjColorCube.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseElementList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLBaseTransform.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/cluparsing.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Stack.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeElement.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeElementList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeVar.h:
+
+/usr/include/c++/4.0.2/list:
+
+/usr/include/c++/4.0.2/bits/stl_list.h:
+
+/usr/include/c++/4.0.2/bits/list.tcc:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/VarList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ImageRepository.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ImageReference.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/TensorData.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/TensorIdx.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeVarList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CLUCodeBase.h:
+
+/usr/include/sys/timeb.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/XML.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/XMLdom.h:
+
+/usr/include/libxml2/libxml/xmlmemory.h:
+
+/usr/include/libxml2/libxml/xmlversion.h:
+
+/usr/include/libxml2/libxml/xmlexports.h:
+
+/usr/include/libxml2/libxml/threads.h:
+
+/usr/include/libxml2/libxml/globals.h:
+
+/usr/include/libxml2/libxml/parser.h:
+
+/usr/include/libxml2/libxml/tree.h:
+
+/usr/include/libxml2/libxml/xmlstring.h:
+
+/usr/include/libxml2/libxml/xmlregexp.h:
+
+/usr/include/libxml2/libxml/dict.h:
+
+/usr/include/libxml2/libxml/hash.h:
+
+/usr/include/libxml2/libxml/valid.h:
+
+/usr/include/libxml2/libxml/xmlerror.h:
+
+/usr/include/libxml2/libxml/list.h:
+
+/usr/include/libxml2/libxml/xmlautomata.h:
+
+/usr/include/libxml2/libxml/entities.h:
+
+/usr/include/libxml2/libxml/encoding.h:
+
+/usr/include/libxml2/libxml/xmlIO.h:
+
+/usr/include/libxml2/libxml/SAX.h:
+
+/usr/include/libxml2/libxml/xlink.h:
+
+/usr/include/libxml2/libxml/SAX2.h:
+
+/usr/include/c++/4.0.2/iostream:
+
+/usr/include/c++/4.0.2/stack:
+
+/usr/include/c++/4.0.2/deque:
+
+/usr/include/c++/4.0.2/bits/stl_deque.h:
+
+/usr/include/c++/4.0.2/bits/deque.tcc:
+
+/usr/include/c++/4.0.2/bits/stl_stack.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/XMLTree.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/XMLElement.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeErrorList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ParseMessageList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CLUParse.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCIDSymDef.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/Parse.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ParseBase.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/ObjectClass.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeFunction.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCLabel.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCNumber.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCString.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCObjSepSym.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenRoundBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeCreateRefVarList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseRoundBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpComma.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenSquareBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeCreateVarList.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseSquareBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpOpenCurlyBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpCloseCurlyBracket.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordIf.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordThen.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordElse.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordLoop.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCKeywordBreak.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOpStd.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OCOperator.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/CodeOperator.h:
+
+OGLWin.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Enumerations.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Export.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Group.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Widget.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Double_Window.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Window.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Group.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_ask.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Chooser.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Window.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Choice.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Item.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Image.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Preferences.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Tile.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Browser.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser_.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Scrollbar.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Slider.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Valuator.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Icon.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/filename.H:
+
+/usr/include/dirent.h:
+
+/usr/include/bits/dirent.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Box.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Check_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Light_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_File_Input.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input_.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Return_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Menu_Bar.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Buffer.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Display.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_draw.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Buffer.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/fl_ask.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Browser.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Hold_Browser.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/OGLWinFLTK.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/glut.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/gl.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Gl_Window.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Single_Window.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Pack.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Scroll.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Value_Slider.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Round_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Help_View.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Shared_Image.H:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/FLTKToolBox.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Counter.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Light_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Repeat_Button.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Value_Input.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Input.H:
+
+FLTKEditor.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Editor.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Text_Display.H:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/mem.h:
+
+/home/xray/chp/progs/CLUProjectCVS/include/clu/memobj.h:
+
+FLTKOutput.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Help_Dialog.H:
+
+/home/xray/chp/progs/CLUCalcSource/CLUfltk/include/FL/Fl_Color_Chooser.H:

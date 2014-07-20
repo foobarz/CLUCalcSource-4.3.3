@@ -1,0 +1,100 @@
+// Visualization of Desargues' Theorem
+_FrameBoxSize = 0;
+:DRAW_POINT_AS_SPHERE;
+
+// Draw a title with latex
+StartOverlay();
+SetLatexMagStep(14);
+:Cyan;
+SetLatexAlign(0,1);
+DrawLatex(5, 3, 0, "Desargue's Theorem in 3D", "title");
+EndOverlay();
+
+DefVarsP3();
+
+a1 = e1 + 0.5*e3 + e4;
+a2 = e1 - 0.5*e3 + e4;
+a3 = e1 + 0.5*e2 + e4;
+
+// Set this to 50 to see intersection of planes.
+AddScale = Slider("1. Plane Size", 0, 20, 0.5, 0);
+
+// Draw three lines from origin
+:White;
+LBase = [e4^a1, e4^a2, e4^a3];
+
+// Use DrawLine here for more control of where
+// the line is drawn
+DrawLine(e4, 5*VecE3(a1));
+DrawLine(e4, 5*VecE3(a2));
+DrawLine(e4, 5*VecE3(a3));
+
+// Create first plane
+P1 = (e1 + e4)^e2^e3;
+
+// Evaluate intersection of white lines with P1
+Aset = P1 & LBase;
+
+if (CheckBox("2. Plane A", 0))
+{
+	:Color(1.000, 0.458, 0.950, 0.8);
+	:(5 + AddScale)*P1;
+	:Aset:Red;
+}
+
+// Create second plane
+X = VecP3(1) + 2*e1;
+Y = VecP3(2) + 0.5*e2 + e3 - e4;
+Z = e1 + 2*e2 - e3;
+P2 = X^Y^Z;
+
+// Evaluate intersections of white lines with P2
+Bset = P2 & LBase;
+
+if (CheckBox("3. Plane B", 0))
+{
+	:Cyan;
+	Offset(P2, X, 20+AddScale);
+	:Bset:Blue;
+}
+
+// Create red and blue lines
+La = [Aset(1)^Aset(2), Aset(3)^Aset(1), Aset(2)^Aset(3)];
+Lb = [Bset(1)^Bset(2), Bset(3)^Bset(1), Bset(2)^Bset(3)];
+
+// Line intersections
+Xab = [La(1) & Lb(1), La(2) & Lb(2), La(3) & Lb(3)];
+
+
+// Create red and blue lines
+if (CheckBox(cbA = "4. Intersect Lines A", 0))
+{
+	:Red;
+	DrawLine(Aset(2), Xab(1));
+	DrawLine(Aset(3), Xab(2));
+	DrawLine(Aset(3), Xab(3));
+}
+
+if (CheckBox(cbB = "5. Intersect Lines B", 0))
+{
+	:Blue;
+	DrawLine(Bset(2), Xab(1));
+	DrawLine(Bset(3), Xab(2));
+	DrawLine(Bset(3), Xab(3));
+}
+
+if (CheckBox(cbA) && CheckBox(cbB))
+{
+	// Draw intersection points of red and blue lines
+	:Green;
+	:Xab;
+}
+
+// Draw white line connecting green
+// intersection points.
+if (CheckBox("6. Final Intersect", 0))
+{
+	:White;
+	DrawLine(Xab(1), Xab(3));
+	DrawLine(Xab(2), Xab(3));
+}

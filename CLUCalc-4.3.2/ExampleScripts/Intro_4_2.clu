@@ -1,0 +1,375 @@
+// Press CTRL+n to start a new script.
+
+/*
+
+Welcome to CLUCalc v4.2
+
+See menu 'Help->About' for build date and time.
+
+Written and conceived by Dr. Christian Perwass.
+Additional development by
+  - Christian Gebken
+  - Daniel Grest
+
+
+For support contact C.Perwass under:
+               help@clucalc.info
+
+or go to the web page:
+               www.clucalc.info.
+
+
+By using this program YOU AGREE
+to the following license agreement
+
+Copyright 2002-2005 by Dr. Christian B. U. Perwass.
+All rights reserved.
+
+Redistribution and use in binary form of CLUCalc.exe
+and/or any of its components, without modification,
+is permitted provided that the following conditions
+are met:
+
+Redistributions in binary form must reproduce the
+above copyright notice, this list of conditions
+and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+All advertising materials mentioning features or use
+of this software must display the following
+acknowledgement:
+This product includes software developed by 
+Dr. Christian B. U. Perwass.
+The name Christian B.U. Perwass may not be used
+to endorse or promote products derived
+from this software without specific prior
+written permission.
+
+THIS SOFTWARE IS PROVIDED BY
+      Dr. Christian B.U. Perwass
+``AS IS'' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL Dr. Christian
+B.U. Perwass BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY
+OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
+_FrameBoxSize = 0;
+
+InfoStart = 
+{
+	::InfoStr = "<body size=\"" + _P(1) + "\">";
+}
+
+InfoEnd =
+{
+	::InfoStr << "</body>";
+}
+
+InfoTitle =
+{
+	::InfoStr << "<h1>" + _P(1) + "</h1>";
+}
+
+txt =
+{
+	::InfoStr << _P(1);
+}
+
+bi =
+{
+	::InfoStr << "<ul>";
+}
+
+ei = 
+{
+	::InfoStr << "</ul>";
+}
+
+it = 
+{
+	::InfoStr << "<li>" + _P(1);
+}
+
+bl =
+{
+	str = "<a href=\"clu://data/";
+	str << _P(1) + "\">";
+	str
+}
+
+el =
+{
+	"</a>"
+}
+
+
+InfoShow =
+{
+	SetInfoText(::InfoStr);
+	SetInfoWidth(250);
+}
+
+/// Data Definition
+
+if (ExecMode & EM_CHANGE)
+{
+	Data = [];
+	
+	Data("intro") = 
+	[
+		"Intro", IntroFunc, "Intro.clu",
+		"This is the introduction visualization script.
+	 You can use mouse mode 1 to move the red sphere."
+	];
+	
+	Data("canal1") = 
+	[
+		"Canal Surface", 0, "CanalSurf1.clu",
+		"This is an example of a so called 'canal surface'."
+		+ "The 'Plot' function does the trick, together with "
+		+ "some nice lighting."
+	];
+
+	Data("tex1") = 
+	[
+		"Texture Mapping", 0, "SphereProj1.clu",
+		"This shows the texture mapping of an image taken with a "
+		+ "fish-eye lens, onto the inside of a half-sphere. "
+		+ "If you place yourself in the center of the sphere "
+		+ "it gives the impression of a panoramic view."
+		+ "<ul>"
+		+ "<li><b>Texture Mapping</b>, select this check box to "
+		+   "texture map the image onto a sphere."
+		+ "<li><b>Factor</b>, a scaling factor for the texture mapping."
+		+ "<li><b>Render</b>, after changing the factor, click this "
+		+    "button to see the effect."
+		+ "</ul>"
+	];
+
+	Data("plot3") = 
+	[
+		"Plot (1)", 0, "PlotTest3.clu",
+		"Here you can see an example of what can be done with "
+		+ "the function 'Plot'. The 'strange' object on top "
+		+ "is constructed by drawing circles passing through "
+		+ "three points that move on three different trajectories. "
+		+ "You can change of the trajectories by moving the sliders "
+		+ "at the bottom of the visualization view."
+	];
+	
+	Data("plot4") = 
+	[
+		"Plot (w. texture map.)", 0, "PlotTest4.clu",
+		"Here is another example of what can be done with "
+		+ "the function 'Plot'. Use the checkboxes at the bottom "
+		+ "of the visualization window to change the following options: "
+		+ "<ul><li><b>Show normals</b><font size=12>, shows the normals of the surface "
+		+ "as small lines.</font>"
+		+ "<li><b>Use color</b><font size=12>, switches between a colored and a gray-scale "
+		+ "surface visualization.</font>"
+		+ "<li><b>Use texture</b><font size=12>, toggles use of a texture.</font>"
+		+ "<li><b>With normal function</b><font size=12>, toggles between the use of an "
+		+ "analytic normal function or numerically evaluated normals.</font>"
+		+ "</ul>"
+	];
+	
+	Data("light2") =
+	[
+		"Lighting", 0, "LightTest2.clu",
+		"This is an example of what can be done with lighting effects. "
+		+ "Basically CLUCalc wraps the lighting commands of OpenGL, so you "
+		+ "have a lot of freedom to design the lighting effect you want."
+	];
+	
+	Data("grav3") =
+	[
+		"Gravitation", 0, "Gravitation3.clu",
+		"This is a simulation of three gravitational bodies orbiting "
+		+ "about each other. I set the initial parameters such that "
+		+ "one 'moon' is orbiting about a 'planet' and the whole systems "
+		+ "orbits about a central 'sun'. If you tweak the parameters only "
+		+ "slightly using the sliders, you will see that the moon quickly "
+		+ "disappears, leaving the planet with less energy and thus on a "
+		+ "lower orbit about the sun. Even though this is only a simple "
+		+ "simulation, you can see nicely how the acceleration of a sattelite "
+		+ "works by flying it close past a planet.<br>"
+		+ "The slider <b>Force Power</b> sets the power with which the distance "
+		+ "of two objects influences the force between them. With gravitation this "
+		+ "is -2, since the gravitational force between two objects is proportional "
+		+ "to their distance raised to the power of -2. For a spring the force is "
+		+ "proportional to distance raised to the power of 1."
+	];
+	
+	Data("read_data") =
+	[
+		"Read Data", 0, "ReadDataTest1.clu",
+		"You can also read in data from text files, as is shown in this script."
+	];
+	
+	Data("robot") =
+	[
+		"Robot", 0, "Robot2.clu",
+		"Here is an example of the visualization of a robot."
+		+ "Use mouse modes 1 to 4 and the right mouse button to move the robot."
+	];
+	
+	Data("stereo") =
+	[
+		"Stereo Camera System", 0, "StereoCamera.clu",
+		"This is a visualization of a stereo camera system with epipolar lines." 
+		+ "Use mouse mode 1 to change the position of the green point."
+	];
+	
+	Data("T4") =
+	[
+		"Camping", 0, "T4Ausbau.clu",
+		"Here is a script that I wrote in order to plan the interior of my VW T4 "
+		+ "windsurf bus. I actually did build more or less what you see here. "
+		+ "Use the slider to transform the bed into a bench."
+	];
+
+	Data("conic1") =
+	[
+		"Conic Intersection", 0, "2D_Conics/ConicIntersect1.clu",
+		"Here two conics and their intersection points are visualized. "
+		+ "Use mouse mode 1 to move one point and thus change the shape "
+		+ "of one of the two conics."
+	];
+	
+	sCurScript = "intro";
+	iFontSize = 14;
+}
+
+
+if (ExecMode & EM_LINK || 
+	ExecMode & EM_CHANGE)
+{	
+	if (ExecMode & EM_LINK)
+	{
+		if ( Size(LinkData("script/")) )
+		{
+			lPos = LinkData("/");
+			sCurScript = LinkData([lPos(1)+1, lPos(2)-1]);
+		}
+	}
+	
+	InfoStart(iFontSize);
+	InfoTitle("CLUCalc 4.2");
+	
+	txt("Welcome to CLUCalc. Below are some links
+	 to example scripts that you may want to have
+	  a look at. All of these and more can be found in
+	  the 'ExampleScripts' folder that comes with
+	  your CLUCalc installation. If you click on a 
+	  link, you will see the result in the visualization
+	  window to the right.<p>
+	  The latest release of CLUCalc as well as more
+	  scripts and the online help pages can be found on
+	  <a href=\"http://www.clucalc.info/\">www.clucalc.info</a>.
+	  <p>
+	  To start writing a new script, click on the editor window
+	  and select the menu item 'File->New File'. Help on CLUCalc
+	  and CLUScript are available through the menu 'Help->Content'
+	  in the editor window.
+	");
+	
+	// List of scripts
+	bi();
+	iScriptCnt = Size( Data );
+	iS = 1;
+	loop
+	{ 
+		if (iS > iScriptCnt) break;
+		
+		CurData -> Data(iS);
+	
+		sTxt = bl("script/" + CurData(1) + "/") + CurData(2,1) + el();
+		if (CurData(1) == sCurScript)
+		{
+			sTxt << "<br><font size=\"12\"><em>Filename:</em><b> " 
+				<< CurData(2,3) << "</b><br>"
+				<< CurData(2,4) << "</font>";
+		}
+		
+		it(sTxt);
+		
+		iS = iS + 1;
+	}
+	ei();
+	
+	InfoEnd();
+	InfoShow();
+	
+	SetFrameRotor(RotorE3(0,1,0, 0));
+	SetFrameOrigin(0,0,0);
+	_2dView = 0;
+	_BGColor = Black;
+}
+
+
+// Execute currently selected function
+if (sCurScript == "intro")
+{ 
+	anim = 0; //# include "Intro.clu" 
+}
+else if (sCurScript == "canal1")
+{ 
+	anim = 1; //# include "CanalSurf1.clu"
+}
+else if (sCurScript == "tex1")
+{ 
+	anim = 0; //# include "SphereProj1.clu"
+}
+else if (sCurScript == "plot3")
+{ 
+	anim = 0; //# include "PlotTest3.clu"
+}
+else if (sCurScript == "plot4")
+{ 
+	anim = 0; //# include "PlotTest4.clu"
+}
+else if (sCurScript == "light2")
+{ 
+	anim = 1; //# include "LightTest2.clu"
+}
+else if (sCurScript == "grav3")
+{ 
+	anim = 1; //# include "Gravitation3.clu"
+}
+else if (sCurScript == "read_data")
+{ 
+	anim = 0; //# include "ReadDataTest1.clu"
+}
+else if (sCurScript == "robot")
+{ 
+	anim = 0; //# include "Robot2.clu"
+}
+else if (sCurScript == "stereo")
+{ 
+	anim = 0; //# include "StereoCamera.clu"
+}
+else if (sCurScript == "T4")
+{ 
+	anim = 0; //# include "T4Ausbau1.clu"
+}
+else if (sCurScript == "conic1")
+{ 
+	anim = 0; //# include "ConicIntersect1.clu"
+}
+
+_DoAnimate = anim;

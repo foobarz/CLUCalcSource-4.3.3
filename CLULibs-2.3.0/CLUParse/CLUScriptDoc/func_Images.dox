@@ -1,0 +1,304 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_ImageFunc Image Drawing Functions
+
+	These functions allow you to load and draw bitmaps.
+
+	\attention
+	Note that there is no explicit function to extract an area of an image. This can be done with the bracket operator (). For example, if \c I is an image variable, you can extract the part of the image starting at coordinates \c x and \c y with width \c w and height \c h via <tt>I(x, y, w, h)</tt>.
+
+	\{
+**/
+
+
+
+/**
+	\brief Creates a copy of an image.
+	
+	\param Img The image to be copied.
+	
+	\return A copy of \a Img.
+	
+	\since v2.2
+	
+	If you use the operator <tt>=</tt> to assign an image to a new variable, the actual image is not copied. Only a reference to it is assigned. To create an actual copy, you need to use this function.
+**/
+image CopyImg(image Img);
+
+
+/**
+	\brief Loads an image file and displays it.
+
+	\param P A vector giving the position of where to draw the image.
+	\param Filename The filename of the image file.
+
+	\return A list containing the actual extend of the displayed image in current coordinates. This list contains six entries. The first three give the x, y and z coordinates of the bottom left corner of the image, and the last three give the x, y and z coordinates of the top right corner of the bitmap. This can, for example, be used to draw two images next to each other.
+		
+	\since v1.4
+
+	\attention Currently this function can only read bitmap files with 24bit color resolution. More image file types will be implemented in the future.
+	
+**/
+list DrawImg(multivector P, string Filename);
+
+/**
+	\brief Loads an image file and displays it.
+
+	\param X The x-coordinate of the draw position.
+	\param Y The y-coordinate of the draw position.
+	\param Z The z-coordinate of the draw position.
+	\param Filename The filename of the image file.
+
+	\return A list containing the actual extend of the displayed image in current coordinates. This list contains six entries. The first three give the x, y and z coordinates of the bottom left corner of the image, and the last three give the x, y and z coordinates of the top right corner of the bitmap. This can, for example, be used to draw two images next to each other.
+		
+	\since v1.4
+
+	\attention Currently this function can only read bitmap files with 24bit color resolution. More image file types will be implemented in the future.
+	
+**/
+list DrawImg(scalar X, scalar Y, scalar Z, string Filename);
+
+
+/**
+	\brief Enables or disables transparency in images.
+	
+	\param DoEnable If this boolean flag is zero then transparency is disabled, otherwise enabled.
+		
+	\since v1.4
+
+	If transparency is enabled, those pixel in an image that have the same color as the transparent color, which is set with the function SetImgTransparentColor(), are made transparent. <b>Image pixels are only made transparent when an image is loaded, not every time it is displayed</b>.
+**/
+void EnableImgTransparency(counter DoEnable);
+
+
+/**
+	\brief Get world (visualization) coordinates of an image.
+
+	\param P An Image.
+
+	\return A list containing the actual extend of the displayed image in current coordinates.
+	This list contains six entries.
+	The resultant values reflect size, scale, origin and align of the image.
+	See e.g. funtion DrawImage for more information.
+		
+	\since v2.0
+	
+**/
+list GetImgCoords(image P);
+
+/**
+	\brief Convert an image to a matrix representation.
+
+	\param P An Image.
+	\param channel The colorchannel (\b optional) red (1), green (2) or blue (3).
+
+	\return A matrix \a M with values \f$ 0\le g\le 1\f$.
+		
+	\since v2.0
+	
+	If no channel is specified the grey channel will be choosen (\b default).
+	
+	
+**/
+matrix Img2Matrix(image P, scalar channel);
+
+
+/**
+	\brief Insert an image into another one.
+	
+	\param imgTarget The target image.
+	\param imgSource The image to be inserted.
+	\param iX The x-position in the target image where the bottom left corner of the source image is to be inserted.
+	\param iY The y-position in the target image where the bottom left corner of the source image is to be inserted.
+	\param iTC (optional) The color channel of the target image to copy to.
+	\param iSC (optional) The color channel of the source image to use.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function inserts an image into another one. If color channels are given, then only the respective source channel is copied into the target channel. A channel is denoted by an integer, 1:red, 2:green, 3:blue, 4:alpha. Copying into the alpha channel makes the target image transparent at the corresponding pixel. See also the example script <tt>ExampleScripts/Images/ImageEx9.clu</tt>.
+**/
+void InsertImg(image imgTarget, image imgSource, counter iX, counter iY, counter iTC, counter iSC);
+
+
+
+/**
+	\brief Convert matrix to greyscale image.
+
+	\param M A Matrix with values out of \f$ [0\,\ldots\,1]\f$.
+
+	\return A greyscale image.
+		
+	\since v2.0
+
+	Values in matrix \a M exceeding the above quoted intervall will be clamped to that range.
+**/
+image Matrix2Img(matrix M);
+
+/**
+	\brief Compute color image out of up to three matrices.
+
+	\param M A list of maximum three matrices with values out of \f$ [0\,\ldots\,1]\f$.
+	\param C A list of numbers representing the corresponding color channels.
+
+	\return An image.
+		
+	\since v2.0
+
+	Values that exceed the above quoted intervall will be clamped to that range.
+	The following code generates a little smooth green image:
+	\code
+	
+	? C = Matrix( [0,1,2,3,4,5,6,7,8,9] );
+	C = C * ~C / 81; // Get a square matrix
+	L1 = C(1,1,5,5); // extract three submatrices
+	L2 = C(4,4,5,5);
+	L3 = C(6,6,5,5);
+	SetImgScale( 50 );
+	:Matrix2Img( [ L1,L2,L3 ], [1,3,2] );
+	// :Matrix2Img( [ L1,L2 ], [1,3] );
+	\endcode
+	
+	Toggle the comments of the last two lines and see what happens.
+**/
+image Matrix2Img(list M, list C);
+
+
+/**
+	\brief Loads an image file.
+
+	\param Filename The filename of the image file.
+
+	\return An image.
+		
+	\since v2.0
+
+	\attention Currently this function can only read bitmap files with 24bit color resolution. More image file types will be implemented in the future.
+	
+**/
+image ReadImg(string Filename);
+
+
+/**
+	\brief Resize an image.
+	
+	\param Img The image that is to be resized.
+	\param iWidth New image width.
+	\param iHeight New image height.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function resizes an image to the given dimensions. See also the example script <tt>ExampleScripts/Images/ImageEx8.clu</tt>.
+**/
+void ResizeImg(image Img, counter iWidth, counter iHeight);
+
+
+/**
+	\brief Resizes the image canvas.
+	
+	\param Img The image to be reshaped.
+	\param iWidth The new canvas width.
+	\param iHeight The new canvas height.
+	\param colClear (optional) The clear color for added canvas areas. Default is black.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function resizes the canvas of an image relative to the image's center. If the canvas is enlarged, then empty parts of the canvas are set to the optionally given value of \a colClear. See also the example script <tt>ExampleScripts/Images/ImageEx8.clu</tt>.
+**/
+void ReshapeImg(image Img, counter iWidth, counter iHeight, color colClear);
+
+
+
+/**
+	\brief Sets the alignment of an image relative to the point where it should be drawn.
+	
+	\param X The alignment along the x-direction.
+	\param Y The alignment along the y-direction.
+	
+	\since v1.4
+
+	If \a X and \a Y are both zero (the default), then a image is drawn with its bottom left corner at the position given in the DrawImg() function. If \a X = 1 and \a Y = 0, then the image is aligned with its bottom right corner. If \a X = 0 and \a Y = 1, then the image is aligned with its top left corner. The parameters \a X and \a Y can also take on negative values. If you want to center an image on the point given in DrawImg(), set \a X = 0.5 and \a Y = 0.5.	
+**/
+void SetImgAlign(scalar X, scalar Y);
+
+/**
+	\brief Set origin position for images.
+
+	\param X The x-coordinate of the origin.
+	\param Y The y-coordinate of the origin.
+	\param Z The z-coordinate of the origin.
+
+	\return nothing.
+		
+	\since v2.0
+	
+**/
+void SetImgPos(scalar X, scalar Y, scalar Z);
+
+/**
+	\brief Set origin position for images.
+
+	\param P A vector in Euclidean, projective or conformal space that gives the origin.
+
+	\return nothing.
+		
+	\since v2.0
+**/
+void SetImgPos(multivector P);
+
+
+/**
+	\brief Sets the scale with which images are drawn.
+	
+	\param Scale The scale.
+		
+	\since v1.4
+
+	If the scale is larger than one, the image is enlarged. If the scale is smaller than one, the image is drawn smaller than normal. This scale is valid for all images drawn after the execution of this function.
+**/
+void SetImgScale(scalar Scale);
+
+
+/**
+	\brief Sets the transparent color for images.
+	
+	\param Col The color that is to be regarded as transparent in images.
+			
+	\since v1.4
+
+	This transparent color only takes effect, when transparency in images is enabled. <b>Image pixels are only made transparent when an image is loaded, not every time it is displayed</b>.
+**/
+void SetImgTransparentColor(color Col);
+
+
+/** 
+	\brief Returns the dimension of an image.
+	
+	\param P An image.
+	
+	\return A list containing the number of rows and columns.
+	
+	\since v2.0
+	
+	If <tt>Size</tt> is applied to an image the result will be a list of two scalars. The first represents
+	the number of rows while the second represents the number of columns. For further information or an example
+	see the <tt>Size</tt> function for matrices.
+	<tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+**/
+list Size(image P);
+
+
+/** \}
+**/
+
+/** \}
+**/

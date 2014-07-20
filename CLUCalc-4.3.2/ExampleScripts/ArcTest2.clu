@@ -1,0 +1,16 @@
+DefVarsE3();
+
+:Green;
+:P = e2;
+
+:Red;
+:A = e1 + e2;
+
+:Blue;
+:B = e3 + e2;
+
+:Magenta;
+DrawArc(P, A, B, 1);
+
+:Cyan;
+DrawArc(P, A, B, 1, 0);

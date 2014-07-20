@@ -1,0 +1,35 @@
+// Ellipse types
+_BGColor = White;
+_2dView = 1;
+
+DefVarsC2();
+:IPNS;
+
+if (ExecMode & EM_CHANGE)
+{
+	lConicStr =
+	[
+		"Circle", "Ellipse", "Hyperbola",
+		"Crossing", "Parallel Line-Pair", "Line"
+	];
+	
+	lMatrix =
+	[
+		Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]),
+		Matrix([[1, 0, 0], [0, 0.5, 0], [0, 0, 1]]),
+		Matrix([[-1, 0, 0], [0, 1, 0], [0, 0, 1]]),
+		Matrix([[1, 0, 0], [0, -1, 0], [0, 0, 0]]),
+		Matrix([[1, 0, 0], [0, 0, 0], [0, 0, 1]]),
+		Matrix([[1, 0, 0], [0, 0, 0], [0, 0, 0]])
+	];
+}
+
+Idx = Choice("Conic Type", lConicStr, 1);
+
+// Draw the conic
+:Conic = VecC2(lMatrix(Idx));
+
+// Show the user what it is
+?AnalyzeMV(Conic);
+
+

@@ -1,0 +1,284 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Misc Miscellaneous Functions
+
+	Functions that do not fit into any particular group.
+	
+	\{
+**/
+
+/**
+	\brief Sets or resets animation mode.
+	
+	\param bVal If \a bVal is not zero, then animation is enables. Otherwise it is disabled.
+	
+	\return Nothing.
+	
+	This is equivalent to setting the variable #_DoAnimate to the value of \a bVal.
+**/
+void EnableAnimate(counter bVal);
+
+
+/**
+	\brief Get time with millisecond precision.
+	
+	\return A time value in seconds with millisecond precision.
+	
+	This function is useful to measure execution times in CLUCalc.
+**/
+scalar GetTime();
+
+
+
+
+/** 
+	\brief Tries to cast the element passed to a scalar.
+	
+	\param X An element or a list of elements to be cast to a scalar.
+	
+	\return The scalar or a list of scalars.
+	
+	\since v2.1
+
+	This function also transforms strings into scalars. In this way you can transform a string of a number into the number itself. If \a X is a list, then the return value is also a list of scalars.
+**/
+scalar Scalar(any X);
+
+
+/**
+	\brief Sets the time step in milliseconds between executions of the script in animation mode.
+	
+	\param dStep Timestep in milliseconds.
+	
+	\return Nothing.
+**/
+void SetAnimateTimeStep(scalar dStep);
+
+/** 
+	\brief Set the number of decimal digits used when evaluating mathematical functions internally.
+	
+	\param Prec The number of decimal digits.
+	
+	\return Nothing.
+	
+	\since v2.1
+
+**/
+void SetEvalPrec(counter Prec);
+
+/** 
+	\brief Set the number of decimal digits used when printing scalar values.
+	
+	\param Prec The number of decimal digits.
+	
+	\return Nothing.
+	
+	\since v1.4
+	
+	\attention
+	The setting of the precision with which scalar values are displayed does so far not work in all cases. This is something that still has to be done.
+	
+Nevertheless, here is an example.
+\code
+A = 1.2345678;
+
+SetTextPrec(1);
+?A;
+
+SetTextPrec(2);
+?A;
+
+SetTextPrec(3);
+?A;
+
+SetTextPrec(4);
+?A;
+\endcode
+
+This produces the output
+\code
+A = 1.2
+A = 1.23
+A = 1.235
+A = 1.2346
+\endcode
+
+**/
+void SetTextPrec(counter Prec);
+
+/** 
+	\brief Set the number of decimal digits used when doing visualization calculations.
+	
+	\param Prec The number of decimal digits.
+	
+	\return Nothing.
+	
+	\since v2.1
+
+	Especially when interpreting multivectors as geometrical objects, this precision is used to distinguish interpretable objects from non-interpretable objects. If you increase the precision, the visualization of certain multivectors may flicker, since sometimes that can be interpreted and at other times they are just about not interpretable.
+**/
+void SetVisPrec(counter Prec);
+
+
+
+/** 
+	\brief Returns the number of characters in a string.
+	
+	\param S A string.
+	
+	\return The number of characters in a string.
+	
+	\since v2.0
+	
+	\attention The former name of the function is <tt>Len</tt>.
+
+<tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+**/
+counter Size(string S);
+
+/** 
+	\brief Returns the number of elements in a list.
+	
+	\param L A list.
+	
+	\return The number of elements in a list.
+	
+	\since v2.0
+	
+	\attention The former name of the function is <tt>Len</tt>.
+
+Here is a code example.
+
+\code
+?L = [1, [2,3], 4];
+?Size(L);
+\endcode
+
+This code produces the following output.
+\code
+L = [1, [2, 3], 4]
+Constant = 3
+\endcode
+<tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+
+**/
+counter Size(list L);
+
+
+/** 
+	\brief Returns the number of elements in a vertex list.
+	
+	\param L A vertex list.
+	
+	\return The number of elements in a vertex list.
+	
+	\since v2.0
+
+<tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+**/
+counter Size(vertexlist L);
+
+
+
+
+
+
+
+/** 
+	\brief Obsolete name. Use String() instead.
+	
+	\since v1.0
+**/
+string Str(any_type X);
+
+
+/** 
+	\brief Creates string representation of parameter.
+	
+	\param X Any object.
+	
+	\return A string representation of \a X.
+	
+	\since v1.0
+
+	This function is particularly useful if you want to concatenate lists with strings. Since the plus operator is applied recursively to every element of a list the line <tt>?"List " + [1,2]</tt> has the output <tt>Constant = [List 1, List 2]</tt>. To obtain the desired result you can write <tt>?"List " + Str([1,2])</tt> which returns <tt>List [1, 2]</tt>.
+	
+	For example,
+	\code
+	?L = [1, 2, 3];
+	?"List = " + L;
+	?"List = " + String(L);
+	\endcode
+
+	produces the output
+	\code
+	L = [1, 2, 3]
+	Constant = [List = 1, List = 2, List = 3]
+	List = [1, 2, 3]
+	\endcode
+
+**/
+string String(any_type X);
+
+
+/** 
+	\brief Concatenates string representations of list elements with the delimiter symbol \a sDel.
+	
+	\param lList A list.
+	\param sDel The delimiter string.
+	
+	\return The concatenated string representations of the list elements.
+	
+	\since v2.3
+	
+	For example,
+	\code
+	?lList = [ 1.2, VecE3(1,2,3), 4.5 ];
+	?Str(lList, " -> ");
+	\endcode
+
+	produces the output
+	
+<b>lList</b> <i>(3)</i>= <br><b>[</b> 1.2 <b>,</b> 1 <b>e1</b> + 2 <b>e2</b> + 3 <b>e3</b> <b>,</b> 4.5 <b>]</b><p><br><b>Constant</b> <i>(32)</i>= <br>1.2 -&gt; 1^e1 + 2^e2 + 3^e3 -&gt; 4.5<p><br>
+
+**/
+string String(list lList, string sDel);
+
+
+
+/** 
+	\brief Returns a string identifying the type of the parameter.
+	
+	\param X Any object.
+	
+	\return A string identifying the type of \a X.
+	
+	\since v1.0
+	
+For example,
+\code
+?L = [1, [2,3], 4];
+?Type(L);
+\endcode
+
+produces the output
+\code
+L = [1, [2, 3], 4]
+List
+\endcode
+
+**/
+string Type(any_type X);
+
+
+
+/** \}
+**/
+
+/** \}
+**/
+

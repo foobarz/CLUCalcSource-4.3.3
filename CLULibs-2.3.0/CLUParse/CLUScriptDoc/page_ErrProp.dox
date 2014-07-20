@@ -1,0 +1,151 @@
+/** \page page_ErrProp Error Propagation in Clifford Algebra
+
+Error propagation is a very recent edition to CLUScript and only just about made it into this release. Therefore, I only release a single function which should give you a taste of what can be done with error propagation. Additional functions are still at a somewhat experimental stage, like the embedding of Euclidean vectors in conformal space and other specialized functions. In future releases also the visualization of the standard deviation surface of a multivector and its covariance matrix should be included. This already works for some elements but again needs some more work for a release.
+
+
+\section sec_EPOp Clifford Algebra Products
+
+The fundamental function to do error propagation for Clifford algebra products is EPOp().
+The functionality of this function is probably best explained with an example. Suppose you have three multivector \f$A\f$, \f$B\f$ and \f$C\f$ in Euclidean space. Since the Clifford algebra of 3d-Euclidean space is 8-dimensional, the covariance matrix of a multivector in this space is an 8x8 matrix. For example, \f$A\f$ can be initialized as a vector with a covariance matrix as follows.
+	
+	\code
+	_FrameBoxSize = 0;
+	_BGColor = White;
+	
+	DefVarsE3();
+	
+	?A = 1*e1 + 2*e2 + 3*e3;
+	
+	// Create covariance matrix
+	CA = Matrix(8, 8);
+	
+	// Now set variances for dimensions e1, e2 and e3.
+	CA(2,2) = 0.005; // variance for e1
+	CA(3,3) = 0.008; // variance for e2
+	CA(4,4) = 0.002; // variance for e3
+	\endcode
+	
+	Multivectors \f$B\f$ and \f$C\f$ may be initialized similarly. Note that the covariance matrices you define here need not be of full rank. The error propagation works nonetheless.
+	
+	\code
+	// Multivector B
+	?B = 1*e1;
+	
+	// Create covariance matrix
+	CB = Matrix(8, 8);
+	
+	// Now set variances for dimensions e1, e2 and e3.
+	CB(2,2) = 0.001; // variance for e1
+
+	// Multivector C
+	?C = 1*e2;
+	
+	// Create covariance matrix
+	CC = Matrix(8, 8);
+	
+	// Now set variances for dimensions e1, e2 and e3.
+	CC(3,3) = 0.006; // variance for e2
+	\endcode
+	
+	We can also define cross-covariance matrices between the multivectors. For the sake of simplicity, we will only define these as zero matrices.
+	
+	\code
+	// Cross-Covariance of A and B
+	CAB = Matrix(8, 8);
+
+	// Cross-Covariance of B and C
+	CBC = Matrix(8, 8);
+
+	// Cross-Covariance of C and A
+	CCA = Matrix(8, 8);
+	\endcode
+	
+	Now suppose we wanted to evaluate the outer product of \f$A\f$ and \f$B\f$ and wanted to know what the covariance matrix of the resultant multivector is. Note that the multivectors are regarded as the mean values of a stochastic process and their covariance matrices give the second moments.
+	
+	\code
+	// Combine the multivectors with their corresponding 
+	// covariance matrices.
+	LA = [A, CA];
+	LB = [B, CB];
+	LC = [C, CC];
+	
+	// Evaluate the outer product of A and B
+	Res = EPOp(MVOP_OUTER, LA, LB, CAB);
+	
+	// Extract the resultant multivector
+	?U = Res(1);
+	
+	// ...and covariance matrix
+	CU = Res(2);
+	
+	// Draw the new covariance matrix with latex
+	StartOverlay();
+
+	:Black;
+	SetLatexMagStep(5);
+	SetLatexAlign(0, 1);
+	// Draw covariance matrix of A
+	P = DrawLatex(10,10,0, 
+		"\[ \Sigma_{AA} = " + Latex(CA) + "\]");
+
+	// Draw covariance matrix of B beneath it
+	P = DrawLatex(10,P(2)+4,0, 
+		"\[ \Sigma_{BB} = " + Latex(CB) + "\]");
+
+	// Draw covariance matrix of U beneath it
+	DrawLatex(10,P(2)+4,0, "\[ \Sigma_{UU} = " + Latex(CU) + "\]");
+
+	EndOverlay();
+	\endcode
+
+	This code produces the following output,
+	\code
+	A = 1^e1 + 2^e2 + 3^e3
+	B = 1^e1
+	C = 1^e2
+	U = 3^e31 + -2^e12
+	\endcode	
+	
+	and the following visualization
+	
+	\image html ErrPropTest1_img1.jpg
+	
+	So now we have the mean value of the outer product of \f$A\f$ and \f$B\f$ and the covariance matrix of \f$U = A\wedge B\f$. However, if we wanted to keep on calculating with \f$U\f$, we would probably need the cross-covariance matrices of \f$U\f$ and \f$A\f$, \f$U\f$ and \f$B\f$, and \f$U\f$ and \f$C\f$. This is necessary since \f$U\f$ is now correlated with \f$A\f$ and \f$B\f$. The corresponding cross-covariance matrices can be calculated directly with EPOp() as follows. The line
+	
+	\code	
+	Res = EPOp(MVOP_OUTER, LA, LB, CAB);
+	\endcode
+	
+	has to be replaced by
+	
+	\code
+	Res = EPOp(MVOP_OUTER, LA, LB, CAB, [CA, ~CAB, CAB, CB, ~CCA, CBC]);
+	\endcode
+	
+	Note that <tt>~CAB</tt> gives the transpose of <tt>CAB</tt>. Transposition is necessary at this point, since the cross-covariance matrices are expected to be passed in a particular form. In order to evaluate the cross-covariance matrix of \f$U = A\wedge B\f$ and some arbitrary multivector \f$C\f$, we need the cross-covariance matrices \f$\Sigma_{AC}\f$ and \f$\Sigma_{BC}\f$. If instead of \f$C\f$ we take \f$A\f$, then we need \f$\Sigma_{AA}\f$, i.e. the covariance matrix of \f$A\f$ and \f$\Sigma_{BA} = \Sigma_{AB}^\mathsf{T}\f$. Hence, in order to obtain <tt>CUA</tt> we have to pass the pair <tt>CA</tt> and <tt>CBA</tt>. However, we only have <tt>CAB</tt> and not <tt>CBA</tt> and thus have to pass the transpose of <tt>CAB</tt>.
+	
+	Now <tt>Res</tt> contains two sublists. The first contains the resultant multivector with its covariance matrix and the second the list of evaluated cross-covariance matrices, one for each pair of cross-covariance matrices passed to EPOp(). That is,
+	
+	\code
+	LU = Res(1);
+	LCC = Res(2);
+	
+	// The resultant mean multivector
+	?U = LU(1);
+	// The covariance matrix of U
+	CU = LU(2);
+	
+	// The cross-covariance matrix of U and A
+	CUA = LCC(1);
+
+	// The cross-covariance matrix of U and B
+	CUB = LCC(2);
+	
+	// The cross-covariance matrix of U and C
+	CUC = LCC(3);
+	\endcode
+	
+	With these additional cross-covariance matrices we could now also evaluate \f$U\cdot A\f$, again using EPOp().
+	
+
+**/

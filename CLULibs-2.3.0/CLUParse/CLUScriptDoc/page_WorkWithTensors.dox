@@ -1,0 +1,640 @@
+/** \page page_WorkWithTensors Working with Tensors
+
+<ul>
+	<li> \ref sec_TensorBasics
+	<li> \ref sec_TensorLoops
+	<li> \ref sec_TensorGA
+</ul>
+	
+<hr>
+\section sec_TensorBasics The Basics
+
+<ul>
+	<li>\ref subsec_Tensor_Def
+	<li>\ref subsec_Tensor_Access
+	<li>\ref subsec_Tensor_Operations
+</ul>
+
+
+The variable type \c tensor is introduced with CLUScript v2.2 and implemented in CLUCalc v4.2. In the long run this tensor type will probably replace the matrix type since it is much more general and more convenient to work with. For the moment, both types exist in parallel, though.
+
+In the following I mean by the \b valence of a tensor, its number of indices. This is often also refered to as the \b rank of a tensor. However, I would like to reserve to term rank for the meaning it has for matrices.
+
+A tensor variable is basically a multi-dimensional array of scalar values. The nice feature of working with tensor variables is that implicit summations over indices can be expressed rather succinctly, as will be shown in section \ref sec_TensorLoops. 
+
+
+\subsection subsec_Tensor_Def Defining Tensors
+
+A tensor of valence three with dimensions 2, 3 and 4 is created in the following way.
+
+\code
+	?T = Tensor(3, [2,3,4]);
+\endcode
+
+This generates the following output
+
+<b>T</b> <i>(2x3x4)</i> = <table border="0"><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr></table>
+
+<table border="0"><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td><td>0</td></tr></table>
+<br>
+
+It is also possible to create a tensor directly from a list or from a matrix. 
+
+\code
+?T1 = Tensor([[[1,2,3],[2,3,4]], [[4,5,6], [5,6,7]]]);
+?T2 = Tensor(Matrix(2,3));
+\endcode
+
+This generates the output
+
+<b>T1</b> <i>(2x2x3)</i> = <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td></tr><tr>
+<td>2</td><td>3</td><td>4</td></tr></table>
+
+<table border="0"><tr>
+<td>4</td><td>5</td><td>6</td></tr><tr>
+<td>5</td><td>6</td><td>7</td></tr></table>
+<br>
+
+<b>T2</b> <i>(2x3)</i> = <table border="0"><tr>
+<td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr></table>
+<br>
+
+
+\subsection subsec_Tensor_Access Accessing Components
+
+The components of a tensor can be accessed by using round brackets, just as for matrices. For example,
+
+\code
+T = Tensor([[[1,2,3],[2,3,4]], [[4,5,6], [5,6,7]]]);
+?T(2,1,3);
+T(1,1,1) = 10;
+?T;
+\endcode
+
+has the output
+
+<b>Constant</b> = 6
+<br>
+
+<b>T</b> <i>(2x2x3)</i> = <table border="0"><tr>
+<td>10</td><td>2</td><td>3</td></tr><tr>
+<td>2</td><td>3</td><td>4</td></tr></table>
+
+<table border="0"><tr>
+<td>4</td><td>5</td><td>6</td></tr><tr>
+<td>5</td><td>6</td><td>7</td></tr></table>
+<br>
+
+
+\subsection subsec_Tensor_Operations Basic Operations
+
+The operators \c +, \c -, \c * and \c / are defined between tensor variables and scalars. Operations between tensors are explained in \ref sec_TensorLoops. For example,
+
+\code
+	?T = Tensor([[1,2,3],[4,5,6]]);
+	?"T + 1 = " + (T + 1);
+	?"1 - T = " + (1 - T);
+	?"T * 2 = " + (T * 2);
+	?"T / 2 = " + (T / 2);
+	?"2 / T = " + (2 / T);
+\endcode
+
+The output is
+
+<b>T</b> <i>(2x3)</i>= <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td></tr><tr>
+<td>4</td><td>5</td><td>6</td></tr></table>
+<br>T + 1 = <table border="0"><tr>
+<td>2</td><td>3</td><td>4</td></tr><tr>
+<td>5</td><td>6</td><td>7</td></tr></table>
+<br>1 - T = <table border="0"><tr>
+<td>0</td><td>-1</td><td>-2</td></tr><tr>
+<td>-3</td><td>-4</td><td>-5</td></tr></table>
+<br>T * 2 = <table border="0"><tr>
+<td>2</td><td>4</td><td>6</td></tr><tr>
+<td>8</td><td>10</td><td>12</td></tr></table>
+<br>T / 2 = <table border="0"><tr>
+<td>0.5</td><td>1</td><td>1.5</td></tr><tr>
+<td>2</td><td>2.5</td><td>3</td></tr></table>
+<br>2 / T = <table border="0"><tr>
+<td>2</td><td>1</td><td>0.667</td></tr><tr>
+<td>0.5</td><td>0.4</td><td>0.333</td></tr></table>
+<br>
+
+
+
+<hr>
+\section sec_TensorLoops Implicit Loops
+
+<ul>
+	<li>\ref subsec_Tensor_Print
+	<li>\ref subsec_Tensor_Assign
+	<li>\ref subsec_Tensor_Contract
+	<li>\ref subsec_Tensor_PointIndices
+	<li>\ref subsec_Tensor_IndexRange
+	<li>\ref subsec_Tensor_AddSub
+</ul>
+
+In order to make full use of tensor variables, you need to know about the generation of implicit loops by using counting indices. There are two different types of counting indices: contraction- and point-indices. Contraction-indices are negative integer values, while point-indices are values between -1 and 0. Contraction indices have the effect of generating a summation loop over the range of the respective index as is explained in \ref subsec_Tensor_Contract. Point-indices on the other hand, imply a loop over all values of an index, but there is no implicit summation. This is explained in more detail in \ref subsec_Tensor_PointIndices.
+
+
+\subsection subsec_Tensor_Print Printing Tensor Components
+
+All components of a tensor are printed to the output window by using the standard \c ? operator, as shown before. However, it is also possible to only print a subset of elements by using a counting index. Consider the following example.
+
+\code
+	?T = Tensor([[1,2,3],[4,5,6]]);
+	?T(1, -1);
+	?T(-1, 1);
+\endcode
+
+The output is
+
+<b>T</b> <i>(2x3)</i>= <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td></tr><tr>
+<td>4</td><td>5</td><td>6</td></tr></table>
+<br><b>Constant</b> <i>(3)</i>= <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td></tr></table>
+<br><b>Constant</b> <i>(2)</i>= <table border="0"><tr>
+<td>1</td><td>4</td></tr></table>
+<br>
+
+That is, the expression <code>?T(1, -1)</code> prints the values of \c T in the first row, while <code>?T(-1, 1)</code> prints the first column. Basically, the idea of counting indices is that when an operation is applied to an expression like <code>T(-1, 1)</code>, then it is applied to the set of elements that are contained in \c T when counting through all allowed values of the first index.
+
+
+\subsection subsec_Tensor_Assign Assigning Tensor Values
+
+It is also possible to assign values only to a particular part of a tensor. For example,
+
+\code
+	A = Tensor(2, [2,3]);
+	A(1, -1) = 2;
+	?A;
+\endcode
+
+gives
+
+<b>A</b> <i>(2x3)</i> = <table border="0"><tr>
+<td>2</td><td>2</td><td>2</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr></table>
+<br>
+
+That is, all elements in the first row of A are set to the value 2. Only setting the diagonal values can be done in the following way
+
+\code
+	A = Tensor(2, [2,3]);
+	A(-1, -1) = 2;
+	?A;
+\endcode
+
+ which gives
+ 
+<b>A</b> <i>(2x3)</i> = <table border="0"><tr>
+<td>2</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>2</td><td>0</td></tr></table>
+<br>
+
+One can also assign parts of one tensor to parts of another tensor.
+
+\code
+	A = Tensor([[1,2], [3,4]]);
+	B = Tensor([[2,3], [1,4]]);
+
+	A(-1,1) = B(2,-1);
+	?A;
+	
+	?C = A(1,-1);
+\endcode
+
+This generates the following output.
+
+<b>A</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>4</td><td>4</td></tr></table>
+
+<br><b>C</b> <i>(2)</i> = <table border="0"><tr>
+<td>1</td><td>2</td></tr></table>
+<br>
+
+
+\subsection subsec_Tensor_Contract Tensor Contraction
+
+
+The following example evaluates the standard matrix product between two 2-valence tensors (i.e. matrices). The equivalent mathematical expressions are
+
+\f[
+A = 
+	\left(\begin{array}{cc} 
+	1 & 2 \\
+	3 & 4
+	\end{array}\right),
+\quad
+B = 
+	\left(\begin{array}{cc} 
+	2 & 3 \\
+	1 & 4
+	\end{array}\right),
+\quad	
+	C_{i,k} = \sum_{j=1}^2\;A_{i,j}\,B_{j,k}.
+\f]
+
+\code
+	?A = Tensor([[1,2], [3,4]]);
+	?B = Tensor([[2,3], [1,4]]);
+
+	?C = A(-1,-2) * B(-2, -3);
+\endcode
+
+This results in
+
+<b>A</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+<br><b>B</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>2</td><td>3</td></tr><tr>
+<td>1</td><td>4</td></tr></table>
+<br><b>C</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>4</td><td>11</td></tr><tr>
+<td>10</td><td>25</td></tr></table>
+<br>
+
+Hence, there is an implicit summation over the index values at the positions where a repeated negative appears. 
+It may also help to define some integer variables to simplify the CLUScript expression.
+For example,
+
+\code
+	i = -1;	j = -2;	k = -3;
+	
+	A = Tensor([[1,2], [3,4]]);
+	B = Tensor([[2,3], [1,4]]);
+
+	C = A(i, j) * B(j, k);
+\endcode
+
+This has the same effect as the previous example, since there will be a contraction over the index \c j. Note that the order of the elements in C is according to the values of the counting indices. That is, in the above example -1 is the first dimension of C and -3 the second dimension. Hence, <code>D = A(k, j) * B(j, i)</code> generates a tensor that is transposed with respect to tensor C.
+
+
+Note that instead of contracting with a product, this can also be done with division. For example, the equivalent to the mathematical expressions
+\f[
+A = 
+	\left(\begin{array}{cc} 
+	1 & 2 \\
+	3 & 4
+	\end{array}\right),
+\quad
+B = 
+	\left(\begin{array}{cc} 
+	2 & 3 \\
+	1 & 4
+	\end{array}\right),
+\quad	
+	C_{i,k} = \sum_{j=1}^2\;\frac{A_{i,j}}{B_{j,k}},
+\f]
+is the following CLUScript.
+
+\code
+	?A = Tensor([[1,2], [3,4]]);
+	?B = Tensor([[2,3], [1,4]]);
+
+	?C = A(-1,-2) / B(-2, -3);
+\endcode
+
+The output is
+
+<b>A</b> <i>(2x2)</i>= <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+<br><b>B</b> <i>(2x2)</i>= <table border="0"><tr>
+<td>2</td><td>3</td></tr><tr>
+<td>1</td><td>4</td></tr></table>
+<br><b>C</b> <i>(2x2)</i>= <table border="0"><tr>
+<td>2.5</td><td>0.833</td></tr><tr>
+<td>5.5</td><td>2</td></tr></table>
+<br>
+
+
+
+
+\subsection subsec_Tensor_PointIndices Point Indices
+
+Point-indices denote indices over which implicit loops are to be executed, however without summation over the index range. For example, suppose you have two tensors of the same size and you would simply like to multiply the corresponding values. Mathematically this may be expressed as
+
+\f[
+A = 
+	\left(\begin{array}{cc} 
+	1 & 2 \\
+	3 & 4
+	\end{array}\right),
+\quad
+B = 
+	\left(\begin{array}{cc} 
+	2 & 3 \\
+	1 & 4
+	\end{array}\right),
+\quad	
+	C_{i,j} = \;A_{i,j}\,B_{i,j}.
+\f]
+
+The corresponding CLUScript looks like this
+
+\code
+?A = Tensor([[1,2], [3,4]]);
+?B = Tensor([[2,3], [1,4]]);
+
+?C = A(-.1,-.2) * B(-.1, -.2);
+\endcode
+
+which generates the output
+
+<b>A</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+<br>
+
+<b>B</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>2</td><td>3</td></tr><tr>
+<td>1</td><td>4</td></tr></table>
+<br>
+
+<b>C</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>2</td><td>6</td></tr><tr>
+<td>3</td><td>16</td></tr></table>
+<br>
+
+It is also possible to mix contraction- and point-indices. For example, suppose you would like to evaluate the scalar product between corresponding column vectors in two tensors. Mathematically this can be written as
+
+\f[
+A = 
+	\left(\begin{array}{cc} 
+	1 & 2 \\
+	3 & 4
+	\end{array}\right),
+\quad
+B = 
+	\left(\begin{array}{cc} 
+	2 & 3 \\
+	1 & 4
+	\end{array}\right),
+\quad	
+	C_{j} = \sum_{i=1}^2 \;A_{i,j}\,B_{i,j}.
+\f]
+
+The corresponding CLUScript looks like this.
+
+\code
+?A = Tensor([[1,2], [3,4]]);
+?B = Tensor([[2,3], [1,4]]);
+
+?C = A(-1,-.2) * B(-1, -.2);
+\endcode
+
+which generates the output
+
+<b>A</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+<br>
+
+<b>B</b> <i>(2x2)</i> = <table border="0"><tr>
+<td>2</td><td>3</td></tr><tr>
+<td>1</td><td>4</td></tr></table>
+<br>
+
+<b>C</b> <i>(2)</i> = <table border="0"><tr>
+<td>5</td><td>22</td></tr></table>
+<br>
+
+
+\subsection subsec_Tensor_IndexRange Restricting Index Ranges
+
+So far all counting indices were always evaluated over their whole allowed range. However, quite often it is desirable to restrain a counting index to a subset of index values. In CLUScript this can be done in two different ways, by either giving a range or a list of index values.
+
+\code
+	?A = Tensor([[1,2,3,4], [5,6,7,8]]);
+
+	?A(-1, [-2,1,3]); // Range for -2
+	?A(-1, [-2, [1,3,4]]); // Index List
+\endcode
+
+This generates the output
+
+<b>A</b> <i>(2x4)</i> = <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td><td>4</td></tr><tr>
+<td>5</td><td>6</td><td>7</td><td>8</td></tr></table>
+<br>
+
+<b>Constant</b> <i>(2x3)</i> = <table border="0"><tr>
+<td>1</td><td>2</td><td>3</td></tr><tr>
+<td>5</td><td>6</td><td>7</td></tr></table>
+<br>
+
+<b>Constant</b> <i>(2x3)</i> = <table border="0"><tr>
+<td>1</td><td>3</td><td>4</td></tr><tr>
+<td>5</td><td>7</td><td>8</td></tr></table>
+<br>
+
+
+
+\subsection subsec_Tensor_AddSub Addition and Subtraction
+
+Implicit loops can also be perfomed when adding and subtracting tensors, as well as adding or subtracting constants to/from tensors. Here is an example,
+
+\code
+	?T = Tensor([[2,0,0], [0,1,0]]);
+	?S1 = T - 1;
+	?S2 = 1 - T;
+\endcode
+
+which generates the output
+
+<b>T</b> <i>(2x3)</i>= <table border="0"><tr>
+<td>2</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>1</td><td>0</td></tr></table>
+<br><b>S1</b> <i>(2x3)</i>= <table border="0"><tr>
+<td>1</td><td>-1</td><td>-1</td></tr><tr>
+<td>-1</td><td>0</td><td>-1</td></tr></table>
+<br><b>S2</b> <i>(2x3)</i>= <table border="0"><tr>
+<td>-1</td><td>1</td><td>1</td></tr><tr>
+<td>1</td><td>0</td><td>1</td></tr></table>
+<br>
+
+That is, subtracting a constant from a tensor, subtracts it from each component of the tensor. This, of course, also works when using counting indices. Here is an example where a tensor is subtracted from its transpose.
+
+\code
+	?T = Tensor([[1,2], [3,4]]);
+	?S = T(-2,-1) - T(-1,-2);
+\endcode
+
+The output is
+
+<b>T</b> <i>(2x2)</i>= <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+<br><b>S</b> <i>(2x2)</i>= <table border="0"><tr>
+<td>0</td><td>1</td></tr><tr>
+<td>-1</td><td>0</td></tr></table>
+<br>
+
+
+
+<hr>
+\section sec_TensorGA Representing GA Operations
+
+The inner, outer and geometric product can all be represented as bilinear functions, while operations like the reverse or dual can be represented as linear functions. In section \ref sec_SolveMV_Intro it is shown why this is case. The basic idea is to write the components of multivectors as vectors. A product of two multivectors can then be written as the contraction of their vector representations with a tensor. For example, let the components of multivector A and B be given by \f$\alpha^i\f$ and \f$\beta^i\f$, respectively. Then the geometric product of A and B can be written as
+\f[
+	\gamma^k = \sum_i\,\sum_j\;\alpha^i\,\beta^j\;{g^k}_{ij},
+\f]
+where the \f$\gamma^k\f$ denote the components of the resultant multivector, and \f${g^k}_{ij}\f$ denotes the components of the tensor encoding the geometric product. This translation of geometric algebra operations into tensor contractions allows the application of linear algebra solution methods to geometric algebra. 
+
+Note that equations of the above type could also be evaluated in CLUScript before by using the function GetMVProductMatrix(). However, using this function the product tensor \f${g^k}_{ij}\f$ could not be obtained by itself, but only its contraction with a vector, which results in a matrix. If we want to treat more complex equation using tensor, we need to be able to deal with the product tensors themselves.
+
+The above calculation can be performed in CLUScript using tensors in the following way.
+
+\code
+	vA = VecE3(1,2,0);
+	vB = VecE3(2,0,3);
+
+	// Transformation of multivector into tensor
+	tA = MV2Tensor(vA); // Column vector
+	tB = MV2Tensor(vB); // Column vector
+	
+	// Print first column as row
+	?tA(-1,1);
+	?tB(-1,1);
+	
+	// Generate geometric product tensor for
+	// 3D-Euclidean space
+	tG = GAOpTensor(GA_E3, MVOP_GEO);
+	?"Size of tG = " + Str(Size(tG));
+	
+	// Contraction of vectors with tensor
+	?tC = tA(-1,1) * tB(-2,1) * tG(-3,-1,-2);
+	
+	// Transformation of tensor into multivector
+	?vC = Tensor2MV(tC);
+	?vA * vB;
+\endcode
+
+This generates the output
+
+<b>Constant</b> <i>(8)</i> = <table border="0"><tr>
+<td>0</td><td>1</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>
+<br>
+
+<b>Constant</b> <i>(8)</i> = <table border="0"><tr>
+<td>0</td><td>2</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>
+<br>
+
+Size of tG = <b>[</b> 8 <b>,</b> 8 <b>,</b> 8 <b>]</b><br><b>tC</b> <i>(8)</i> = 
+<table border="0"><tr>
+<td>2</td><td>0</td><td>0</td><td>0</td><td>6</td><td>-3</td><td>-4</td><td>0</td></tr></table>
+<br>
+
+<b>vC</b> <i>(1)</i> = <br><b>[</b> 2 + 6 <b>e23</b> + -3 <b>e31</b> + -4 <b>e12</b> <b>]</b><p><br>
+
+<b>Constant</b> = 2 + 6 <b>e23</b> + -3 <b>e31</b> + -4 <b>e12</b><br>
+
+The variables tA and tB are tensors of dimensions 8x1, i.e. they are column vectors. The tensor tG has dimension 8x8x8. The contraction of the vectors with the tensor is equivalent to the geometric product of the corresponding multivectors. It is also possible to pass a list of vectors to MV2Tensor(), in which case a tensor is created that contains the components of the multivectors in its columns. The following script generates the same output as the previous one.
+
+\code
+// Create list of multivectors
+lVec = [];
+lVec << VecE3(1,2,0);
+lVec << VecE3(2,0,3);
+
+// Transformation of multivectors into tensor.
+// The multivectors form the columns of the tensor.
+tVec = MV2Tensor(lVec); 
+
+// Print columns separately as rows
+?tVec(-1,1);
+?tVec(-1,2);
+
+// Generate geometric product tensor for
+// 3D-Euclidean space
+tG = GAOpTensor(GA_E3, MVOP_GEO);
+?"Size of tG = " + Str(Size(tG));
+
+// Contraction of vectors with tensor
+?tC = tVec(-1,1) * tVec(-2,2) * tG(-3,-1,-2);
+
+// Transformation of tensor into multivector
+?vC = Tensor2MV(tC);
+// Geometric product of all vectors in list lVec.
+?prod(lVec);
+\endcode
+
+
+\subsection subsec_Tensors_GAMask Masking
+
+Typically only a few components of the multivetors we are working with are non-zero. In the above example, the initial multivectors are 3D-vectors, but they are still represented by 8-dimensional vectors in the tensor form. In projective and conformal space the ratio of used components to unused components is usually even much higher. In order to reduce the numerical complexity, it is therefore possible to define masks that define which components of a multivector are mapped into the tensor form. Again this is best explained with an example.
+
+\code
+	// Create list of multivectors
+	lVec = [];
+	lVec << VecE3(1,2,0);
+	lVec << VecE3(2,0,3);
+
+	// Mask for vectors
+	lVecMask = 
+		[ 0, // Scalar
+		1, 2, 3, // Vector
+		0, 0, 0, // Bivector
+		0 // Trivector
+		];
+			
+	// Transformation of multivectors into tensor.
+	// The multivectors form the columns of the tensor.
+	tVec = MV2Tensor(lVec, lVecMask); 
+
+	// Print columns separately as rows
+	// There are only three components now
+	?tVec(-1,1);
+	?tVec(-1,2);
+
+	// Generate geometric product tensor for
+	// 3D-Euclidean space using mask.
+	lResMask = 0;
+	tG = GAOpTensor(GA_E3, MVOP_GEO, lVecMask, lVecMask, lResMask);
+	?"Size of tG = " + Str(Size(tG));
+	?"Result Mask = " + Str(lResMask);
+
+	// Contraction of vectors with tensor
+	?tC = tVec(-1,1) * tVec(-2,2) * tG(-3,-1,-2);
+
+	// Transformation of tensor into multivector
+	?vC = Tensor2MV(tC, lResMask);
+
+	// Geometric product of all elements in lVec
+	?prod(lVec);
+\endcode
+
+This generates the output
+
+<b>Constant</b> <i>(3)</i>= <table border="0"><tr>
+<td>1</td><td>2</td><td>0</td></tr></table>
+<br><b>Constant</b> <i>(3)</i>= <table border="0"><tr>
+<td>2</td><td>0</td><td>3</td></tr></table>
+<br>Size of tG = <b>[</b> 4 <b>,</b> 3 <b>,</b> 3 <b>]</b><br>Result Mask = <b>[</b> 1 <b>,</b> 0 <b>,</b> 0 <b>,</b> 0 <b>,</b> 2 <b>,</b> 3 <b>,</b> 4 <b>,</b> 0 <b>]</b><br><b>tC</b> <i>(4)</i>= <table border="0"><tr>
+<td>2</td><td>6</td><td>-3</td><td>-4</td></tr></table>
+<br><b>vC</b> <i>(1)</i>= <br><b>[</b> 2 + 6 <b>e23</b> + -3 <b>e31</b> + -4 <b>e12</b> <b>]</b><p><br><b>Constant</b> = 2 + 6 <b>e23</b> + -3 <b>e31</b> + -4 <b>e12</b><br>
+
+The variable \c lVecMask is a list with eight entries, relating to the eight dimensions of the Geometric Algebra of 3D-Euclidean space. In the above example \c lVecMask is defined such that the entries relating to the vector components are given consecutive non-zero values. The tensors generated from the multivectors by using this mask, then only contain the three vector components.
+
+The tensor representing the geometric product has to have different dimensions now as well. Therefore, the mask used to generate the tensor \c tVec has to be specified in the function GAOpTensor(). This function takes as last parameter a variable that either already contains a result mask, or in which the resultant mask will be stored. In the above example \c lResMask is set to zero, which tells the function GAOpTensor() that it should set this variable to the resultant mask. The resultant mask depends on the two other masks given. It basically describes, which components in a multivector can at most be non-zero under the given operation. In the above example the two mask \c lVecMask specifies that the left and right operands of the geometric products will be vectors. It then follows that the result of the geometric product will generate a multivector that has at most a scalar and three bivector components. Hence, the result mask in \c lResMask. 
+
+The geometric product is then executed by contraction of the two vectors in \c tVec with the geometric product tensor \c tG. Note that \c tG is now of dimensions 4x3x3. In order to transform the resultant tensor \c tC back into a multivector the resultant mask \c lResMask has to be given in the function Tensor2MV(). 
+
+If we were only interested in a particular subset of components of the resultant multivector, we could have also specified \c lResMask accordingly before a call to GAOpTensor().
+
+
+
+**/

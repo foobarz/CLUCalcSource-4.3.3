@@ -1,0 +1,38 @@
+// Use Mouse Mode 1 to change coupled twists.
+
+// Define E3 basis variables
+DefVarsE3();
+
+// Define some vectors
+:A = e1:MYellow;
+
+// Vector B can be moved in mouse mode 1
+:B = VecE3(1) + e1:MGreen;
+
+// Set color to green
+:Green;
+
+// Define some rotors
+R = RotorE3(0, 1, 0, 10*RadPerDeg);
+R2 = RotorE3(0, 1, 0, -5*RadPerDeg);
+
+// Now plot the coupled twists created by R and R2.
+:Plot((A = R*A*~R) + (B = R2*B*~R2), [x, 0, 1, 72]);
+
+// Now plot the sinc function
+SINC = Plot(0.1*x*e1 + sin(x)/x*e2, [x, -4*Pi, 4*Pi, 60]);
+
+// Print values of sinc function
+?SINC;
+
+// Type of variabel SINC
+?"SINC is of type '" + Type(SINC) + "'";
+
+// Number of elements in SINC
+?"SINC has " + Len(SINC) + " elements.";
+
+// Get first vertex
+?"The first vertex is " + Str(SINC(1));
+
+// Draw sinc function
+:SINC:Red;

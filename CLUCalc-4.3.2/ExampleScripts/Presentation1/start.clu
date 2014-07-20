@@ -1,0 +1,145 @@
+// Title page which creates presentation list
+
+// Only initialize the script list if the 
+// script has just been loaded or changed.
+if (ExecMode & EM_CHANGE)
+{
+	MyTime = Time;
+
+	// Clear the script list
+	_ClearScriptList();
+	
+	// Now add all the scripts in the order
+	// you want to present them
+	_AddScriptToList("Introduction Start", "intro_start.clu");
+	_AddScriptToList("Introduction", "intro_1.clu");
+
+	// Now add again this slide to return to the start
+	_AddScriptToList("Start", "start.clu");	
+}
+
+// Here our standard slide is included
+//#include "stdslide.clu"
+
+// And now the title of this talk
+StartOverlay();
+
+SetLatexAlign(0.5,1);
+DrawLatex(40,12,0, 
+"\plain:
+\input{header}
+\begin{document}
+\begin{center}
+{\huge Presentations with\\[1ex] CLUCalc}\\[5mm]
+{\large An Overview}
+\end{center}
+\end{document}
+", "title");
+
+SetLatexAlign(0.5, 1);
+DrawLatex(40, 85, 0, 
+"\sf by Christian B. U. Perwass", 
+"me");
+EndOverlay();
+
+////////////////////////////////////////////////
+/// What follows here is some code to generate
+/// a rotating robot arm.
+
+// Increase the lighting effect.
+SetAmbientLight(DWhite);
+
+Circle =
+{
+	_rad = _P(1);
+	_z = _P(2);
+	VecN3(-_rad,0,_z) ^ VecN3(0,_rad,_z) ^ VecN3(_rad,0,_z)
+}
+
+CirclePair =
+{
+	_rad = _P(1);
+	::LC = ::Circle(_rad, 0);
+	::LC << ::Circle(_rad, _P(2));
+}
+
+Cylinder =
+{
+	_idx = _P(1);
+
+	::CirclePair(::rad(_idx), ::len(_idx));
+
+	::Cyl(_idx) = DrawCircleSurface(::LC, [MGray, MGray], 0);
+
+	::S(_idx) = *(::LC(2)/(::LC(2)^e));
+}
+
+
+if (ExecMode & EM_CHANGE)
+{
+	DefVarsN3();
+	:N3_SOLID;
+	:MGray;
+
+	SetFrameOrigin(-1, -2.5, -1);
+//	SetFrameRotor(RotorE3(0,1,0, 0));
+
+	S = [0,0,0];
+	Cyl = [0,0,0];
+
+	len = [1.5, 1.3, 1.2];
+	rad = [0.2, 0.15, 0.1];
+	angle = [0, a2, 0];
+	
+	Cylinder(1);
+	Cylinder(2);
+	Cylinder(3);
+}
+else if (ExecMode & EM_ANIMATE)
+{
+	:N3_SOLID;
+	Pos2 = 3 - abs(((Time/4) % 6) - 3);
+	Pos3 = 2 - abs(((Time/5) % 4) - 2);
+
+	a1 = (Time * Pi/6) % (2*Pi) + 1.1*Pi;
+	a2 = Pos2 * (Pi/5);
+	a3 = Pos3 * Pi/6;
+
+	RotateFrame(RotorE3(1,0,0, -Pi/2));	
+	:Cyl(1);
+	:MCyan;
+	:S(1);
+
+	RotateFrame(RotorE3(0,0,1, a1));
+	:MBlue;
+
+	TranslateFrame(0, 0, len(1));
+	RotateFrame(R = RotorE3(0,1,0, a2));
+	:R;
+	:Cyl(2);
+	:MCyan;
+	:S(2);
+
+	TranslateFrame(0, 0, len(2));
+	RotateFrame(R = RotorE3(0,1,0, a3));
+	:MBlue;
+	:R;
+	:Cyl(3);
+	:Black;
+	:S(3);
+}
+
+?MyTime;
+?Time;
+?_DoAnimate;
+
+// Uncomment the following block if you 
+// only want the robot arm to move once
+// for about 6 seconds.
+/*
+if ((Time - MyTime) > 6)
+	_DoAnimate = 0;
+else
+*/
+	_DoAnimate = 1;
+

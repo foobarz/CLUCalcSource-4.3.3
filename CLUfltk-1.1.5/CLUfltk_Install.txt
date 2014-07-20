@@ -1,0 +1,52 @@
+This is some help on how to install and compile CLUfltk.
+
+You can basically follow the description in the appropriate
+README file for your system. 
+
+Windows Install
+===============
+
+Open the 'fltk.sln' file in the 'visualc' subdirectory
+with Visual Studio .NET, and build all projects
+in debug and release mode. That's all.
+
+
+Linux Install
+=============
+
+First of all, set the environment variable 
+FLTK_HOME to the CLUfltk directory. For example,
+if CLUfltk is installed under
+
+   /home/foo/CLUProject/CLUfltk-1.1.5
+
+then this should also be the path contained in FLTK_HOME.
+
+You should now install CLUfltk to the FLTK_HOME directory.
+To do this simply execute the following commands from within
+the CLUfltk directory.
+
+	  ./configure --prefix=${FLTK_HOME}
+	  make install
+	  make
+
+Note that at least on my setup make install returns with an error
+after compiling and installing everything. And somehow it has
+deleted the main fltk library again. But if you execute 'make'
+again then everything is ok.
+
+Alternatively you can also simply excute the script BUILD from
+within the CLUfltk directory by typing
+	
+	./BUILD
+
+Make sure that FLTK_HOME is defined in the shell you are using.
+
+
+Should you have any problems, you can contact me under 
+
+       help@clucalc.info
+
+Kiel, 25. October 2005,
+
+Christian Perwass.

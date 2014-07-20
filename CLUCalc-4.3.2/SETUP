@@ -1,0 +1,24 @@
+#!/bin/sh
+echo "----------------- CLUCalc Setup--------------------"
+echo " generating the configure script and other helpers "
+echo "---------------------------------------------------"
+echo "starting: libtoolize --force"
+libtoolize --force
+echo "starting: aclocal"
+aclocal
+echo "starting: autoconf"
+autoconf
+echo "starting: automake --add-missing"
+automake --add-missing
+echo "starting: automake"
+automake
+echo "---------------------------------------"
+echo "You can now start the configure script:"
+echo "type: ./configure --prefix=<YOUR INSTALLDIR>"
+echo "      make"
+echo "      make install"
+echo
+echo "Or if you have set CLU_HOME to the"
+echo "install directory simply call BUILD."
+echo "---------------------------------------"
+

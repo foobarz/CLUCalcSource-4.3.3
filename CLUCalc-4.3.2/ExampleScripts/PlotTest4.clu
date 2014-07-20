@@ -1,0 +1,95 @@
+
+fScale = 0.2;
+
+// The function
+f = 
+{ 
+	x = _P(1); y = _P(2); 
+
+	VecE3(y, ::fScale*cos(2*Pi*x*y), x) 
+}
+
+// The surface normal
+f_norm = 
+{ 
+	x = _P(1); y = _P(2); 
+	
+	fx = VecE3(0, -::fScale*2*Pi*y*sin(2*Pi*x*y), 1);// + 0.1*VecE3(Ran(), Ran(), Ran());
+	fy = VecE3(1, -::fScale*2*Pi*x*sin(2*Pi*x*y), 0);// + 0.1*VecE3(Ran(), Ran(), Ran());
+	
+	fn = *(fx ^ fy);
+	fn / abs(fn)
+}
+
+// A color
+f_col =
+{
+	x = _P(1); y = _P(2); 
+
+	fMag = cos(2*Pi*x*y);
+	Color(fMag, 1-fMag, 1-fMag*fMag)
+}
+
+// Set size of normals.
+// If this is zero, then normals are never drawn.
+fNormScale = 0.1;
+
+CheckBox("With normal function", 0);
+CheckBox("Use color", 1);
+CheckBox("Use texture", 1);
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK ||
+	ToolName == "With normal function" ||
+	ToolName == "Use color" ||
+	ToolName == "Use texture")
+{
+
+	if (CheckBox("Use texture"))
+	{
+		imgTex = ReadImg("checkers.png");
+	}
+
+	if (CheckBox("With normal function"))
+	{
+		if (CheckBox("Use color"))
+		{
+			Vex = Plot([f(x, y), f_norm(x, y), f_col(x,y) ], 
+					[x,-1,1,15], [y,-1,1,15], 
+					fNormScale);
+		}
+		else		
+		{
+			Vex = Plot([f(x, y), f_norm(x, y) ], 
+					[x,-1,1,15], [y,-1,1,15], 
+					fNormScale);
+		}
+	}
+	else
+	{
+		if (CheckBox("Use color"))
+		{
+			Vex = Plot([f(x, y), f_col(x,y)], 
+					[x,-1,1,15], [y,-1,1,15], 
+					fNormScale);
+		}
+		else
+		{
+			Vex = Plot(f(x, y), 
+					[x,-1,1,15], [y,-1,1,15], 
+					fNormScale);
+		}
+	}
+}
+
+if (CheckBox("Use texture"))
+	SetTexture(imgTex);
+	
+// Draw Surface
+:Vex(1);
+
+// Check whether to draw normals
+:MWhite;
+if (CheckBox("Show normals", 0))
+	:Vex(2);
+

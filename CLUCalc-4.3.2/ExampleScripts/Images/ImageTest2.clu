@@ -1,0 +1,38 @@
+// Bitmap Intro
+
+_BGColor = White;
+
+// You can now also draw bitmap files
+// that are stored in the windows .bmp format
+// as 24bit true color images.
+
+// Align the bitmaps to the center of
+// the drawing position.
+SetImgAlign(0.5, 0.5);
+
+?x = VecE3(1);
+// Set position of image
+SetImgPos(x);
+
+// Load an image
+?imgSurf = ReadImg("Surf2.bmp");
+
+// Draw the image at previously set position
+//:imgSurf;
+
+Button("Save as PNG");
+Button("Save as JPG");
+Button("Save as EPS");
+Button("Save as TIFF");
+
+// Save image as PNG file
+// You can save as JPG, BMP, EPS
+if (ToolName == "Save as PNG")
+	WriteImg(imgSurf, "Surf2.png");
+else if (ToolName == "Save as JPG")
+	WriteImg(imgSurf, "Surf2.jpg");
+else if (ToolName == "Save as EPS")
+	WriteImg(imgSurf, "Surf2.eps");
+else if (ToolName == "Save as TIFF")
+	WriteImg(imgSurf, "Surf2.tiff");
+

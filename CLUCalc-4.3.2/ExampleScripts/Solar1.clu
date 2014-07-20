@@ -1,0 +1,57 @@
+_DoAnimate = 1;
+
+DefVarsN3();
+
+dAEarth = ((Time * 45) % 360) * RadPerDeg;
+dAMoon = ((Time * 270) % 360) * RadPerDeg;
+dASaturn = ((Time * 20) % 360) * RadPerDeg;
+
+SetMode(N3_OPNS, N3_SOLID);
+
+:Color(0.9, 0.9, 0.0);
+:Sun = SphereN3(0,0,0, 1);
+
+Earth = SphereN3(0,0,0, 0.5);
+Moon = SphereN3(0,0,0, 0.1);
+Saturn = SphereN3(0,0,0, 0.6);
+
+D = DilatorN3(0.97);
+Ring = *(VecN3(-1,0,0)^VecN3(1,0,0)^VecN3(0,0,1));
+
+TEarth = TranslatorN3(4, 0, 0);
+TMoon = TranslatorN3(1,0,0);
+TSat = TranslatorN3(10, 0, 0);
+
+REarth = RotorN3(0,1,0, dAEarth);
+RMoon = RotorN3(0,1,0, dAMoon);
+RSat = RotorN3(0,1,0, dASaturn);
+RRing = RotorN3(0,0,1, 20*RadPerDeg);
+
+MEarth = REarth * TEarth;
+MMoon = MEarth * RMoon * TMoon;
+MSat = RSat * TSat;
+
+:Color(0.1, 0.2, 0.8);
+:MEarth * Earth * ~MEarth;
+
+:Color(0.4, 0.4, 0.1);
+:MMoon * Moon * ~MMoon;
+
+:IPNS;
+:MCyan;
+Ring = RRing * Ring * ~RRing;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+
+:OPNS;
+:Color(0.2, 0.3, 0.5);
+:MSat * Saturn * ~MSat;

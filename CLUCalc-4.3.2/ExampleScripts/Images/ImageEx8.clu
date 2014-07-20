@@ -1,0 +1,18 @@
+// Image Function Example 8
+
+// Read an image
+Img = ReadImg("cog_siegel.bmp");
+
+// Create an actual copy of the image stored in Img
+Img2 = CopyImg(Img);
+
+// Resize original image
+ResizeImg(Img, 50, 50);
+SetImgPos(-1,0,0);
+:Img;
+
+// Reshape copied image
+ReshapeImg(Img2, 300, 200, Red);
+SetImgPos(0,0,0);
+:Img2;
+

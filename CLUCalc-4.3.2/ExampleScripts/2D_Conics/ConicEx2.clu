@@ -1,0 +1,26 @@
+// Draw conic through five points
+_2dView = 1;
+_BGColor = White;
+
+?"Use mouse modes 1 through 5 to move the five points.";
+
+:DRAW_POINT_AS_SPHERE;
+
+:Red;
+:A = VecC2(VecE3(1) + VecE3(1,0));
+
+:Green;
+:B = VecC2(VecE3(2) + VecE3(0,1));
+
+:Blue;
+:C = VecC2(VecE3(3) + VecE3(-1,0));
+
+:Magenta;
+:D = VecC2(VecE3(4) + VecE3(0,-1));
+
+:Cyan;
+:E = VecC2(VecE3(5) + VecE3(1,1));
+
+// Draw conic through five points
+:Black;
+:Conic = A^B^C^D^E;

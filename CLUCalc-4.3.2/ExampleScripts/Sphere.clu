@@ -1,0 +1,12 @@
+DefVarsN3();
+SetMode(N3_OPNS);
+
+:A = VecN3(1, 0, 0):Red;
+:B = VecN3(0, 1, 0):Green;
+:C = VecN3(0, 0, 1):Blue;
+:X = VecN3(1):Yellow;
+
+:A^B^C^n:MBlue;
+:S = A^B^C^X:Magenta;
+?S;
+

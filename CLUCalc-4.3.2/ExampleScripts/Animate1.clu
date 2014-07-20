@@ -1,0 +1,16 @@
+// Make this script animated
+_DoAnimate = 1;
+
+DefVarsE3();
+
+// Keep Angle in range 0, 360
+?Angle = ((Time * 180) % 360) * RadPerDeg;
+
+// Make initial vector user adjustable
+X = VecE3(1) + e1;
+
+// Create Rotor and draw it
+:R = RotorE3(0, 1, 0, Angle):MBlue;
+
+// Rotate vector and draw it
+:Y = R * X * ~R:Red;

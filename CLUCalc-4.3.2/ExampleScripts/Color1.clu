@@ -1,0 +1,18 @@
+_DoAnimate = 1;
+
+DefVarsN3();
+:IPNS;
+
+?angle = ((Time * 10) % 360) * RadPerDeg;
+R = RotorN3(0, 1, 0, angle);
+
+?r = abs(sin(Time * 10 * RadPerDeg));
+?g = abs(sin(Time * 17 * RadPerDeg));
+?b = abs(sin(Time * 27 * RadPerDeg));
+?a = abs(cos(Time * 5 * RadPerDeg));
+
+:Col1 = Color(r, g, b, a);
+:R*10*e3*~R;
+
+:MRed;
+:*SphereN3(0, 0, 0, 1);

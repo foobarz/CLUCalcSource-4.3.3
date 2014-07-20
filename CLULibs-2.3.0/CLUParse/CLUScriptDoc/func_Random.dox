@@ -1,0 +1,67 @@
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_RanFunc Random Number Generator Functions
+
+	Functions that have to do with the generation of random numbers.
+	
+	\{
+**/
+
+
+/** 
+	\brief Generates a (pseudo-)random number with a Gaussian distribution.
+	
+	\return A (pseudo-)random number.
+	\since v1.4
+	
+	This function is implemented using a procedure from the Numerical Recipies.
+	The range of the values returned depends on the mean and variance set with
+	the function SetGaussPars.
+**/
+scalar Gauss(void);
+
+/** 
+	\brief Generates a (pseudo-)random number between zero and one.
+	
+	\return A (pseudo-)random number between zero and one.
+	\since v1.4
+	
+	This function is implemented using the \c ran3 procedure as described in 
+	the Numerical Recipies.
+**/
+scalar Ran(void);
+
+
+/** 
+	\brief Sets the seed for the random number generation algorithm.
+
+	\param mean The mean of the Gaussian distribution.
+	\param stddev The standard deviation of the Gaussian distribution.
+				
+	\return Nothing.
+	\since v1.4
+	
+**/
+void SetGaussPars(scalar mean, scalar stddev);
+
+/** 
+	\brief Sets the seed for the random number generation algorithm.
+
+	\param seed The seed number. If this value is smaller than zero, a seed is generated
+			from the computer clock.
+				
+	\return Nothing.
+	\since v1.4
+	
+**/
+void SetRanSeed(scalar seed);
+
+/** \}
+**/
+
+/** \}
+**/
+

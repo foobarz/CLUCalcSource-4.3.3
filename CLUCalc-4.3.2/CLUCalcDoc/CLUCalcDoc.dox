@@ -1,0 +1,239 @@
+
+/** \mainpage CLUCalc - A Visual Calculator
+
+\image html KleinBottle_sm.jpg
+
+This is the documentation of <b>CLUCalc</b> and <b>CLUScript</b>. 
+CLUCalc v4.3 was written and conceived by Dr. <i>Christian B.U. Perwass</i>. Previous help with CLUCalc development by <i>Christian Gebken</i> and <i>Daniel Grest</i>.
+
+<ul>
+	<li>\ref sec_Main_Important
+	<li>\ref sec_Main_DokuIndex
+	<li>\ref sec_Main_AddInfo
+</ul>
+
+<b>Now in version 4.2 and 4.3</b>
+<ul>
+	<li>Read and write images of 'png', 'jpg', 'bmp' and other formats, and use them for 
+		<b>texture mapping</b> standard geometric objects and arbitrary surfaces.
+		
+	<li>Work directly with the image of rendered latex code, for example for 
+		texture mapping.
+		
+	<li><b>New variable type 'Tensor'</b>, which supports arbitrary dimensional tensor (limited by available memory) and allows for <b>automatic contraction</b> of tensors in products. Additionally, functions that generate algebra product tensors are available, which allows you to represent virtually all algebra operations as tensor products. See \ref page_WorkWithTensors for detailed information.
+	
+	<li>It is now possible to read from and write to a serial port, which allows you to control peripheral hardware. Currently this is only implemented under Windows. See \ref page_SerialPort for more details.
+
+	<li>You can now assign to a list. For example, the code [U,D,V] = SVD(M), sets variables U, D and V to the resultant matrices returned from SVD(). See \ref subsec_VarLists for more details.
+	
+	<li>In version 4.3 you can now also read XML files with ReadXML() and read and write text files with ReadText() and WriteText().
+	
+	<li><b>See all new features of this version in the</b> \ref page_ChangeLog "Change Log".
+</ul>
+
+
+
+
+
+<hr>
+
+\section sec_Main_Important Important Issues
+
+<ul>
+	<li>
+	Note that LaTeX rendering does not work under Windows when the path to the corresponding CLUScript contains special symbols like German Umlaute. 
+
+	<li>
+	Depending on the OpenGL hardware acceleration of your computer, certian features may slow down the visualizations considerably. They are in particular,
+	<ol>
+		<li>the use of texure mapping is very slow without hardware acceleration,
+	    <li>the use of more than on light (the default is one),
+	    <li>anti-aliasing for points and lines (see EnableSmoothPoint() and EnableSmoothLine()),
+	    <li>the use of rendered latex bitmaps with DrawLatex().
+	</ol>
+	I developed CLUCalc on a 1.3GHz, Pentium IV Mobile machine with a NVIDIA GeForce4 420 Go 32M, where all example scripts run fine. On other machines I saw that the displaying of large bitmaps, as is the case when showing latex rendered text bitmaps in resentations, is very slow. It also seems that in some cases if you do not have a GeForce graphics card, the visualizations may not work properly. <b>In version 3.1.1 I fixed a bug, which prevented the proper display of visualizations on some computers.</b> 
+
+</ul>
+
+<hr>
+
+\section sec_Main_DokuIndex Manual Index
+
+This documentation consists of two parts: one describing the program <b>CLUCalc</b> and the
+other describing the script language <b>CLUScript</b>. 
+<ul>
+    <li>
+    \ref page_CLUCalc "CLUCalc"
+    <br>Introduction to CLUCalc.
+
+    <ul>
+        <li>
+        \ref page_RelLog "Release Log"
+        <br>The release log of CLUCalc.
+        <br>
+    </ul>
+    <br>
+    </li>
+
+    <li>
+    \ref page_CLUScript "CLUScript"
+    <br>Introduction to CLUScript. There exists also a \ref grp_Functions "function" 
+    and a \ref grp_VarAll "predefined variables" reference. You can also find these under 
+    the link "Modules" at the top of the page.
+
+    <ul>
+ 		<li>
+		\ref page_GettingStarted
+		<br>A first peek at CLUScript.
+        <li>
+        \ref page_TheLanguage "The Language"
+        <br>Elements of the CLUScript language.
+        <br>
+ 		<ul>
+			<li>\ref subsec_Basics
+			<li>\ref subsec_Labels
+			<li>\ref subsec_Operators
+			<li>\ref subsec_StructProg
+			<li>\ref subsec_VarLists
+			<li>\ref subsec_Strings	
+			<li>\ref subsec_Macros
+		</ul>
+
+       <li>
+        \ref page_WorkWithMV "Working with Multivectors"
+        <br>Defining, evaluating and drawing multivectors.
+        <br>
+ 		<ul>
+			<li>\ref sec_CreateMV
+			<li>\ref sec_CalcMV
+			<li>\ref sec_VisMV
+			<li>\ref sec_Plot
+		</ul>
+
+       <li>
+        \ref page_WorkWithMat "Working with Matrices"
+        <br>Defining, evaluating and drawing matrices.
+        <br>
+        <ul>
+			<li> \ref sec_MatrixBasics
+			<li> \ref sec_MatrixPointOperators
+			<li> \ref sec_MatrixLogic
+			<li> \ref sec_MatrixPrint
+			<li> \ref sec_MatrixExamples
+		</ul>
+
+       <li>
+        \ref page_WorkWithTensors
+        <br>Defining, evaluating and calculating with tensors.
+        <br>
+        <ul>
+			<li> \ref sec_TensorBasics
+			<li> \ref sec_TensorLoops
+			<li> \ref sec_TensorGA
+		</ul>
+
+        <li>
+        \ref page_SolveMVEqns "Solving Multivector Equations"
+        <br> How to solve multivector equations.
+        <br>
+        <li>
+        \ref page_ErrProp "Error Propagation"
+        <br> Error propagation in Clifford algebra and for other operations.
+        <br>
+        <li>
+        \ref page_UserInteraction "User Interaction"
+        <br>User interaction in scripts.
+        <br>
+        <li>
+        \ref page_Animation "Animation"
+        <br>Animation of scripts.
+        <br>
+        <li>
+        \ref page_Tools 
+        <br>User interaction with tools.
+        <br>
+		<li>
+		\ref page_Info 
+		<br>User interactive text.
+		<br>
+		<li>
+		\ref page_Images
+		<br>Reading, writing, displaying and modifying images.
+		<br>
+        <li>
+        \ref page_Latex
+        <br>Rendering Latex text for annotations and visualization titles.
+        <br>
+        <li>
+		\ref page_TextureMapping
+		<br>Texture mapping of surfaces.
+		<br>
+		<li>
+        \ref page_Presentation "Presentations"
+        <br>How to prepare presentations.
+        <br>
+		<li>
+        \ref page_SerialPort
+        <br>How to access the serial port.
+        <br>
+    </ul>
+    </li>
+</ul>
+
+<hr>
+
+\section sec_Main_AddInfo Additional Information
+
+
+CLUCalc is  
+distributed under this \ref page_License "license". CLUCalc v4.2 makes use of the following libraries:
+<table border="0">
+<tr>
+	<td>
+	<a href="http://www.fltk.org">FLTK library</a> (www.fltk.org)
+	</td>
+	<td> 
+	Gives the basis for window management, the text editor and 
+	HTML support. The FLTK library was used in order to produce a user friendly 
+	Clifford Algebra calculator that runs under Windows, Linux and Unix. 
+	</td>
+</tr>
+<tr>
+	<td>
+	<a href="http://openil.sourceforge.net/">DevIL library</a>
+	</td>
+	<td>
+	Adds support for reading and writing images in various different formats. It uses the libraries <b>libpng</b>, <b>zlib</b>, <b>libjpeg</b>, <b>libtiff</b>, <b>libmng</b> and <b>little cms</b>.
+	</td>
+</tr>
+<tr>
+	<td>
+	<a href="http://xmlsoft.org/">libxml2</a> (xmlsoft.org)
+	</td>
+	<td>
+	Adds support for reading and writing of XML files. This is used by ReadVar(), WriteVar() and ReadXML().
+	</td>
+</tr>
+<tr>
+	<td>
+	<a href="http://www.pdflib.com/products/more/jpeg2ps.html">jpeg2ps</a> 
+	(www.pdflib.com)
+	</td>
+	<td>
+	CLUCalc uses an adaptation of the source code of <code>jpeg2ps</code> by Thomas Merz to add support for the output of EPS files. This is used to add an EPS wrapper around the JPEG files generated from a screenshot.
+	</td>
+</tr>
+<tr>
+	<td>EISPACK
+	</td>
+	<td>
+	CLUCalc uses a translation into C of some of the fortran routines found in the EISPACK library. Unfortunately, I cannot find the webpage anymore, where I downloaded these files from.
+	</td>
+</tr>
+</table>
+
+Should you 
+have any problems, comments or questions please conact me under 
+<a href="mailto:help@clucalc.info">help@clucalc.info</a>. You can find the latest information about CLUCalc under <a href="http://www.clucalc.info/">www.clucalc.info</a>.
+
+**/

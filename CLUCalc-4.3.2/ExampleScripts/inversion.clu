@@ -1,0 +1,43 @@
+// An example of inversion
+_DoAnimate = 1;
+
+DefVarsN3();
+SetMode(N3_IPNS, N3_WIRE);
+
+// Vary Pos between -3 and 3.
+?Pos = 3 - abs((Time % 12) - 6);
+
+// Make vector user adjustable
+:A = VecN3(1):Red;
+
+// Create large sphere
+:S1 = A - e:DYellow;
+
+// Make moving point user adjustable
+:B = VecN3(VecE3(2) + VecE3(Pos,2,0)): Blue;
+
+// Create plane half way between points
+// A and B.
+:P = A - B:MMagenta;
+
+// Remove the : from the next line
+// to see InvL2 further down better.
+// Evaluate inversion of plane
+:Inv = S1 * P * S1:MCyan:N3_SOLID;
+
+// Create Line from A to B
+:L = A^B^e:N3_OPNS:Blue;
+
+// Evaluate intersection point of
+// L with P.
+:Xp = (P . L) :Green;
+
+// Create a dummy plane
+P2 = VecN3(0,1,0) - VecN3(0,-1,0):N3_IPNS;
+
+// Evaluate line L2 as intersection
+// of P and P2.
+:L2 = P^P2:Red;
+
+// Evaluate inversion of line L2 on S1
+:InvL2 = S1 * L2 *  S1:Red;

@@ -1,0 +1,41 @@
+_2dView = 1;
+_BGColor = White;
+_DoAnimate = 1;
+:E3_DRAW_VEC_AS_POINT;
+
+if (ExecMode & EM_CHANGE)
+{
+	i = 1;
+	Fac = 0.5;
+	SetGaussPars(0,0.1);
+	LP = VecE3(0,0,0);
+	LC = Color(0,1,0);
+	LH = VecE3(0,0,0);
+}
+else if (ExecMode & EM_ANIMATE)
+{
+	x1 = Fac * (Ran() - 0.5);
+	x2 = Fac * (Ran() - 0.5);
+	x3 = Fac * (Ran() - 0.5);
+
+	LH << VecE3(sqrt(x1*x1 + x2*x2),0,0);
+	LP << LP(i) + VecE3(x1, x2, 0);
+	LC << Color(i/100, 1-i/100, 0);
+	i = i + 1;
+
+	if (i > 200)
+	{
+//		LP = VecE3(0,0,0);
+//		LC = Color(0,1,0);
+//		i = 1;
+		_DoAnimate = 0;
+		DrawPointList(LP, LC);
+	}
+	else
+	{
+		//:LP;
+		DrawPointList(LP, LC);
+	}
+}
+
+

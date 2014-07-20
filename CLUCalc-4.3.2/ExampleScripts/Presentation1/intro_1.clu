@@ -1,0 +1,57 @@
+// Don't forget to force latex rendering the first
+// time you execute this script.
+
+// Set the part we are currently in for the header.
+// At this point we are in the first part of the talk
+PartID = 1;
+
+// Include the standard slide
+//#  include "stdslide.clu"
+
+// Use functions from the stdslide.clu file
+// to create a slide
+
+Title("A feature overview");
+
+// This is \begin{itemize}
+bi();
+// And this is \item 
+it("Interactive 3d-graphics directly in the slides");
+// Here is a sub-itemize, whose font size we reduce
+bi(-2);
+	it("Use standard mouse mode to rotate/translate visualization.");
+	it("Use mouse mode 1 and right mouse button to move point 'a'.");
+ei();
+it("Render text and formulas with \LaTeX");
+// Here comes the \end{itemize}
+ei();
+
+// And now we draw the slide
+MakeSlide();
+
+
+// And here comes the promised interactive
+// 3d-graphics.
+
+// Draw the framebox
+_FrameBoxSize = 1.5;
+
+// Move the frame origin down a bit so that
+// it lies underneath the text
+SetFrameOrigin(0, -1.3, 0);
+
+// And also rotate the frame a bit,
+// so that the graphics look good.
+SetFrameRotor(RotorE3(1,1,0, Pi/6));
+
+// User interaction through mouse mode 1
+:Red;
+:A = VecE3(1) + VecE3(1,0,0);
+SetLatexAlign(0, 0.5);
+DrawLatex(A, "$\displaystyle a = \int_0^1\,f(x)\,dx$", "a_label");
+
+:Blue;
+:B = VecE3(0,1,0);
+
+:Color(0.353, 1.000, 0.625, 0.8);
+:A^B;

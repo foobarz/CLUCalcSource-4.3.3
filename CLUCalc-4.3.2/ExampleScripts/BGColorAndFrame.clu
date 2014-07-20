@@ -1,0 +1,15 @@
+_DoAnimate = 1;
+
+?r =  1 - abs(((Time / 10) % 2) - 1);
+?g =  1 - abs(((Time / 13) % 2) - 1);
+?b=  1 - abs(((Time / 17) % 2) - 1);
+?size = 5 - 4*abs(((Time / 10) % 2) - 1);
+
+// Background color is set by _BGColor.
+// This only becomes active after second
+// execution of script!
+_BGColor = Color(r, g, b);
+
+// Size of Frame Box. For values of size <=  0
+// no box is shown.
+_FrameBoxSize = size;

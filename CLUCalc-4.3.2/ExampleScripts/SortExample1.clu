@@ -1,0 +1,21 @@
+// Sort ascending
+?L = [4,1,7,3];
+?sort(L); 
+?L;
+
+// Sort descending
+?L = [4,1,7,3];
+?sort(L, false); 
+?L;
+
+// Sort ascending without changing L,
+// only return index list of sorting.
+?L = [4,1,7,3];
+?sort(L, true, false); 
+?L;
+
+// Sort with user defined function
+?L = [VecE3(1,2,0), VecE3(4,1,0), VecE3(1,0,0)];
+SortFunc = { abs(_P(1)) < abs(_P(2)) }
+?sort(L, SortFunc);
+?L;

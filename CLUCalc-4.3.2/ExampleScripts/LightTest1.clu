@@ -1,0 +1,32 @@
+
+DefVarsE3();
+
+:E3_DRAW_VEC_AS_POINT;
+:Blue;
+:A = -3*e1;
+Dir = e1;
+fSpotCutOff = 15;
+
+EnableLight(0, 0);
+EnableLight(1, 1);
+EnableLightFixed(1,0);
+
+SetAmbientLight(DWhite);
+
+SetLightPos(1, A);
+
+SetLightAmbientCol(1, Black);
+SetLightDiffuseCol(1, Red);
+SetLightSpecularCol(1, MGray);
+
+SetLightSpotDir(1, Dir);
+SetLightSpotCutOff(1, fSpotCutOff);
+SetLightSpotExp(1, 100);
+SetLightAttenuation(1, 0.1, 0, 0);
+
+:N3_SOLID;
+:MWhite;
+:SphereN3(0,0,0, 1);
+
+DrawCone(A-0.05*Dir, Dir, tan(fSpotCutOff*RadPerDeg));
+

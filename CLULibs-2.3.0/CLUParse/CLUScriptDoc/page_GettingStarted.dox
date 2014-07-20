@@ -1,0 +1,134 @@
+/** \page page_GettingStarted Getting Started
+
+The first thing to be said about CLUScript is that it is somewhat similar to the C-programming language. 
+The most obvious similarity is probably that every program line has to be ended by a semicolon. However, a program line can be extended over a number of text lines. Comments can be included in the script in the same way as in C and C++. For example,
+
+\code
+
+	// This is a single line comment
+	A = 1 + 2;
+
+	// The above line gives the same result as
+	A = 
+		  1
+		+ 2;
+
+	?A = A + 1;
+\endcode
+
+Note that you execute a script in CLUCalc by pressing <b>ctrl + p</b>. You can also simply copy and paste the code examples presented here into the editor window of CLUCalc and execute them to see the result.
+
+The end of a script does not have to be signalled with a particular keyword. By the way, a question mark at the beginning of a line prints the result after evaluation of the corresponding line in the output window. 
+
+So let's draw something. The colon (':') is an operator that draws whatever is on its right, as long as it can be drawn. That is, if you have a multivector that represents a geometric object you can draw this geometric meaning by applying the colon operator to the multivector. For example,
+
+\code
+
+	// Define Basis vectors of Euclidean 3D-space
+	DefVarsE3();	
+	
+	// Set the current color to red
+	:Red;
+	
+	// Draw the vector (1,1,1)
+	:VecE3(1,1,1);
+	
+	// Set the color to Blue
+	:Blue;
+	
+	// Draw the outer product of e1 and e2
+	:e1^e2;
+	
+\endcode
+
+The result of this short script is shown in the following image.
+
+\image html GS_Ex1.jpg
+
+You can also easily make this script user interactive. For example, you may want the user to change the position of the vector. This can be done by replacing the line
+
+\code
+	:VecE3(1,1,1);
+\endcode
+
+with
+
+\code
+	:VecE3(1);
+\endcode
+
+Now the vector can be changed using the mouse when the mouse mode is set to 1. You can change the current mouse mode in the visualization window of CLUCalc. Once you selected mouse mode 1, you can then hold down the right mouse button and move the mouse in order to move the vector. You can use mouse modes 1 to 9.
+
+Sometimes it's better to have the user interact with your script not using the mouse but through so called 'tools'. For example,
+
+\code
+
+	// Define Basis vectors of Euclidean 3D-space
+	DefVarsE3();	
+
+	// Create three tools named 'x', 'y' and 'z'
+	// The parameters are:
+	//	1. Name
+	//	2. Minimum value
+	//	3. Maximum value
+	//  4. Step size
+	//	5. Initial value
+	?x = Slider("x", -1, 1, 0.1, 0);
+	?y = Slider("y", -2, 2, 0.1, 0.5);
+	?z = Slider("z", -1, 1, 0.1, -1);
+		
+	// Set the current color to red
+	:Red;
+	
+	// Draw the vector (x,y,z)
+	:VecE3(x,y,z);
+	
+	// Set the color to Blue
+	:Blue;
+	
+	// Draw the outer product of e1 and e2
+	:e1^e2;
+
+\endcode
+
+After executing this script you should see the following visualization window.
+The user can now move the sliders with the mouse, which changes the position of the vector. 
+
+\image html GS_ToolEx1.jpg
+
+
+Animating a script is also simple. Suppose you would like to animate the vector from above by letting it rotate about the origin. This may be done as follows.
+
+\code
+	// Tell the parser to re-execute this script constantly
+	_DoAnimate = 1;
+
+	// Calculate an angle value from the predefined variable 'Time'
+	// that contains the times in seconds since the start of
+	// the animation.
+	?angle = ((Time * 90) % 360) * RadPerDeg;
+	// 'RadPerDeg' is also predefined and gives the ratio of
+	// radians per degree. The opertor '%' evaluates the modulus.
+	
+	// Define a rotor about y-axis
+	R = RotorE3(0,1,0, angle);
+	
+	// Define Basis vectors of Euclidean 3D-space
+	DefVarsE3();	
+	
+	// Set the current color to red
+	:Red;
+	
+	// Draw the rotated vector (1,1,1)
+	:R * VecE3(1,1,1) * ~R;
+	
+	// Set the color to Blue
+	:Blue;
+	
+	// Draw the outer product of e1 and e2
+	:e1^e2;
+	
+\endcode
+
+**/
+

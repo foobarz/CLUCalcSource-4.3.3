@@ -1,0 +1,21 @@
+_DoAnimate = 1;
+DefVarsE3();
+EnableLight(0, 0);
+//SetLightAttenuation(0, 0, 0.5, 0);
+
+EnableLight(1, 1);
+SetLightAmbientCol(1, Black);
+SetLightDiffuseCol(1, Red);
+
+angle = ((Time * 180)) * RadPerDeg;
+
+R1 = RotorE3(0,1,0, angle);
+R2 = RotorE3(0,1,0, 0.1*angle);
+X = VecE3(2,0,0);
+
+:Red;
+:Y = R2*(R1*(X + 8*e1)*~R1 - 8*e1)*~R2;
+SetLightPos(1, Y);
+
+:N3_SOLID;
+:S = SphereN3(0,0,0, 1);

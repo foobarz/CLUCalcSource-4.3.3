@@ -1,0 +1,131 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Tensor Tensor Functions
+
+	Functions that deal with tensors.
+	
+	\{
+**/
+
+
+/**
+	\brief Generates the tensor representing a GA operation.
+	
+	\param iAlgID The ID-number of the algebra.
+	\param iOpID The ID-number of the operator.
+	\param lLeftMask (optional) The mask of the left operand.
+	\param lRightMask (optional) The mask of the right operand.
+	\param lResMask (optional) The mask of the resultant tensor.
+	
+	\return The tensor representing the respective GA operation.
+	
+	\since v2.2
+	
+	The algebra IDs that are currently defined in CLUScript are #GA_E3, #GA_P3, #GA_N3, #GA_C2. Possible values for the operator ID are #MVOP_REVERSE, #MVOP_INVOLUTE, #MVOP_GEO, #MVOP_INNER, #MVOP_OUTER, #MVOP_DUAL. See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor GAOpTensor(counter iAlgID, counter iOpID, 
+				  list lLeftMask, list lRightMask, list lResMask);
+
+
+
+/**
+	\brief Gives the tensor representation of a multivector as a column vector.
+	
+	\param vA The multivector.
+	\param lMask (optional) A masking list.
+	
+	\return The tensor representing the multivector.
+	
+	\since v2.2
+	
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor MV2Tensor(multivector vA, list lMask);
+
+
+/**
+	\brief Gives the tensor representations of a list of multivector as the columns of a tensor.
+	
+	\param lA The list of multivectors.
+	\param lMask (optional) A masking list.
+	
+	\return The tensor representing the multivectors.
+	
+	\since v2.2
+	
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor MV2Tensor(list lA, list lMask);
+
+
+
+/**
+	\brief Create a tensor of given valence and dimensions.
+	
+	\param iValence The valence of the tensor (the number of its indices).
+	\param lDim A list of counters giving the dimensions of the tensor.
+	
+	\return A tensor of the specified size containing zeros.
+	
+	\since v2.2
+	
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor Tensor(counter iValence, list lDim);
+
+
+/**
+	\brief Transforms a list into a tensor if possible.
+	
+	\param lVal A list of scalar values, which must have the form of a tensor.
+	
+	\return A tensor containing the components of the list.
+	
+	\since v2.2
+	
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor Tensor(list lVal);
+
+
+/**
+	\brief Transforms a matrix into a tensor.
+	
+	\param mVal The matrix.
+	
+	\return A 2-valence tensor containing the matrix components.
+	
+	\since v2.2
+	
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+tensor Tensor(matrix mVal);
+
+
+
+/**
+	\brief Gives the multivector representation of a tensor.
+	
+	\param tT The tensor.
+	
+	\return A list of multivectors, one for each column of the tensor.
+	
+	\since v2.2
+
+	See \ref page_WorkWithTensors for a detailed description.
+**/
+list Tensor2MV(tensor tT);
+
+
+
+
+/** \}
+**/
+
+/** \}
+**/
+

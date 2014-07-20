@@ -1,0 +1,13 @@
+// Define a function
+func = 
+{ 
+	// make b a reference to the first parameter
+	b -> _P(1);  
+	// set b equal to 2 which also changes
+	// the variable that is passed as parameter.
+	b = 2; 
+}
+
+?a = 1;
+func(a);
+?a;

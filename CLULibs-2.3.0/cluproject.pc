@@ -1,0 +1,11 @@
+prefix=/home/xray/chp/progs/CLUCalcSource
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: CLULibs
+Description: CLU Libraries CLU, CLUDraw, CLUParse
+Requires: 
+Version: 2.3.0
+Libs: -L${libdir} -L/usr/lib -L/usr/lib -L -L/usr/X11R6/lib -lCLUParse -lCLUDraw -lCLU -lm -lGL -lGLU -lglut -lX11 -lXmu -lXi
+Cflags: -I${includedir} -I/usr/include -I/usr/include -DCLUDRAW_GLUT -I/home/xray/chp/progs/CLUCalcSource/CLUfltk/include -I/usr/X11R6/include -DCLUDRAW_FLTK -D_GNUCPP3_

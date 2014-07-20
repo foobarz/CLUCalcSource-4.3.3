@@ -1,0 +1,18 @@
+// Create matrix
+?M = Matrix( [[1, 2], [3, 4]] );
+
+// Find SVD
+List = SVD(M);
+
+// Print Matrices
+?U = List(1);
+D = List(2);
+?V = List(3);
+
+// Print diagonal
+?Diag = Diag2Row(D);
+
+// Did it work?
+?U * D * ~V;
+?U * ~U;
+?V * ~V;

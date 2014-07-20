@@ -1,0 +1,32 @@
+/** \page page_Animation Animation
+
+Animation is quite a nice feature to breath even more life into the geometry. In order to animate a script you need to insert the line <tt>_DoAnimate = 1</tt>, preferably at the beginning of your script. Depending on the front-end you may also need to activate animation. In CLUCalc this is done by selecting "Animate" from the menu "Visualization". If you activate animation at the front-end but do not include the above mentioned line, then the script is not executed at every animation step, and hence it will not be animated. Note that if you load a script in CLUCalc that does contain the line <tt>_DoAnimate = 1</tt>, it will be animated automatically.
+
+Simply executing the script at every time step is not of much use in itself. In order to allow for smooth animations variables <tt>Time</tt> and <tt>dTime</tt> are predefined. <tt>Time</tt> contains the total time passed since the beginning of the animation in seconds. <tt>dTime</tt> gives the elapsed time since the last execution of the script in seconds. These two variables are Scalar variables not Counters. The time resolution is typically $40 * 10^{-3}$ seconds, that is about 25 frames per second (fps). The fps of course depend on your hardware and the script.
+
+The following example script can be found under <tt>Animate1.clu</tt>. It shows how to animate the rotation of a vector. Also take a look at the script <tt>Inversion.clu</tt> for a more advanced example.
+
+\code
+ 
+// Make this script animated
+_DoAnimate = 1;
+
+DefVarsE3();
+
+// Keep Angle in range 0, 360
+?Angle = (Time * 180) % 360;
+
+// Make initial vector user adjustable
+X = VecE3(1) + e1;
+
+// Create Rotor and draw it
+:R = RotorE3(0, 1, 0, Angle):MBlue;
+
+// Rotate vector and draw it
+:Y = R * X * ~R:Red;
+\endcode
+
+\attention Note that in CLUCalc you can work on the script while the animation is running. As soon as you parse the changed script it is displayed without interrupting the animation. 
+
+
+**/

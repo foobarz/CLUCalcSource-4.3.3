@@ -1,0 +1,85 @@
+// Reads in surface data and displays it
+
+_FrameBoxSize = 0;
+SetLineWidth(1);
+EnableSmoothLine(0);
+
+DefVarsE3();
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK)
+{
+	?D = ReadData("RBF3Surface3.txt");
+	RBF = ReadData("RBF3.txt", ";");
+
+
+	?iPointCount = Len(D);
+	iP = 1;
+	loop
+	{
+		if (iP > iPointCount)
+			break;
+
+		H = VecE3(D(iP)(3), D(iP)(4), 0);
+		H = H / 300;
+		fHeight = sqrt(H.H);
+		fC = exp(-0.5*fHeight * fHeight / 0.4);
+	
+		A = VecP3(D(iP)(1), D(iP)(2), fHeight);
+		Col = Color(1 - fC, fC, 0);
+		GCol = Color(0.6*(1-fC), 0.6*(fC), 0);
+	
+		if (iP == 1)
+		{
+			LP = A;	
+			LC = Col;
+			LGC = GCol;
+		}	
+		else
+		{
+			LP << A;
+			LC << Col;
+			LGC << GCol;
+		}
+	
+		iP = iP + 1;
+	}
+
+	VL_PointSurf = DrawPointSurface(30, 30, LP, LC, 1, 0);
+	VL_PointGrid = DrawPointGrid(30, 30, LP, LGC, 1, 1);
+
+}
+	
+?iRBFCount = Len(RBF);
+iR = 1;
+loop
+{
+	if (iR > iRBFCount)
+		break;
+
+	A = VecE3(RBF(iR)(1), RBF(iR)(2), 0);
+	:Red;
+	DrawLine(A, A + e3);
+	:Blue;
+	DrawCircle(A, e3, 1);
+
+	if (iR == 1)
+	{
+		LRBF = VecP3(A);	
+	}	
+	else
+	{
+		LRBF << VecP3(A);
+	}
+
+	iR = iR + 1;
+}
+
+:Orange;
+:LRBF;
+
+:Blue;
+//:LP;
+
+:VL_PointSurf;
+:VL_PointGrid;

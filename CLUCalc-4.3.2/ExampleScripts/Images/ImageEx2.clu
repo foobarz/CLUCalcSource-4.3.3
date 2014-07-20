@@ -1,0 +1,43 @@
+// Image Function Example 2
+
+_FrameBoxSize = 0;
+_BGColor = White;
+
+// Read an image
+Img = ReadImg("Surf2.bmp");
+
+// This time we work in an overlay 
+// coordinate system
+StartOverlay();
+
+SetImgAlign(0,1);	// top-left align
+SetImgPos(5,5,0);
+
+// Draw Image
+:Img;
+
+// Get bottom-left-near and top-right-far coordinates
+// of image in the current coordinate system.
+P = GetImgCoords(Img);
+
+// Need to increase the z-component of the line
+// by a bit, so that the line is drawn on top 
+// of the image.
+DrawLine(P(1), P(2), P(3)+1, P(4), P(5), P(6)+1);
+
+// Want to draw the same image behind the
+// previous image at a larger scale.
+
+// Set new scale
+SetImgScale(2);
+// Set Position behind previous position
+SetImgPos(5,5,-1);
+:Img;
+
+// Again get the coordinates of the image 
+// and draw a line from its bottom left to
+// top right corner.
+P = GetImgCoords(Img);
+DrawLine(P(1), P(2), P(3)+1, P(4), P(5), P(6)+1);
+
+EndOverlay();

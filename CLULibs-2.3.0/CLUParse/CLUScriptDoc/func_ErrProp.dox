@@ -1,0 +1,42 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_ErrPropFunc Error Propagation Functions
+
+	These functions allow you to do error propagation in Clifford algebra and standard mathematical operations. Since this is a rather new field for me and especially error propagation in Clifford algebra has, as far as I know, not been published anywhere else so far, these functions are still somewhat experimental. They do work, but their syntax and functionality may change in the future.
+	
+	Currently all error propagation functions start with "EP", which stands for <b>e</b>rror <b>p</b>ropagation.
+
+	\{
+**/
+
+/**
+	\brief Error propagation within a Clifford algebra product.
+	
+	\param ProductID An ID value representing a product. The allowed values here are #MVOP_INNER, #MVOP_OUTER, #MVOP_GEO, #MVOP_ADD, #MVOP_SUB.
+	
+	\param LA A list with two elements. The first element is a multivector and the second its covariance matrix.
+	
+	\param LB A list with two elements. The first element is a multivector and the second its covariance matrix.
+	
+	\param CCovAB The cross-covariance matrix of the multivectors in list \a LA and \a LB.
+	
+	\param CCList (\b optional) A list with an even number of entries. The entries must all be matrices and are taken pairwise. They are cross-covariance matrices of the multivectors in \a LA and \a LB, and a third multivector.
+	
+	\return A list containing either two elements if no cross-covariance matrix list was given (\a CCList), or two sublists if \a CCList was not empty. The two elements in the first case, or the two elements in the first sublist in the latter case, are the resultant multivector of the given operation and its covariance matrix.
+	
+	\since v1.4
+
+	For a detailed description of this function see section \ref page_ErrProp "Error Propagation".	
+**/
+list EPOp(counter ProductID, list LA, list LB, matrix CCovAB, list CCList);
+
+
+/** \}
+**/
+
+/** \}
+**/

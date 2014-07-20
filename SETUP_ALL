@@ -1,0 +1,17 @@
+#!/bin/sh
+
+source ./ENV
+
+
+cd ${CLUDEVIL_SOURCE}
+./SETUP
+
+cd ${CLULIBS_SOURCE}
+./SETUP
+
+cd ${CLUCALC_SOURCE}
+./SETUP
+
+
+
+

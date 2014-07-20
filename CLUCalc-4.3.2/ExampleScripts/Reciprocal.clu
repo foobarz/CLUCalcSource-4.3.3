@@ -1,0 +1,15 @@
+DefVarsE3();
+
+// Define initially orthonormal basis in E3
+// Using Mouse mode 1 you can move
+// the A1 basis vector.
+:A1 = VecE3(1) + e1 :Red;
+:A2 = e2 :Green;
+:A3 = e3 :Blue;
+
+// Find reciprocal basis
+?fA = !*(A1^A2^A3);
+:rA1 = *(A2^A3) * fA :Magenta;
+:rA2 = *(A3^A1) * fA :Yellow;
+:rA3 = *(A1^A2) * fA :Cyan;
+

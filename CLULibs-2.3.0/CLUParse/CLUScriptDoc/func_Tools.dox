@@ -1,0 +1,305 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_ToolFunc Tool Functions
+
+	The functions described here create tools which are displayed in a window attached to the visualization. This allows the generation of simple dialog boxes, which can improve the user interactivity of a visualization. For more details on how to use tools see \ref page_Tools.
+
+	\{
+**/
+
+/**
+	\brief Create a button tool.
+	
+	\param Name The name of the tool.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return nothing.
+	
+	\since v2.0
+
+	This function creates a button tool. For example, the code
+	
+	\code
+	Button("Show Sphere");
+	\endcode
+	
+	creates a tool that looks like this
+
+	\image html ButtonExample1.jpg
+	
+	The name of the button is drawn inside it. When a button is pressed the script is reexecuted with #ExecMode set to #EM_TOOL and #ToolName set to the name of the button tool. See also \ref page_Tools for more details and examples.
+	
+**/
+void Button(string Name, string ToolTip);
+
+/**
+	\brief Create a check box tool.
+	
+	\param Name The name of the tool.
+	\param Init The initial value of the check box.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return 1 if check box is selected and 0 if not.
+	
+	\since v1.5
+
+	This function creates a check box tool. For example, the code
+	
+	\code
+	CheckBox("Show Sphere", 0);
+	\endcode
+	
+	creates an input that looks like this
+
+	\image html CheckBoxExample1.jpg
+	
+	The title is drawn on top. The initial value of the check box is given by \a Init. If the \a Init is zero, the check box is not selected, otherwise it is selected. The return value is 1 for a selected check box and 0 for an unselected check box. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar CheckBox(string Name, scalar Init, string ToolTip);
+
+/**
+	\brief Evaluate a check box tool.
+	
+	\param Name The name of the tool.
+	
+	\return The current value of the named check box.
+	
+	\since v1.5
+
+	This function retrieves the value of a previously created check box. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar CheckBox(string Name);
+
+/**
+	\brief Create a combo box tool.
+	
+	\param Name A string representing the name of the tool.
+	\param Elts A list from that an element is to be choosen.
+	\param Init A counter specifying an initial element from the list.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return The selected element.
+	
+	\since v2.0
+
+	The following code first creates a circle \a C. After that it is decomposed via function <tt>FactorizeBlade</tt> into two orthogonal spheres.
+	The user may now select the sphere that shall be displayed.
+	
+	\code
+	DefVarsN3();
+	:IPNS;
+	:Red;
+	:P1 = VecN3(1,-2,3);
+	:P2 = VecN3( 3,-1,4);
+	:P3 = VecN3( 2,7,-1);
+	:C = (P1 ^ P2 ^ P3) * I:Yellow;
+	L = FactorizeBlade( C );     // C ~ 'L(1) ^ L(2)'.
+	c = Choice("Spheres", L, 1);
+	:L(c):Blue + Alpha + Alpha;  // Display one of the spheres.
+	\endcode
+	The combo box will appear at the bottom of the visualization window and might look like this if the user opened it:
+	
+	\image html Choice_img1.jpg
+	
+**/
+scalar Choice(string Name, list Elts, counter Init, string ToolTip);
+
+/**
+	\brief Evaluate a combo box tool.
+	
+	\param Name The name of the tool.
+	
+	\return The current value of the named combo box.
+	
+	\since v2.0
+
+	This function retrieves the value of a previously created combo box. See also \ref page_Tools for more details and examples.	
+**/
+scalar Choice(string Name);
+
+/**
+	\brief Create an input tool.
+	
+	\param Name The name of the tool.
+	\param Min The minimum value of the input.
+	\param Max The maximum value of the input.
+	\param Init The initial value of the input.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return The currently entered value.
+	
+	\since v1.5
+
+	This function creates an input tool. For example, the code
+	
+	\code
+	Input("Radius", 0, 2, 1);
+	\endcode
+	
+	creates an input that looks like this
+
+	\image html InputExample1.jpg
+	
+	The title is drawn on top, while the current value is displayed in the input field. The minimum and maximum allowed values are set by \a Min and \a Max, respectively. The initial value of the input is given by \a Init. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar Input(string Name, scalar Min, scalar Max, scalar Init, string ToolTip);
+
+
+/**
+	\brief Evaluate an input tool.
+	
+	\param Name The name of the tool.
+	
+	\return The current value of the named input tool.
+	
+	\since v1.5
+
+	This function retrieves the value of a previously created input tool. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar Input(string Name);
+
+
+/**
+	\brief Create a text input tool.
+	
+	\param sName The name of the tool.
+	\param bCallback If this is not zero (#true), then the corresponding CLUScript is re-executed each time the user enters or deletes a letter. If this value is zero, then the script is only-reexecuted when the user presses return.
+	\param sInit The initial string value of the input.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return The currently entered string.
+	
+	\since v2.2
+
+	This function creates a text input tool. 
+	See also \ref page_Tools for more details and examples.
+	
+**/
+string InputText(string sName, counter bCallback, string sText, string ToolTip);
+
+
+/**
+	\brief Evaluate a text input tool.
+	
+	\param sName The name of the tool.
+	
+	\return The current string value of the named text input tool.
+	
+	\since v2.2
+
+	This function retrieves the string value of a previously created input tool. See also \ref page_Tools for more details and examples.
+	
+**/
+string InputText(string sName);
+
+
+
+
+/**
+	\brief Create a slider tool.
+	
+	\param Name The name of the tool.
+	\param Min The minimum value of the slider.
+	\param Max The maximum value of the slider.
+	\param Step The step width of the slider.
+	\param Init The initial value of the slider.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return The currently selected value.
+	
+	\since v1.5
+
+	This function creates a slider tool. For example, the code
+	
+	\code
+	Slider("Radius", 0, 2, 0.1, 1);
+	\endcode
+	
+	creates a slider that looks like this
+
+	\image html SliderExample1.jpg
+	
+	The title is drawn on top, while the current value is displayed to the left of the slider. When the slider is moved into its left most position, it takes on the value \a Min. At its right most position its value is \a Max. The values in between can only be selected in steps of \a Step. The initial value of the slider is given by \a Init. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar Slider(string Name, scalar Min, scalar Max, scalar Step, scalar Init, string ToolTip);
+
+
+/**
+	\brief Evaluate a stepper tool.
+	
+	\param sName The name of the tool.
+	
+	\return The current value of the named stepper.
+	
+	\since v2.2
+
+	This function retrieves the value of a previously created stepper. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar Slider(string sName);
+
+
+
+
+/**
+	\brief Create a stepper tool.
+	
+	\param sName The name of the tool.
+	\param dMin The minimum value of the stepper.
+	\param dMax The maximum value of the stepper.
+	\param dStep The small step width of the stepper.
+	\param dLargeStep The large step width of the stepper.
+	\param dInit The initial value of the stepper.
+	\param ToolTip (optional) A descriptive text that appears when the user places the mouse over the tool.
+	
+	\return The currently selected value.
+	
+	\since v2.2
+
+	This function creates a stepper tool. For example, the code
+	
+	\code
+	Stepper("Radius", 0, 1, 0.01, 0.1, 0.5);
+	\endcode
+	
+	creates a stepper that looks like this
+
+	\image html StepperExample1.jpg
+	
+	The title is drawn on top, while the current value is displayed in the middle of the stepper tool. Clicking on the single arrows changes the current value by a small step, while clicking on the double arrows changes the current value by a large step. See also \ref page_Tools for details and examples.
+	
+**/
+scalar Stepper(string sName, scalar dMin, scalar dMax, scalar dStep, scalar dLargeStep, scalar dInit, string ToolTip);
+
+
+/**
+	\brief Evaluate a stepper tool.
+	
+	\param Name The name of the tool.
+	
+	\return The current value of the named stepper.
+	
+	\since v1.5
+
+	This function retrieves the value of a previously created stepper. See also \ref page_Tools for more details and examples.
+	
+**/
+scalar Stepper(string sName);
+
+
+
+
+/** \}
+**/
+
+/** \}
+**/

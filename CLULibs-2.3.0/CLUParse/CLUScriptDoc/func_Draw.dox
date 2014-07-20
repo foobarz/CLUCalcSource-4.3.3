@@ -1,0 +1,1596 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_DrawFunc Drawing Functions
+
+	Functions that draw geometric entities or influence the way they are visualized. 
+
+	\{
+**/
+
+
+
+/** 
+	\brief Adds a vector to the current origin of the drawing frame.
+	
+	\param x Displacement x-coordinate of frame origin.
+	\param x Displacement y-coordinate of frame origin.
+	\param x Displacement z-coordinate of frame origin.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This allows you to move the origin of the basis frame into which all entities are drawn.	
+**/
+void AddFrameOrigin(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Adds a rotation to the drawing frame.
+
+	\param R A rotor giving the rotation of the frame.	
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This allows you to change the orientation of the basis frame relative to its current orientation. The rotor \a R is multiplied from the left to the current rotor.
+**/
+void AddFrameRotor(multivector R);
+
+
+
+
+/** 
+	\brief Generate a color variable.
+	
+	\param r The red color component.
+	\param g The green color component.
+	\param b The blue color component.
+	
+	\return A color variable that can be applied to the visualization state-machine
+	via the colon operator (<tt>:</tt>).
+	
+	\since v1.0
+
+	\attention From CLUCalc v3.0.0 onwards you can create a code-line defining a color
+	from a color chooser via the menu in the editor window. Also, if you place your
+	cursor on the word "Color" of a Color-function call, and select the appropriate
+	menu item, the color chooser will modify the code-line.
+	
+The color components are clamped to the range [0,1]. That is, if you pass a value outside this range it is changed to the nearest element of the range. <b>See script</b> <tt>Color1.clu</tt> for a nice example. 
+	
+For example,
+\code
+
+DefVarsE3();
+
+?MyCol = Color(0.1, 0.4, 0.6);
+:e1 :MyCol;
+\endcode
+
+produces the output
+\code
+
+MyCol = (0.1, 0.4, 0.6)
+\endcode
+
+**/
+color Color(scalar r, scalar g, scalar b);
+
+/** 
+	\brief Generate a color variable.
+	
+	\param r The red color component.
+	\param g The green color component.
+	\param b The blue color component.
+	\param a The alpha (translucency) color component.
+	
+	\return A color variable that can be applied to the visualization state-machine
+	via the colon operator (<tt>:</tt>).
+	
+	\since v1.0
+
+The color components are clamped to the range [0,1]. That is, if you pass a value outside this range it is changed to the nearest element of the range. <b>See script</b> <tt>Color1.clu</tt> for a nice example. The last parameter (the alpha component) gives the translucency of an object. If alpha is one, then the object is completely opaque. If alpha is zero, then the object is completely transparent.
+	
+**/
+color Color(scalar r, scalar g, scalar b, scalar a);
+
+
+/** 
+	\brief Draws an arc.
+	
+	\param P Vector giving origin of arc.
+	\param A Vector giving start point of arc.
+	\param B Vector giving end point of arc.
+	\param Rad Radius of arc.
+	\param Short (\b optional) Boolean flag. If set to 1 it indicates that the arc along the shortest path from \a A to \a B is to be drawn (default). Otherwise, the arc is drawn along the longer path.
+
+	\return Nothing
+	
+	\since v1.4
+
+	Draws an arc in the plane passing through \a P and spanned by \a P - \a A and \a P - \a B. The origin of the arc is at \a P and its radius is given by \a Rad. The flag \a Short allows you to draw either the arc from \a A to \a B along the short path or along the long path. Here is an example.
+	
+\code
+DefVarsE3();
+
+:Green;
+:P = e2;
+
+:Red;
+:A = e1 + e2;
+
+:Blue;
+:B = e3 + e2;
+
+:Magenta;
+DrawArc(P, A, B, 1);
+
+:Cyan;
+DrawArc(P, A, B, 1, 0);
+\endcode
+
+This script generates the following image.
+
+\image html ArcTest2_img1.jpg
+
+**/
+void DrawArc(multivector P, multivector A, multivector B, scalar Rad, counter Short);
+
+
+/** 
+	\brief Draws an arrow.
+	
+	\param A Multivector giving start point of the arrow.
+	\param B Multivector giving end point of the arrow.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws an arrow from position of \a A to position of \a B.
+**/
+void DrawArrow(multivector A, multivector B);
+
+
+/** 
+	\brief Draws an arrow.
+	
+	\param ax x-coordinate of start point of arrow.
+	\param ay y-coordinate of start point of arrow.
+	\param az z-coordinate of start point of arrow.
+	
+	\param bx x-coordinate of end point of arrow.
+	\param by y-coordinate of end point of arrow.
+	\param bz z-coordinate of end point of arrow.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws an arrow from (\a ax, \a ay, \a az) to (\a bx, \a by, \a bz). 
+**/
+void DrawArrow(	scalar ax, scalar ay, scalar az, 
+				scalar bx, scalar by, scalar bz);
+
+
+/** 
+	\brief Draws a box.
+	
+	\param P Multivector giving center position of box.
+	\param A Multivector giving first edge direction and length.
+	\param B Multivector giving second edge direction and length.
+	\param C Multivector giving third edge direction and length.
+	\param CornerColorList (\b optional) List of eight colors for the corners of the box.
+
+	\return Nothing
+	
+	\since v2.0
+	
+	Draws a box centered on \a P, with edge directions \a A, \a B and \a C. The optional list of colors, draws the corners of the box in the respective colors and uses smooth color shading between the corners. Here is an example. The script
+	
+\code
+	DefVarsE3();
+	lCol = [ Red, Magenta, Blue, Cyan, Green, Yellow, White, DWhite ];
+	DrawBox(id, e1, e2, e3, lCol);
+\endcode
+
+produces the visualization
+
+\image html BoxEx1.jpg
+
+
+**/
+void DrawBox(multivector P, multivector A, multivector B, multivector C, list CornerColorList);
+
+
+/** 
+	\brief Draws a box.
+	
+	\param P Multivector giving center position of box.
+	\param A Multivector giving first edge direction and length.
+	\param B Multivector giving second edge direction and length.
+	\param Depth Scalar giving depth of box.
+	\param CornerColorList (\b optional) List of eight colors for the corners of the box.
+
+	\return Nothing
+	
+	\since v2.0
+	
+	Draws a box centered on \a P, with edge directions \a A, \a B. The third edge direction is perpendicular to \a A and \a B and has a length given by \a Depth. The optional list of colors, draws the corners of the box in the respective colors and uses smooth color shading between the corners. 
+**/
+void DrawBox(multivector P, multivector A, multivector B, scalar Depth, list CornerColorList);
+
+
+/** 
+	\brief Draws a circle.
+	
+	\param P Vector giving origin of circle.
+	\param N Vector giving normal of plane in which circle lies.
+	\param Rad Radius of circle
+
+	\return Nothing
+	
+	\since v1.4
+**/
+void DrawCircle(multivector P, multivector N, scalar Rad);
+
+
+
+/** 
+	\brief Draws the surface spanned by a set of circles.
+
+	\param LMV A list of multivectors in conformal space representing circles.
+	\param LCol A list with one color for each circle.
+	\param DoDraw (\b optional) A boolean flag indicating whether the surface is to be drawn directly (= 1, default), or not.
+
+	\return A vertex list representing the surface spanned by the circles. This vertex list can be useful to draw the surface at some later stage without having to execute this function.
+	
+	\since v1.4
+	
+	This function only works with multivectors that represent circles in conformal space. How the surface connecting two circles is drawn, depends on their normals. In the following simple example, a nice effect is obtained by negating the normal of the central circle.
+	Also see the script <tt>KleinBottle.clu</tt> which draws a Klein bottle.
+	
+	\code
+// Switch on anti-aliasing for lines
+EnableSmoothLine(1);
+
+// Define the standard basis vector variables
+// for conformal space.
+DefVarsN3();
+
+// Do not show the frame box
+_FrameBoxSize = 0;
+
+// Define three spheres
+S1 = SphereN3(0,0,0, 1);
+S2 = SphereN3(0.1,0.5,0, 1);
+S3 = SphereN3(0.2,0.7,0, 1);
+
+// Draw all spheres with a solid surface
+:N3_SOLID;
+// Use a transparent color
+:Color(0.198, 0.264, 1.000, 0.8);
+// Draw a fourth sphere, whose x-position 
+// can also be influenced by the user in
+// mouse mode one with the right 
+// mouse button. 
+:S4 = SphereN3(Mouse(1,2,1),0.8,0, 1);
+
+// Set the color to red
+:Red;
+// Intersect spheres 1 and 2, and
+// draw intersection circle
+:C1 = *S1 . S2;
+
+// Set Color to green
+:Green;
+// Intersect spheres 2 and 3, and
+// draw intersection circle
+// If you remove the minus sign in this equation,
+// you obtain a completely different surface.
+:C2 = -*S2 . S3;
+
+// Set Color to magenta
+:Magenta;
+// Intersect spheres 3 and 4, and
+// draw intersection circle
+:C3 = *S3 . S4;
+
+// Create a list of circles
+LCircle = [C1, C2, C3];
+
+// Create a list of colors
+LColor = [Red, Green, Magenta];
+
+// Draw surface spanned by circles.
+DrawCircleSurface(LCircle, LColor);
+	\endcode
+	
+	This script generates the following visualization.
+	
+	\image html CircleSurface_img1.jpg	
+	
+	If you change the line <tt>:C2 = -*S2 . S3</tt> into <tt>:C2 = *S2 . S3</tt>, you obtain the following visualization.
+	
+	\image html CircleSurface_img2.jpg
+**/
+vertexlist DrawCircleSurface(list LMV, list LCol, counter DoDraw);
+
+
+/** 
+	\brief Draws an open cylinder.
+
+	\param P A multivector that specifies the center of the cylinder bottom.
+	\param D A multivector that specifies direction and length.
+	\param Radius A scalar defining the radius.
+	\param DoDraw (\b optional) A boolean flag indicating whether the cylinder is to be drawn directly (= 1, default), or not.
+	\param Slices (\b optional) An integer value in the range of 3 to 360, which gives the number of slices in which a cylinder is separated. The default is 72.
+
+	\return A vertex list representing the surface of the cylinder.
+	
+	\since v2.0
+	
+	Setting the number of slices to a lower value can be useful if the cylinders drawn appear rather small in the visualization. Less slices will then not change the visual quality, while speeding up the visualization considerably.
+	Here's an example,
+
+	\code
+	_BGColor = White;
+	d = 1.1;
+	D = VecN3(0,0.5,0);
+	DrawCylinder( VecN3( -2*d,0,0 ), D, 1 ):Blue;
+	DrawCylinder( VecN3( 0,0,0 ), D, 1 ):Black;
+	DrawCylinder( VecN3( 2*d,0,0 ), D, 1 ):Red;
+	DrawCylinder( VecN3( -d,0,-d ), D, 1 ):Yellow;
+	DrawCylinder( VecN3( d,0,-d ), D, 1 ):Green;
+	\endcode
+	
+	that produces a kind of olympic 'cylinders'.
+
+	\image html DrawCylinder_img1.jpg	
+
+**/
+vertexlist DrawCylinder(multivector P, multivector D, scalar Radius, counter DoDraw);
+
+
+/** 
+	\brief Draws a partial disk.
+	
+	\param P Vector giving origin of disk.
+	\param A Vector giving start point of disk.
+	\param B Vector giving end point of disk.
+	\param Rad Radius of disk.
+	\param Short (\b optional) Boolean flag. If set to 1 it indicates that the disk withn the arc along the shortest path from \a A to \a B is to be drawn (default). Otherwise, the disk is drawn along the longer path.
+
+	\return Nothing
+	
+	\since v2.0
+
+	This function works just like DrawArc(). However, instead of just drawing an arc, it draws a partial disk whose outer border is the arc.
+	
+**/
+void DrawDisk(multivector P, multivector A, multivector B, scalar Rad, counter Short);
+
+
+
+/**
+	\brief Draws an icosahedron.
+	
+	\param vC Center of Icosahedron.
+	\param dRadius The radius of the icosahedron.
+	\param iPower The power of the icosahedron. Has to be >= 0 and <= 6.
+	\param bSolid If bSolid is not zero, then the icosahedron is drawn as a solid object, and as wireframe otherwise.
+	
+	\return Nothing.
+	
+	\since v.2.2
+	
+	This function draws an icosahedron. Note that spheres in CLUCalc are also drawn as icosahedrons. However, when you draw a sphere a pre-calculated icosahedron of a fixed power is used. Here is an example of drawing a wireframe icosahedron.
+	
+	\code
+	DrawIcosahedron(VecE3(0,0,0), 1, 3, false);
+	\endcode
+	
+	Output:
+	
+	\image html Icosahedron1.png
+**/
+void DrawIcosahedron(multivector vC, scalar dRadius, counter iPower, counter bSolid);
+
+
+/** 
+	\brief Draws the surface spanned by a set of lines.
+
+	\param LMV A list of multivectors in conformal space representing lines.
+	\param LCol A list with one color for each line.
+	\param DoDraw (\b optional) A boolean flag indicating whether the surface is to be drawn directly (= 1, default), or not.
+
+	\return A vertex list representing the surface spanned by the lines.
+	
+	\since v2.0
+	
+	This function only works with multivectors that represent lines in conformal space. Its usage is the same as for the function <tt>DrawCircleSurface</tt>.
+	The code
+	
+	\code
+	DefVarsN3();
+	:IPNS;
+	_FrameBoxSize = 0;
+
+	// Define a line and a transformation (mvT)
+	mvLine = e^VecN3( 1,0,0) ^ VecN3( 2,0,0 );
+	mvT = TranslatorN3( 0,0,0.2) * RotorN3( 0,0,1, 7*Pi/180 );
+
+	lmvL = []; // declare empty lists for lines and colors
+	lcolC = [];
+
+	// create a set of lines
+	dNum = 40;
+	i = 0;
+	loop{
+		if ( i == dNum )
+			break;
+		i = i + 1;
+	
+		mvLine =  mvT * mvLine* ~mvT;
+		lmvL << (mvLine * I);
+		lcolC << Color( 1, pow(i/dNum,2), 0 );
+	}
+	
+	DrawLineSurface( lmvL, lcolC );
+	\endcode
+	
+	generates for example the following output
+
+	\image html LineSurface_img1.jpg
+**/
+vertexlist DrawLineSurface(list LMV, list LCol, counter DoDraw);
+
+
+/** 
+	\brief Draws a cone.
+	
+	\param P Origin of cone.
+	\param A Direction and length of cone.
+	\param Rad Radius of cone at the opening.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	Draws a cone whose origin is in \a P. The cone opens in the direction of \a A and has the length of \a A. The radius at the opening of the cone is given by \a Rad.
+**/
+void DrawCone(multivector P, multivector A, scalar Rad);
+
+
+/** 
+	\brief Draws an ellipse.
+	
+	\param P Vector giving origin of ellipse.
+	\param A Vector giving first axis of ellipse.
+	\param B Vector giving second axis of ellipse.
+
+	\return Nothing
+	
+	\since v1.5
+**/
+void DrawEllipse(multivector P, multivector A, multivector B);
+
+/** 
+	\brief Draws an ellipsoid.
+	
+	\param P Vector giving origin of ellipse.
+	\param A Vector giving first axis of ellipsoid.
+	\param B Vector giving second axis of ellipsoid.
+	\param C Vector giving third axis of ellipsoid.
+
+	\return Nothing
+	
+	\since v2.0
+**/
+void DrawEllipsoid(multivector P, multivector A, multivector B, multivector C);
+
+
+/** 
+	\brief Draws a line.
+	
+	\param A Multivector giving start point of line.
+	\param B Multivector giving end point of line.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws a line from position of \a A to position of \a B.
+**/
+void DrawLine(multivector A, multivector B);
+
+
+/** 
+	\brief Draws a line.
+	
+	\param ax x-coordinate of start point of line.
+	\param ay y-coordinate of start point of line.
+	\param az z-coordinate of start point of line.
+	
+	\param bx x-coordinate of end point of line.
+	\param by y-coordinate of end point of line.
+	\param bz z-coordinate of end point of line.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws a line from (\a ax, \a ay, \a az) to (\a bx, \a by, \a bz). 
+**/
+void DrawLine(	scalar ax, scalar ay, scalar az, 
+				scalar bx, scalar by, scalar bz);
+
+
+
+/** 
+	\brief Draws a plane
+	
+	\param C Multivector giving center of plane.
+	\param A Multivector giving first basis vector of plane.
+	\param B Multivector giving second basis vector of plane.
+	\param Rad (optional) Radius of disk. If this is zero or not given
+			plane is drawn as a rectangle.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws a plane centered on \a C with basis vectors \a A and \a B. The side length of the rectangle drawn is just the magnitude of the respective basis vectors. If \a Rad is not zero, then a disk with radius \a Rad is drawn instead.
+**/
+void DrawPlane(multivector C, multivector A, multivector B, scalar Rad);
+
+
+/** 
+	\brief Draws a plane
+	
+	\param cx x-coordinate of plane center.
+	\param cy y-coordinate of plane center.
+	\param cz z-coordinate of plane center.
+	
+	\param ax x-coordinate of first base vector of plane.
+	\param ay y-coordinate of first base vector of plane.
+	\param az z-coordinate of first base vector of plane.
+	
+	\param bx x-coordinate of second base vector of plane.
+	\param by y-coordinate of second base vector of plane.
+	\param bz z-coordinate of second base vector of plane.
+
+	\param Rad (optional) Radius of disk. If this is zero or not given
+			plane is drawn as a rectangle.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws a plane centered on (\a cx, \a cy, \a cz) with basis vectors (\a ax, \a ay, \a az) and (\a bx, \a by, \a bz). The side length of the rectangle drawn is just the magnitude of the respective basis vectors. If \a Rad is not zero, then a disk with radius \a Rad is drawn instead.
+**/
+void DrawPlane(scalar cx, scalar cy, scalar cz, 
+				scalar ax, scalar ay, scalar az, 
+				scalar bx, scalar by, scalar bz, scalar Rad);
+
+
+/** 
+	\brief Draws a point.
+	
+	\param A Multivector that represents a point Euclidean space.
+	
+	\return Nothing
+	
+	\since v1.4
+	
+	If the multivector passed is a vector in projective space, say, then this vector
+	is projected into Euclidean space and then displayed.
+**/
+void DrawPoint(multivector A);
+
+/** 
+	\brief Draws a point.
+	
+	\param x x-coordinate
+	\param y y-coordinate
+	\param z z-coordinate
+	
+	\return Nothing
+	
+	\since v1.4
+**/
+void DrawPoint(scalar x, scalar y, scalar z);
+
+
+/** 
+	\brief Draws a surface grid over a 2-dimensional set of points.
+
+	\param CountX Number of points along x-direction.
+	\param CountY Number of points along y-direction.
+	\param LMV A list of multivectors containing the surface points.
+	
+	\param LCol (\b optional) A list of colors with one entry for each surface point. By default all surface points take on the currently active color.
+	
+	\param DoDraw (\b optional) A boolean flag. If this is one (default), the surface grid is drawn directly, otherwise it is not drawn. The latter case may be useful if you want to draw the vertex list returned at a later stage.
+	
+	\param NegNormals (\b optional) A boolean flag. If this is one, the surface normals are negated. Otherwise (the default) they are not.
+	
+	\param LNorm (\b optional) A list of multivectors containing one surface normal for each point. If this list is not given, the surface normals are evaluated automatically. Note that the algorithm used for this automatic generation of surface normals is probably not the best one currently.
+	
+	\return A vertex list representing the surface grid to be drawn.
+	
+	\since v1.4
+	
+	\attention The syntax of this function is preliminary and may change slightly
+	in a future version.
+	
+	With this function you can draw arbitrary vector valued, 2-dimensional functions. One important feature of this function is, that it returns a vertex list of the surface gird to be drawn. You can draw the vertex list by simply applying the colon operator (:) to it. This is much quicker than calling the <tt>DrawPointGrid</tt> function each time you want to draw the surface grid.
+
+In order to get a surface grid drawn, you first need to generate a list of surface points. They have to be ordered row-wise. That is, the list of points contains first all points of the first row, then the points of the second row, etc. See function DrawPointSurface() for an example.
+**/
+vertexlist DrawPointGrid(counter CountX, counter CountY, list LMV, 
+			list LCol, counter DoDraw, counter NegNormals, list LNorm);
+
+
+
+
+/** 
+	\brief Draws a line through a set of points.
+
+	\param LMV A list of multivectors containing the points.
+	
+	\param LCol (\b optional) A list of colors with one entry for each point. By default all points take on the currently active color.
+	
+	\param DoDraw (\b optional) A boolean flag. If this is one (default), the line is drawn directly, otherwise it is not drawn. The latter case may be useful if you want to draw the vertex list returned at a later stage.
+	
+	\param NegNormals (\b optional) A boolean flag. If this is one, the normals are negated. Otherwise (the default) they are not. 
+	
+	\param LNorm (\b optional) A list of multivectors containing one normal for each point. If this list is not given, the normals are evaluated automatically. 
+To think of normals in a one dimensional function may seem strange. However, somehow the reflectance needs to be evaluated, so normals have to be given in some form. By default normals are evaluated that are perpendicular to the plane the line is drawn in.	
+	
+	\return A vertex list representing the line function to be drawn.
+	
+	\since v1.4
+	
+	\attention The syntax of this function is preliminary and may change slightly
+	in a future version.
+	
+	With this function you can draw arbitrary vector valued, 1-dimensional functions. One important feature of this function is, that it returns a vertex list of the surface gird to be drawn. You can draw the vertex list by simply applying the colon operator (:) to it. This is much quicker than calling the <tt>DrawPointList</tt> function each time you want to draw the function.
+
+This function can be used to replace the Plot() function. However, you will have to write the loop that generate the points yourself. See function DrawPointSurface() for an example of how to generate such a list.
+**/
+vertexlist DrawPointList(list LMV, 
+			list LCol, counter DoDraw, counter NegNormals, list LNorm);
+
+/** 
+	\brief Draws a surface over a 2-dimensional set of points.
+
+	\param CountX Number of points along x-direction.
+	\param CountY Number of points along y-direction.
+	\param LMV A list of multivectors containing the surface points.
+	
+	\param LCol (\b optional) A list of colors with one entry for each surface point. By default all surface points take on the currently active color.
+	
+	\param DoDraw (\b optional) A boolean flag. If this is one (default), the surface is drawn directly, otherwise it is not drawn. The latter case may be useful if you want to draw the vertex list returned at a later stage.
+	
+	\param NegNormals (\b optional) A boolean flag. If this is one, the surface normals are negated. Otherwise (the default) they are not.
+	
+	\param LNorm (\b optional) A list of multivectors containing one surface normal for each point. If this list is not given, the surface normals are evaluated automatically. Note that the algorithm used for this automatic generation of surface normals is probably not the best one currently.
+	
+	\return A vertex list representing the surface to be drawn.
+	
+	\since v1.4
+	
+	\attention The syntax of this function is preliminary and may change slightly
+	in a future version.
+	
+	With this function you can draw arbitrary vector valued, 2-dimensional functions. One important feature of this function is, that it returns a vertex list of the surface to be drawn. You can draw the vertex list by simply applying the colon operator (:) to it. This is much quicker than calling the <tt>DrawPointSurface</tt> function each time you want to draw the surface.
+
+In order to get a surface drawn you first need to generate a list of surface points. They have to be ordered row-wise. That is, the list of points contains first all points of the first row, then the points of the second row, etc. Here is a simple example to draw the function \f$x\,y\f$.
+
+\code
+// Switch off the frame box
+_FrameBoxSize = 0;
+
+// Define the standard basis vector variables
+// for Euclidean space.
+DefVarsE3();
+
+// The step width in x and y direction
+StepX = 0.1;
+StepY = 0.1;
+
+// The Plot range
+MinX = -1;
+MaxX = 1;
+MinY = -1;
+MaxY = 1;
+
+// Count the rows that we draw.
+RowCount = 0;
+
+// Reset lists
+LP = [];
+LC = [];
+LC2 = [];
+
+// Set y to initial value
+y = MinY;
+// and start a loop over y
+loop
+{
+	// Check whether y is out of range
+	if (y > MaxY)
+		break; // if yes, then end loop over y
+	
+	// Set x to its initial value
+	x = MinX;
+	// and start a loop over x
+	loop
+	{
+		// check whether x is out of range
+		if (x > MaxX)
+			break; // if yes, then end loop over x
+
+		// Evaluate point a current x,y-position
+		A = x*e1 + y*e3 + sin(3*x)*cos(2*y)*e2;
+
+		// Evaluate color at current position
+		c = exp(-x*x*y*y/0.1);
+		Col = Color(c, 0, 1 - c);
+	
+		// Evaluate color for surface grid
+		c = 0.9 * c;
+		Col2 = Color(c, 0, 1-c);
+
+		// Add point to list
+		LP << A;
+		// Add color to list
+		LC << Col;
+		// Add color to list
+		LC2 << Col2;
+		
+		// Increase x-position by StepX
+		x = x + StepX;
+	}
+
+	// Increase y-position by StepY
+	y = y + StepY;
+
+	// Count the rows
+	RowCount = RowCount + 1;
+}
+
+// Evaluate the columns
+ColCount = Len(LP) / RowCount;
+
+// Draw Surface
+DrawPointSurface(ColCount, RowCount, LP, LC);
+
+// Draw Grid
+DrawPointGrid(ColCount, RowCount, LP, LC2);
+\endcode
+
+This generates the following image.
+\image html PointSurface1_img1.jpg
+
+**/
+vertexlist DrawPointSurface(counter CountX, counter CountY, list LMV, 
+			list LCol, counter DoDraw, counter NegNormals, list LNorm);
+
+
+
+/** 
+	\brief Draws a sphere.
+	
+	\param P Vector giving origin of sphere.
+	\param Rad Radius of sphere.
+
+	\return Nothing
+	
+	\since v1.5
+**/
+void DrawSphere(multivector P, scalar Rad);
+
+
+/** 
+	\brief Draws a simple text.
+	
+	\param A The position where to draw the text.
+	\param Text The text to draw.
+	
+	\return Nothing
+	
+	\since v2.1
+
+	Draws the given text at the given position in the currently active color and size. The font size can be set with SetTextSize(). Here is an example,
+	
+	\code
+	:A = VecE3(1,2,1);
+	:Red;
+	SetTextSize(2);
+	DrawText(A, A);
+	\endcode
+	
+	This code produces the following output.
+	
+	\image html DrawTextEx1.jpg
+	
+**/
+void DrawText(multivector A, string Text);
+
+
+/** 
+	\brief Draws a triangle.
+	
+	\param ax x-coordinate of first point of triangle.
+	\param ay y-coordinate of first point of triangle.
+	\param az z-coordinate of first point of triangle.
+	
+	\param bx x-coordinate of second point of triangle.
+	\param by y-coordinate of second point of triangle.
+	\param bz z-coordinate of second point of triangle.
+
+	\param cx x-coordinate of third point of triangle.
+	\param cy y-coordinate of third point of triangle.
+	\param cz z-coordinate of third point of triangle.
+
+	\return Nothing
+	
+	\since v1.4
+	
+	Draws a triangle whose corners are given by the specified points.
+**/
+void DrawTriangle(scalar ax, scalar ay, scalar az, 
+				scalar bx, scalar by, scalar bz,
+				scalar cx, scalar cy, scalar cz);
+
+
+/** 
+	\brief Draws a triangle.
+	
+	\param A Multivector giving first point of triangle.
+	\param B Multivector giving second point of triangle.
+	\param C Multivector giving third point of triangle.
+
+	\return Nothing
+	
+	\since v1.4
+
+	Draws a triangle through the given points.	
+**/
+void DrawTriangle(multivector A, multivector B, multivector C);
+
+
+/**
+	\brief Enables or disables the use of absolute texture coordinates.
+	
+	\param bVal If \a bVal is not zero, then absolute texture coordinates are enabled and otherwise disabled.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	See \ref page_TextureMapping for a detailed description.
+**/
+void EnableAbsTexCoords(counter bVal);
+
+
+/**
+	\brief Enables or disables fog.
+	
+	\param bEnable If not zero then fog is enables, otherwise disabled.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This is a direct mapping of the OpenGL fog support. Enabling fog blends objects more and more into a fog color as they are further away from the camera.
+**/
+void EnableFog(counter bEnable);
+
+
+/** 
+	\brief Enables anti-aliasing for lines.
+	
+	\param IsSmooth A boolean flag that either enables (1) or disables (0) anti-aliasing for lines. By default anti-aliasing is switched off.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This only affects lines.
+**/
+void EnableSmoothLine(counter IsSmooth);
+
+
+
+/** 
+	\brief Enables anti-aliasing for points.
+	
+	\param IsSmooth A boolean flag that either enables (1) or disables (0) anti-aliasing for points. By default anti-aliasing is switched off.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This only affects points.
+**/
+void EnableSmoothPoint(counter IsSmooth);
+
+
+
+/** 
+	\brief Ends an overlay block.
+	
+	\return Nothing
+	
+	\since v1.4
+	
+	Each call to StartOverlay() needs to have one call to EndOverlay(). See StartOverlay() for an example.
+**/
+void EndOverlay(void);
+
+
+/**
+	\brief Exit the actual view.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	This command quits an environment that had been begun by the function <tt>StartView</tt>.
+**/
+void EndView();
+
+
+/**
+	\brief Returns the width of lines.
+	
+	\return The width with which lines are drawn. 
+	
+	\since v2.2
+	
+	See also SetLineWidth().
+**/
+counter GetLineWidth();
+
+/**
+	\brief Returns the size of points.
+	
+	\return The size with which points are drawn.
+	
+	\since v2.2
+	
+	See also SetPointSize().
+**/
+counter GetPointSize();
+
+
+
+
+/** 
+	\brief This function draw multivector \a A at the offset given by 
+			multivector \a X and scaled to \a scale. 
+			Use this function, for example, to draw plane or lines at particular positions.
+
+	
+	\param A The multivector to be drawn.
+	\param X The offset by which the visualization of \a A is to be moved.
+	\param scale The scale with which the visualization is to be scaled.
+	
+	\return Nothing
+	
+	\since v1.4
+	
+	See section \ref sec_VisMV "Visualizing Multivectors" for more details.
+**/
+void Offset(multivector A, multivector X, scalar scale);
+
+
+
+/** 
+	\brief Draw a point-, circle- or line-valued 1D-function.
+	
+	\param F A vector valued function.
+	\param L A list containing free the variable and the plot range.
+		
+	\return This function returns a vertex list containing the evaluated points of the function.
+	
+	\since v1.0
+
+<tt>F</tt> has to be a point-, circle- or line-valued function. The resultant (multi-)vectors may be from any space but must have a representation in Euclidean space. If \a F is point-valued, Plot() draws a curve in space. If it is circle-valued (e.g. 3-blades in conformal space), then surface spanned by the circles is drawn (see '<code>CanalSurf1.clu</code>' for an example). Similarly, if \a F is line-valued (e.g. 2-blades in projective space or 3-blades in conformal space), then the surface spanned by the lines is shown. The circle and line surface functionality is available since version 2.1.
+
+The list <tt>L</tt> must contain the free variable, the minimum value, the maximum value and the number of partitions into which the given range is split. If the number of partitions is <tt>n</tt> then <tt>Plot</tt> evaluates the function <tt>F</tt> <tt>n+1</tt> times. See section \ref sec_Plot for more details.
+
+	For example,
+	\code
+		
+	DefVarsE3();
+	
+	SQ = Plot(x*e1 + x*x*e2, [x, 0, 1, 4]);
+	?SQ;
+	:SQ :Red;
+	\endcode
+
+	produces the output
+	\code
+	
+	SQ = ((0, 0, 0), (0.25, 0.0625, 0), (0.5, 0.25, 0), 
+		  (0.75, 0.5625, 0), (1, 1, 0))
+	\endcode
+	
+**/
+vertexlist Plot(multivector F, list L);
+
+/** 
+	\brief Draw a point-valued 2D-function, i.e. a surface.
+	
+	\param F A point-valued function.
+	\param L1 A list containing the first free variable and its range.
+	\param L2 A list containing the second free variable and its range.
+	\param S <b>(optional)</b> Length of normals.
+		
+	\return This function returns a vertex list containing the evaluated points of the function.
+	
+	\since v2.1
+
+\a F has to be a point-valued function. The resultant (multi-)vectors may be from any space but must have a point representation in Euclidean space. 
+
+The lists \a L1 and \a L2 must contain their respective free variable, minimum value, maximum value and number of partitions into which the given range is split. 
+
+If the parameter \a S is given, it sets the length of normals drawn on top of the surface. Negative values are also allowed, in which case the normals are drawn on the back of the surface. If this parameter is not given or set to zero, no normals are drawn.
+
+See section \ref sec_Plot for more details.
+
+	For example,
+	\code
+		
+	:Plot(VecE3(y, x*x*y*y, x),
+			[x, -1, 1, 20], 
+			[y, -1, 1, 20], 0.1);
+	\endcode
+
+	produces the visualization
+	
+	\image html PlotEx2.jpg
+	
+**/
+vertexlist Plot(multivector F, list L1, list L2, scalar S);
+
+
+/** 
+	\brief Draw a point-, circle- or line-valued 1D-function with varying colors.
+	
+	\param A A list containing as first element a vector valued function and as second element a color-valued function.
+	
+	\param L A list containing free the variable and the plot range.
+		
+	\return This function returns a vertex list containing the evaluated points of the function.
+	
+	\since v2.1
+
+\a A has to consist of two elements, a first element \a F and a second element \a C. \a F has to be a point-, circle- or line-valued function. The resultant (multi-)vectors may be from any space but must have a representation in Euclidean space. If \a F is point-valued, Plot() draws a curve in space. If it is circle-valued (e.g. 3-blades in conformal space), then surface spanned by the circles is drawn (see '<code>CanalSurf1.clu</code>' for an example). Similarly, if \a F is line-valued (e.g. 2-blades in projective space or 3-blades in conformal space), then the surface spanned by the lines is shown. 
+
+The second element \a C has to be a color valued function. It gives the color for each parameter value.
+
+The list \a L must contain the free variable, the minimum value, the maximum value and the number of partitions into which the given range is split. If the number of partitions is \a n then Plot() evaluates the functions \a F  and \a C, \a n+1 times. See section \ref sec_Plot for more details.
+
+	For example,
+	\code
+		
+	_2dView = 1;
+
+	:Plot([VecE3(x, x*x, 0), Color(x*x, 0, 1-x*x)],
+			[x, -1, 1, 20]);
+	\endcode
+
+	produces the visualization
+	
+	\image html PlotEx1.jpg
+	
+**/
+vertexlist Plot(list A, list L);
+
+
+/** 
+	\brief Draw a point-valued 2D-function, i.e. a surface, with associated colors and normals.
+	
+	\param A A list containing a point-valued function and optionally also a color function and a normal function.
+	\param L1 A list containing the first free variable and its range.
+	\param L2 A list containing the second free variable and its range.
+	\param S <b>(optional)</b> Length of normals.
+		
+	\return This function returns a vertex list containing the evaluated points of the function.
+	
+	\since v2.1
+
+The list \a A may contain one to four elements. Let us call the first element \a F, the second element \a C, the third element \a N and the fourth element \a T. \a F is a point valued function, \a C is a color function, \a N a normal function and \a T a texture coordinate function. Note that the second and third parameters can also be exchanged.
+
+\a F has to be a point-valued function. The resultant (multi-)vectors may be from any space but must have a point representation in Euclidean space. 
+
+\a C has to be a color-valued function. It gives the color at each point of the surface.
+
+\a N also has to be point-valued. However, here the point is interpreted as the direction of a normal. These directions need not be normalized, since this is done internally. If no normal function is given, the surface normals are evaluated from the function itself. The normals are used for correct lighting of the surface, as well as drawing the normals if parameter \a S is given.
+
+\a T also has to be a point valued function, whereby currently only the first two components of the vectors are used. See \ref page_TextureMapping for more details on texture coordinates. <b>The texture coordinate function always has to be the fourth element in the list \a A</b>. Otherwise it could not be distinguished from the normal function. If you do not to want to specify a normal or color function but you do want to specify a texture function, the color and normal function have to be represented by 0 in the list \a A. For an example see section \ref sec_TexMap_ArbSurf of \ref page_TextureMapping.
+
+The lists \a L1 and \a L2 must contain their respective free variable, minimum value, maximum value and number of partitions into which the given range is split. 
+
+If the parameter \a S is given, it sets the length of normals drawn on top of the surface. Negative values are also allowed, in which case the normals are drawn on the back of the surface. If this parameter is not given or set to zero, no normals are drawn.
+
+See section \ref sec_Plot for more details.
+
+	For example,
+	\code
+		
+	:Plot([VecE3(y, x*x*y*y, x),						// Function
+			Color(x*x, y*y, 1-x*x*y*y),					// Color
+			*(VecE3(0,2*x*y*y, 1)^VecE3(1, 2*x*x*y, 0)) // Normal
+		   ],
+		   [x, -1, 1, 20], 
+		   [y, -1, 1, 20], 
+		   0.1);
+	\endcode
+
+	produces the visualization
+	
+	\image html PlotEx3.jpg
+	
+**/
+vertexlist Plot(list A, list L1, list L2, scalar S);
+
+
+
+
+/** 
+	\brief Restore saved projection matrix from the stack.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	This function calls the openGL command <tt>glPopMatrix</tt>.
+	All parameters corresponding to the frame will be restored.
+	In case of extensive drawing operations it is often more convenient to change the frame and perform the drawings relative to
+	the new origin instead of adjusting all parameters in all drawing functions.	Here's an example,
+	\code
+	
+	PushFrame();  // save frame
+	TranslateFrame(-2,0,0);
+	DrawCone( VecE3( 0,0,0), VecE3( 0,1,0), 1 ); // Draw cone at current (translated) origin.
+	// more draw operations ....
+	PopFrame();   // restore frame
+	:e0:Red; // Visualize origin.
+	\endcode
+	The code will produce the subsequent image.
+
+	\image html Frame_img1.jpg
+	
+**/
+void PopFrame(void);
+
+/** 
+	\brief Save current projection matrix to a stack.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	This function calls the openGL command <tt>glPushMatrix</tt>. The matrix that contains the actual settings concerning the frame will be pushed
+	to the stack. To restore the matrix and thus the frame use <tt>PopFrame</tt>.
+**/
+void PushFrame(void);
+
+/** 
+	\brief Rotates the drawing frame.
+	
+	\param R An euclidian rotor giving the rotation of the frame.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	All drawing operations after a call to this functions are drawn rotated by the given rotor. While the function SetFrameRotor() sets the global frame orientation and should only be called once within a script, this function may be called any number of times and only rotated a local frame.
+**/
+void RotateFrame(multivector R);
+
+
+/** 
+	\brief Rotates the projectview matrix of OpenGl.
+	
+	\param R An euclidian rotor giving the rotation of the modelview.
+	
+	\return Nothing
+	
+	\since v2.0
+
+	In contrast to the function <tt>RotateFrame</tt>, the openGL camera coordinate system is rotatad, instead of rotating the object coordinate system.
+	Note that only consecutive drawing commands will relate to the new view of the scene.
+**/
+void RotateView(multivector R);
+
+
+/**
+	\brief Sets the shape in which arrows are drawn.
+	
+	\param dLength The length of the arrow tip.
+	\param dAngle The opening angle of the arrow tip in degrees.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	The initial values are <tt>0.15</tt> for the length and <tt>15</tt> for the angle.
+**/
+void SetArrowShape(scalar dLength, scalar dAngle);
+
+
+/**
+	\brief Sets the color of fog.
+	
+	\param colFog The fog color.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	You need to enable fog with EnableFog() before this has any effect.	
+**/
+void SetFogColor(color colFog);
+
+
+
+/**
+	\brief Set the density of fog.
+	
+	\param dDensity The density. Has to be > 0.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	You need to enable fog with EnableFog() before this has any effect.
+**/
+void SetFogDensity(scalar dDensity);
+
+
+/** 
+	\brief Sets the origin of the drawing frame.
+	
+	\param x New x-coordinate of frame origin.
+	\param x New y-coordinate of frame origin.
+	\param x New z-coordinate of frame origin.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This allows you to set the origin of the basis frame into which all entities are drawn.	
+**/
+void SetFrameOrigin(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Sets the rotation of the drawing frame.
+
+	\param R A rotor giving the rotation of the frame.	
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This allows you to set the orientation of the basis frame into which all entities are drawn.	
+**/
+void SetFrameRotor(multivector R);
+
+
+
+/** 
+	\brief Sets the width of lines in pixel.
+	
+	\param Width The width of lines in pixels.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	The line width set here affects all drawing operations that draw lines. This is, for example, also the case for circles and function plotting. 
+		
+**/
+void SetLineWidth(scalar Width);
+
+
+
+/** 
+	\brief Sets one or a number of drawing modes.
+	
+	\param mode The drawing mode.
+		
+	\return Nothing
+	
+	\since v1.0
+	
+	The modes that are set with this function, influence the visualization of 
+	of multivectors. See the \ref grp_VarAll "predefined variable reference" for the set
+	of values that can be used with this function.
+**/
+void SetMode(counter mode);
+
+
+/** 
+	\brief Sets the plot mode for the function Plot().
+	
+	\param mode The drawing mode.
+		
+	\return Nothing
+	
+	\since v1.0
+	
+	The modes that are set with this function, influence the way a function is plotted with the function Plot(). See the \ref grp_VarAll "predefined variable reference" for the set
+	of values that can be used with this function.
+**/
+void SetPlotMode(counter mode);
+
+
+/** 
+	\brief Sets the size of points in pixel.
+	
+	\param Size The size of points in pixel.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	The point size affects all drawing operations where points are plotted. 		
+**/
+void SetPointSize(scalar Size);
+
+
+/** 
+	\brief Sets the size of text drawn with DrawText().
+	
+	\param Size The size of the text.
+	
+	\return Nothing
+	
+	\since v2.1
+
+	The size variable \a Size has to be a value between 1 and 7.
+**/
+void SetTextSize(counter Size);
+
+
+
+/**
+	\brief Sets the texture for texture mapping, or disables texture mapping.
+	
+	\param Img (optional) The image to be used for texture mapping.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	See \ref page_TextureMapping for a detailed description.
+**/
+void SetTexture(image Img);
+
+/**
+	\brief Sets the texture repetition factor.
+	
+	\param dFac The repetition factor.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	See \ref page_TextureMapping for a detailed description.
+**/
+void SetTextureRepeat(scalar dFac);
+
+
+/** 
+	\brief Set the perspective angle which affects the modelview.
+	
+	\param a A scalar specifying an aperture angle.
+		
+	\return Nothing
+	
+	\since v2.0
+	
+	This function defines the size of the aperture angle. The value of \a a must lie between 1 and 179. The default is 70.
+	It can also be regarded as changing the focal length of the (virtual) viewing camera that is used by openGL.
+	
+**/
+void SetViewAngle(scalar a);
+
+
+/**
+	\brief Set the size of the visualization window.
+	
+	\param iWidth The new width.
+	\param iHeight The new height.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function sets the width and height of the OpenGL visualization window. This allows you to do screen shots of the visualization of a specific size.
+**/
+void SetVisWinSize(counter iWidth, counter iHeight);
+
+
+
+
+/** 
+	\brief Starts an overlay block.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	This function defines a temporary orthographic projection matrix and a new coordinate system. You can return to the standard coordinate system with the function EndOverlay(). The new coordinate system has its origin at the top left of the visualization window. The coordinate at the bottom right is (100, 100). That is, these coordinates can be interpreted as percent of the visualization window. The idea of such an overlay coordinate system is, that it is not changed when the user rotates or translates the standard coordinate system with the mouse. Hence, elements drawn in the overlay appear as if they overlay the standard visualization. This forms the basis for presentations with CLUScript.
+	
+	Note that the orthographic projection is along the z-axis. This means, that even though an element at different z-depths appears the same, the z-coordinate allows you to define a z-order in which elements are drawn.
+	
+	Here is an example.
+	
+	\code
+	
+	StartOverlay();
+
+	:Red;
+	DrawLine(0,0,0, 50,50,0);
+
+	:Green;
+	DrawLine(100,0,0, 50,50,0);
+
+	:Blue;
+	DrawLine(50,50,0, 50,100,0);
+
+	EndOverlay();
+
+	\endcode
+	
+	This produces the following visualization.
+	
+	\image html OverlayTest1_img1.jpg
+	
+	This shows that independent of how the standard visualization basis frame is rotated, the lines in the overlay block are drawn in the same way.
+**/
+void StartOverlay(void);
+
+
+/**
+	\brief Start a new view.
+	
+	\param x A scalar defining the x-coordinate of the bottom left corner.
+	\param y A scalar defining the y-coordinate of the bottom left corner.
+	\param w A scalar defining the width of the view.
+	\param h A scalar defining the height of the view.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	The two points defined by the four parameters specify a rectangular region within the visualization window.
+	If the values for width and height are in the range [0,1], then they are regarded as percentage values with respect to the size of the whole visualization window. If they are larger than 1, they are regarded as pixel values.
+	The newly created view will then be projected into the defined region. Note that the standard user interaction (mouse mode 0) is restricted to
+	the normal view. But it is possible to adopt the mouse interaction by using other mouse modes.
+	This function starts an environment that has to be ended by the function EndView().
+	Observe that the former view doesn't have any influence on the new view.
+	Here is the example script <tt>ExampleScripts/StartView1.clu</tt>.
+	
+	\code
+	// Start a view with its bottom-left corner
+	// at the bottom-left corner of the visualization
+	// window, and having half its width and height.
+	StartView(0,0, 0.5, 0.5);
+
+	// Start an overlay
+	StartOverlay();
+
+	// Draw a rectangle along the 
+	// outer border of the view.
+	SetLineWidth(4);
+	:Red;
+	DrawLine(VecE3(0,0), VecE3(100,0));
+	DrawLine(VecE3(100,0), VecE3(100,100));
+	DrawLine(VecE3(100,100), VecE3(0,100));
+	DrawLine(VecE3(0,100), VecE3(0,0));
+	SetLineWidth(2);
+
+	// End the overlay
+	EndOverlay();
+
+	// Now draw a sphere in the view
+	:Blue;
+	DrawSphere(VecE3(0,0,0), 1);
+
+	// End the view
+	EndView();
+
+	// Draw the same sphere in the main view
+	:Green;
+	DrawSphere(VecE3(0,0,0), 1);	
+	\endcode
+	
+	Output:
+	
+	\image html StartView1_1.png
+**/
+void StartView(scalar x, scalar y, scalar w, scalar h);
+
+
+
+/** 
+	\brief Translates the drawing frame.
+	
+	\param x The translation in x-direction.
+	\param y The translation in y-direction.
+	\param z The translation in z-direction.
+	
+	\return Nothing
+	
+	\since v1.4
+
+	All drawing operations after a call to this functions are drawn translated by the given amount. While the function SetFrameOrigin() sets the global frame origin and should only be called once within a script, this function may be called any number of times and only translates a local frame.
+**/
+void TranslateFrame(scalar x, scalar y, scalar z);
+
+
+/** 
+	\brief Translates the drawing frame.
+	
+	\param T A multivector representing a vector.
+	
+	\return Nothing
+	
+	\since v2.0
+
+	All drawing operations after a call to this functions are drawn translated by the given amount. While the function SetFrameOrigin() sets the global frame origin and should only be called once within a script, this function may be called any number of times and only translates a local frame.
+**/
+void TranslateFrame(multivector T);
+
+
+
+/** 
+	\brief Translate the projectview matrix of OpenGl.
+	
+	\param x The translation in x-direction.
+	\param y The translation in y-direction.
+	\param z The translation in z-direction.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	Instead of translating the object coordinate system, the camera is moved.
+	Note that only consecutive drawing commands will relate to the new view of the scene.
+**/
+void TranslateView(scalar x, scalar y, scalar z);
+
+/**
+	\brief Translate the projectview matrix of OpenGl.
+	
+	\param T A multivector representing a vector.
+	
+	\return Nothing
+	
+	\since v2.0
+	
+	Instead of translating the object coordinate system, the camera is moved.
+	Note that only consecutive drawing commands will relate to the new view of the scene.
+**/
+void TranslateView(multivector T);
+
+
+/** \}
+**/
+
+/** \}
+**/

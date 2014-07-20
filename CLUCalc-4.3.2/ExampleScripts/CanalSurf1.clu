@@ -1,0 +1,129 @@
+// Drawing a canal surface
+_DoAnimate = 1;
+_FrameBoxSize = 0;
+SetGaussPars(0, 1);
+
+DefVarsN3();
+
+// Functions
+Median = 
+{ 
+	t = _P(1); 
+	u = _P(2);
+	l = _P(3);
+	
+	x = exp(-0.5*t*t/l);
+	w = 2*Pi*u*t;
+
+	VecN3(x*cos(w), t, x*sin(w))
+}
+
+Sphere = 
+{ 
+	t = _P(1); 
+	u = _P(2);
+	l = _P(3);
+	r = _P(4);
+	
+	x = exp(-0.5*t*t/l);
+	w = 2*Pi*u*t;
+
+	VecN3(x*cos(w), t, x*sin(w)) - r*x*e
+}
+
+dMedian =
+{
+	t = _P(1); 
+	u = _P(2);
+	l = _P(3);
+	
+	x = exp(-0.5*t*t/l);
+	dx = -t/l * x;
+	w = 2*Pi*u*t;
+
+	f = x*cos(w)*e1 + t*e2 + x*sin(w)*e3;
+	df = (dx*cos(w) - x*2*Pi*u*sin(w))*e1 
+			+ e2 
+			+ (dx*sin(w) + x*2*Pi*u*cos(w))*e3;
+	
+	df + (f . df) * e
+}
+
+u = Slider("Freq.", 0.1, 2, 0.05, 0.85);
+l = Slider("Att.", 0.45, 2, 0.05, 0.8);
+r = Slider("Radius", 0.002, 0.2, 0.005, 0.01);
+iSteps = Slider("Steps", 30, 100, 1, 40);
+
+PushFrame();
+TranslateFrame(0, -1, 0);
+
+phi = (Time*Pi/6) % (2*Pi);
+th = (Time*Pi/8) % (2*Pi);
+t = 2*pow(sin(phi),2);
+t2 = 2*pow(sin(th),2);
+pos = Median(t, u, l); //VecE3(0,sin(phi),0);
+pos2 = Median(t2, u, l); //VecE3(0,sin(phi),0);
+//?c = 0.9*pow(sin(th),2) + 0.1;
+
+a = Slider("1. Ambient Light", 0, 1, 0.01, 0);
+SetAmbientLight(Color(a,a,a));
+	
+EnableLight(0, 0);
+
+/*
+SetLightAmbientCol(0, Black);
+SetLightDiffuseCol(0, Black);
+SetLightSpecularCol(0, Black);
+*/
+
+EnableLight(1, 1);
+SetLightPos(1, pos);
+SetLightAmbientCol(1, Color(0.1, 0.1, 0.1));
+SetLightDiffuseCol(1, Black);
+SetLightSpecularCol(1, DWhite);
+SetLightAttenuation(1, 0, 0, 1);
+DrawSphere(pos, 0.05);
+
+if (CheckBox("2. Second Light", 0))
+{
+	EnableLight(2, 1);
+	SetLightPos(2, pos2);
+	SetLightAmbientCol(2, DYellow);
+	SetLightDiffuseCol(2, Black);
+	SetLightSpecularCol(2, DYellow);
+	SetLightAttenuation(2, 0, 0, 1);
+	DrawSphere(pos2, 0.05);
+}
+
+
+:IPNS;
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK ||
+	ToolName == "Freq." ||
+	ToolName == "Att." ||
+	ToolName == "Radius" ||
+	ToolName == "Steps")
+{
+	// Plot the median line
+	:Red;	
+	vexMedian = Plot(Median(t, u, l), [t, 0, 2, iSteps]);
+	
+	// Plot the canal surface
+	vexSurf = Plot(
+		[dMedian(t,u,l)^Sphere(t,u,l,r), // this outer product gives the 'tangent' circle
+	 	  Color(t/2-1, Gauss(), t/2)],
+		[t, 0, 2, iSteps]);
+		
+	img = ReadImg("text.png");
+}
+
+if (CheckBox("Use Texture", 0))
+{
+	SetTexture(img);
+}
+
+:vexMedian;
+:vexSurf;
+		
+PopFrame();

@@ -1,0 +1,130 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(source/CLUCalc.cpp)
+
+AM_INIT_AUTOMAKE(CLUCalc,4.3.2)
+dnl AM_CONFIG_HEADER(config.h)
+
+
+dnl Uncomment this to use gnu compiler version 2.95 on solaris
+dnl CXX=/usr/local/bin/c++
+dnl CXX=/opt/gnu/bin/cpp
+
+dnl Checks for programs.
+dnl AC_PROG_AWK
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CPP
+AC_PROG_INSTALL 
+
+echo Compiler: ${CXX}
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+AC_PROG_GCC_TRADITIONAL
+
+dnl Checks for X11
+AC_PATH_XTRA
+AC_SUBST(X_CFLAGS)
+AC_SUBST(X_PRE_LIBS)
+AC_SUBST(X_EXTRA_LIBS)
+AC_SUBST(X_LIBS)
+AC_SUBST(x_libraries)
+
+dnl use GNU libtool
+AM_PROG_LIBTOOL
+
+
+
+dnl The global c++ compiler flags
+
+dnl CXXFLAGS="-O3 -Wall"
+CXXFLAGS="-D_GNUCPP3_ -DCLUCALC_VERSION=\\\"4.3.2\\\" -DCLUCALC_BUILD_DATE=__DATE__ -DCLUCALC_BUILD_TIME=__TIME__ -DCLUCALC_VERSION_MAJOR=4 -DCLUCALC_VERSION_MINOR=3 -DCLUCALC_VERSION_REVISION=2"
+
+dnl AC_CHECK_LIB(glut,glutHideWindow,CXXFLAGS="$CXXFLAGS -DCLUDRAW_GLUT")
+
+dnl AC_PATH_PROG(FLTK_CONFIG,fltk-config)
+FLTK_CONFIG="${CLU_HOME}/CLUfltk/fltk-config"
+
+if test "$FLTK_CONFIG"; then
+   echo
+   echo "---------- detected configuration of fltk-config -------------"
+   echo "fltk-config dir: " $FLTK_CONFIG
+   FLTK_CXXFLAGS=`exec ${FLTK_CONFIG} --use-gl --use-images --use-glut --cxxflags`
+   CXXFLAGS="$CXXFLAGS -DCLUDRAW_FLTK $FLTK_CXXFLAGS"
+   FLTK_LIBS=`exec ${FLTK_CONFIG} --use-gl --use-images --use-glut --ldstaticflags`
+   AC_SUBST(FLTK_LIBS)
+else
+   echo
+   AC_MSG_ERROR("FLTK not installed. Might need to set PATH to FLTK installation.")
+fi
+
+
+AC_PATH_PROG(PKG_CONFIG,pkg-config)
+
+
+if test "$PKG_CONFIG"; then
+   echo "pkg-config dir: " $PKG_CONFIG
+
+
+   echo
+   echo "Checking CLUProject configuration..."
+   echo 
+
+   if `exec ${PKG_CONFIG} cluproject --exists`; then
+      CLU_CXXFLAGS=`exec ${PKG_CONFIG} cluproject --cflags`
+      CLU_LIBS=`exec ${PKG_CONFIG} cluproject --libs`
+   else
+      echo
+      AC_MSG_ERROR("CLUProject cannot be found. Might need to set PKG_CONFIG_PATH variable to CLU_HOME path.")
+   fi  
+
+   echo
+   echo Checking libxml2 configuration
+   echo
+
+   if `exec ${PKG_CONFIG} libxml-2.0 --exists`; then
+      XML_CXXFLAGS=`exec ${PKG_CONFIG} libxml-2.0 --cflags`
+      XML_LIBS=`exec ${PKG_CONFIG} libxml-2.0 --libs`
+   else
+      echo
+      AC_MSG_ERROR("XML2 library cannot be found. Might need to set PKG_CONFIG_PATH variable to appropriate path.")
+   fi
+
+else
+   AC_MSG_ERROR("pkg-config not installed.")
+   echo
+fi
+
+AC_SUBST(XML_CXXFLAGS)
+AC_SUBST(XML_LIBS)
+
+
+echo
+echo "CLUProject Cxx-Flags: ${CLU_CXXFLAGS}"
+echo "CLUProject Libs: ${CLU_LIBS}"
+echo 
+
+AC_SUBST(CLU_CXXFLAGS)
+AC_SUBST(CLU_LIBS)
+
+
+CXXFLAGS="$CXXFLAGS ${CLU_CXXFLAGS} ${XML_CXXFLAGS} -I${DEVIL_HOME}/include"
+
+
+echo
+echo "C-Flags:" $CXXFLAGS
+echo
+echo "FLTK-Libs: " $FLTK_LIBS
+echo
+
+
+AC_OUTPUT(Makefile
+source/Makefile)
+

@@ -1,0 +1,61 @@
+DefVarsN3();
+
+/*
+?"Change to mouse mode 1 and move the red sphere";
+?"by holding down the right mouse button and";
+?"moving the mouse in the visualization window.";
+
+?" ";
+?"Press CTRL + h in the editor window for more help.";
+*/
+
+:N3_IPNS;
+:N3_SOLID;
+:N3_SHOW_IMAG;
+_FrameBoxSize = 0;
+EnableSmoothLine(1);
+SetFrameRotor(RotorE3(1,0.7,0, Pi/5));
+
+//img = ReadImg("cog_siegel.png");
+//img2 = ReadImg("tex_wood.png");
+//img3 = ReadImg("tex_bluemarble.png");
+//WriteImg(img2, "Surf2.png");
+
+
+//SetTexture(img);
+:MRed;
+:Sr = VecN3(VecE3(1) + VecE3(-0.12,0,0.2)) - 0.5*e;
+
+//SetTexture(img2);
+:MBlue;
+//:Color(0, 0, 0.6, 0.9);
+:Sb = VecN3(0.5, 0, 0) - 0.5*e;
+
+//SetTexture(img3);
+:MGreen + Alpha;
+//:Color(0, 0.6, 0, 0.9);
+:Sg = VecN3(-0.5, 0.5, 0) - 0.5*e;
+//SetTexture();
+
+:Color(0.540, 0.991, 1.000);
+SetLatexMagStep(20);
+DrawLatex(-1.5, 0.3, 1.1, "\\[\\mathsf{CLU}\\mathit{Calc}^{" + "4.3" + "}\\] ", "title");
+
+:Magenta;
+:C = Sr^Sb;
+
+:Cyan;
+:C = Sr^Sg;
+
+:Yellow;
+:PP = Sr^Sb^Sg;
+
+:VecC2(0,1)^VecC2(1,0)^VecC2(0,-1)^VecC2(-1,0)^VecC2(1.5,0.2);
+
+StartOverlay();
+SetLatexMagStep(10);
+SetLatexAlign(0.5, 0);
+DrawLatex(50, 98, 0, "Get it from \\texttt{www.CluCalc.info}",
+          "web");
+EndOverlay();
+

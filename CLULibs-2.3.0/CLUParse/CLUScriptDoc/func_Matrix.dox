@@ -1,0 +1,1099 @@
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Matrix Matrix Functions
+
+	Functions that have to do with the generation of and operation on matrices.
+	
+	\{
+**/
+
+
+/** 
+	\brief Produces horizontal concatenation of two appropriate matrices.
+
+	\param M A matrix.
+	\param A A matrix to add.
+	
+	\return An enlarged matrix.
+	
+	\since v2.0
+
+	This function appends matrix \a A from the right to matrix \a M, if both matrices have the same number of rows.	
+**/
+matrix AddCols(matrix M, matrix A);
+
+/** 
+	\brief Produces vertical concatenation of two appropriate matrices.
+
+	\param M A matrix.
+	\param A A matrix to add.
+	
+	\return An enlarged matrix.
+	
+	\since v2.0
+
+	This function appends matrix \a A from beneath to matrix \a M, if both matrices have the same number of columns.	
+**/
+matrix AddRows(matrix M, matrix A);
+
+
+/**
+	\brief Transforms a single column matrix into a symmetric matrix.
+	
+	\param V The single column matrix.
+	
+	\return The corresponding symmetric matrix.
+	
+	\code
+	?V = Matrix([1,2,3]);
+	?M = Col2Sym(V);
+	\endcode
+	
+	Output:
+	
+	<b>V</b> <i>(3x1)</i>= <table border="0"><tr><td>
+	1</td></tr><tr><td>
+	2</td></tr><tr><td>
+	3
+	</td></tr></table>
+	<br><b>M</b> <i>(2x2)</i>= <table border="0"><tr><td>
+	1</td><td>1.41</td></tr><tr><td>
+	1.41</td><td>3
+	</td></tr></table>
+	<br>	
+	
+	Note that the components in the column vector that are mapped to off-diagonal elements of the symmetric matrix, are divided by the square root of 2.
+**/
+matrix Col2Sym(matrix V);
+
+/**
+	\brief Transforms the vector in one index of a tensor into a symmetric matrix.
+	
+	\param T The vector.
+	
+	\return The corresponding symmetric matrix.
+	
+	\code
+	?T = Tensor([[1,2,3], [4,5,6]]);
+	?M = Col2Sym(T(1,-1));
+	\endcode
+	
+	Output:
+	
+	<b>T</b> <i>(2x3)</i>= <table border="0"><tr>
+	<td>1</td><td>2</td><td>3</td></tr><tr>
+	<td>4</td><td>5</td><td>6</td></tr></table>
+	<br><b>M</b> <i>(2x2)</i>= <table border="0"><tr><td>
+	1</td><td>1.41</td></tr><tr><td>
+	1.41</td><td>3
+	</td></tr></table>
+	<br>	
+
+	Note that the components in the column vector that are mapped to off-diagonal elements of the symmetric matrix, are divided by the square root of 2.
+**/
+matrix Col2Sym(tensor T);
+
+
+
+/** 
+	\brief Evaluates the determinant of a matrix.
+	
+	\param M The matrix.
+	
+	\return The determinant of \a M.
+	
+	\since v1.0
+
+For example,
+\code	
+?M = Matrix( ((1,2), (3,4)) );
+?DetM = det(M);
+\endcode
+
+produces the output
+\code
+M = (| 1 2|, | 3 4|)
+DetM = -2
+\endcode
+
+**/
+scalar det(matrix M);
+
+
+/** 
+	\brief Evaluates the determinant in two indices of a tensor.
+	
+	\param T The tensor.
+	
+	\return The determinant of \a T.
+	
+	\since v2.2
+
+	For example,
+	\code	
+	?T = Tensor( [ [[1,2], [3,4]], [[5,6],[7,8]] ] );
+	?dV = det(T(1,-1,-2));
+	\endcode
+
+	produces the output
+
+	<b>T</b> <i>(2x2x2)</i>= <table border="0"><tr>
+<td>1</td><td>2</td></tr><tr>
+<td>3</td><td>4</td></tr></table>
+
+	<table border="0"><tr>
+<td>5</td><td>6</td></tr><tr>
+<td>7</td><td>8</td></tr></table>
+<br><b>dV</b> = -2<br>
+
+**/
+scalar det(tensor T);
+
+
+/** 
+	\brief Transforms the diagonal of a matrix to a matrix with a single row, i.e. a row-vector.
+
+	\param M The matrix.	
+	\return A row-vector containing the diagonal of \a M.
+	
+	\since v1.4
+	
+	\deprecated Use the new name Diag2Row() instead.
+	
+For example,
+
+\code
+
+?M = IdMatrix( 3, 3 );
+?R = DiagToRow(M);
+\endcode
+
+produces the output
+\code
+
+M = (| 1 0 0|, | 0 1 0|, | 0 0 1|)
+R = (| 1 1 1|)
+\endcode
+**/
+matrix DiagToRow(matrix M);
+
+/** 
+	\brief Transforms the diagonal of a matrix to a matrix with a single row, i.e. a row-vector.
+
+	\param M The matrix.	
+	\return A row-vector containing the diagonal of \a M.
+	
+	\since v1.5
+	
+
+For example,
+
+\code
+
+?M = IdMatrix( 3, 3 );
+?R = DiagToRow(M);
+\endcode
+
+produces the output
+\code
+
+M = (| 1 0 0|, | 0 1 0|, | 0 0 1|)
+R = (| 1 1 1|)
+\endcode
+**/
+matrix Diag2Row(matrix M);
+
+
+/** 
+	\brief Find eigenvalues and eigenvectors.
+	
+	\param M A matrix.
+	
+	\return A list of four matrices giving the eigenvalues and the normalized eigenvectors.
+	
+	\since v2.0
+	
+	This function evaluates the eigenvalue decomposition of matrices \f$M\,=\,VDV^{-1}\f$. The return is a list \a L consisting of four elements,
+	two matrices of size \f$1\times n\f$ and two matrices of size \f$n\times n\f$. The former matrices represent the eigenvalues, whereas the latter
+	represent the eigenvectors, resp. the matrix \f$V\f$. The particular first list elements, i.e. <tt>L(1)</tt> and <tt>L(3)</tt> give the
+	real parts. Elements with even list index give the corresponding imaginary parts.
+	The eigenvalues are sorted in descending order according to their magnitude. The order of the eigenvectors, i.e. the columns of
+	matrix \f$V\f$ is taken over from the one of the eigenvalues.
+	The following example shall clarify the use of function <tt>Eigen</tt>.
+	
+	\code
+	_FrameBoxSize = 0;
+	M = Matrix([ [0,3,1,4], [3,0,1,5], [1,1,0,9],[ 4,5,9,0] ]);
+	L = Eigen( M );
+	? "Size of list L = " + Size( L );
+	
+	StartOverlay();
+	SetLatexAlign(0,1);
+	SetLatexMagStep(4);
+	:White; 
+	P1 = DrawLatex( 5,       5,0, "$M\, =\, " + Latex( M ) + "$", "1");
+	P2 = DrawLatex( 5, P1(2)+5,0, "$L(1)\, =\, D_{\mbox{real}}\, =\, " + Latex( Row2Diag(L(1)) ) + "$", "2");
+	P3 = DrawLatex(P2(4)+5, P1(2)+5,0, "$L(3)\, =\, V_{\mbox{real}}\, =\, " + Latex( L(3) ) + "$", "4");
+	P2 = DrawLatex( 5, P3(2)+5,0, "$L(2)\, =\, D_{\mbox{imag}}\, =\, " + Latex( Row2Diag(L(2)) ) + "$", "3");
+	P2 = DrawLatex(P2(4)+5, P3(2)+5,0, "$L(4)\, =\, V_{\mbox{imag}}\, =\, " + Latex( L(4) ) + "$", "5");
+	EndOverlay();
+	/*   Matrix is symmetric --> pure real   */
+	? V = L(3);
+	? D = Row2Diag( L(1) );
+	
+	? M = V * D * !V;
+	? M = V * D * ~V; // Since V is nomalized (!).
+	\endcode
+	This will result in
+	
+	\image html Eigen_img1.jpg	
+**/
+list Eigen(matrix M);
+
+
+/**
+	\brief Evaluates the eigenvalues and eigenvectors of a sub-matrix of a tensor.
+	
+	\param T The tensor.
+	
+	\return A list of four matrices giving the eigenvalues and the normalized eigenvectors.
+	
+	\since v2.2
+	
+	See the function Eigen() for matrices for a detailed description. For example, if <tt>T</tt> is given by <code>T = Tensor(3, [2,3,3])</tt> you can evaluate the eigenvalues and eigenvectors a submatrix by <code>Eigen(T(1,-1,-2))</code>.
+	
+**/
+list Eigen(tensor T);
+
+
+/** 
+	\brief Find eigenvalues of a matrix.
+	
+	\param M A matrix.
+	
+	\return A list of two matrices giving the eigenvalues.
+	
+	\since v2.0
+	
+	This function evaluates the eigenvalues of a matrix. It's output is a list of two matrices which are just the first two matrices
+	in the return of function <tt>Eigen</tt>, i.e. with <tt>L1 = Eigenvalues(M)</tt> and <tt>L2 = (Eigen(M))([ [1], [2] ])</tt> we have
+	that <tt>L1</tt> is equal to <tt>L2</tt>.
+**/
+list EigenValues(matrix M);
+
+
+/**
+	\brief Evaluates the eigenvalues of a sub-matrix of a tensor.
+	
+	\param T The tensor.
+	
+	\return A list of two matrices giving the eigenvalues.
+	
+	\since v2.2
+	
+	See the function EigenValues() for matrices for a detailed description. For example, if <tt>T</tt> is given by <code>T = Tensor(3, [2,3,3])</tt> you can evaluate the eigenvalues of a submatrix by <code>EigenValues(T(1,-1,-2))</code>.
+	
+**/
+list EigenValues(tensor T);
+
+
+
+
+/** 
+	\brief Get a list of \a N matrix rows which mainly span the row space.
+	
+	\param M A matrix.
+	\param N The number of rows to be selected.
+	
+	\return A list of \a N indices.
+	
+	\since v2.0
+	
+	This function is akin to \a RowSpace. But instead of setting a threshold for choosing rows the parameter \a N
+	determines the number of rows.
+	By using the function \a GetRows a new matrix can be constructed.
+**/
+list FindMainNRows(matrix M, counter N);
+
+
+
+/** 
+	\brief Generates a matrix based on a multivector and a product.
+
+	\param A A multivector.
+	\param ProductId An id-number identifying the type of product.
+	This parameter can take on the values of the following predefined variables.
+	<ul>
+		<li>
+		<tt>MVOP_INNER</tt>
+		<br>The inner product
+		<br>
+		<li>
+		<tt>MVOP_OUTER</tt>
+		<br>The outer product
+		<br>
+		<li>
+		<tt>MVOP_GEO</tt>
+		<br>The geometric product
+		<br>
+	</ul>
+	\param Mask An embedding mask. This parameter is \b optional.
+	\param Left Flag indicating whether product is to be executed from left (1) or right (0). 
+		This parameter is \b optional.
+	
+	\return A matrix representing a multivector product.
+	
+	\since v1.4
+	
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+**/
+matrix GetMVProductMatrix(multivector A, counter ProductId, list Mask, counter Left);
+
+/** 
+	\brief Generates a matrix based on a multivector and a product. 
+
+	\since v1.5
+	
+	This is the same function as before, only the order of the optional parameters 
+	\a Mask and \a Left	is changed.
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+**/
+matrix GetMVProductMatrix(multivector A, counter ProductId, counter Left, list Mask);
+
+
+/** 
+	\brief Generates a matrix based on a list of multivector and a product.
+
+	\param L A list of multivector.
+	\param ProductId An id-number identifying the type of product.
+	This parameter can take on the values of the following predefined variables.
+	<ul>
+		<li>
+		<tt>MVOP_INNER</tt>
+		<br>The inner product
+		<br>
+		<li>
+		<tt>MVOP_OUTER</tt>
+		<br>The outer product
+		<br>
+		<li>
+		<tt>MVOP_GEO</tt>
+		<br>The geometric product
+		<br>
+	</ul>
+	\param Mask An embedding mask. This parameter is \b optional.
+	\param Left Flag indicating whether product is to be executed from left (1) or right (0). 
+		This parameter is \b optional.
+	
+	\return A matrix representing a multivector product.
+	
+	\since v1.4
+	
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+**/
+matrix GetMVProductMatrix(list L, counter ProductId, list Mask, counter Left);
+
+/** 
+	\brief Generates a matrix based on a list of multivectors and a product. 
+
+	\since v1.5
+	
+	This is the same function as before, only the order of the optional parameters 
+	\a Mask and \a Left	is changed.
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+**/
+matrix GetMVProductMatrix(list L, counter ProductId, counter Left, list Mask);
+
+
+/** 
+	\brief Construct matrix from rows of another matrix.
+	
+	\param M A matrix.
+	\param Idx A list containing indices.
+	
+	\return A matrix assembled by selected rows of the original matrix.
+	
+	\since v2.0
+	
+	Selecting the first and 4th row of matrix \a M by
+	
+	\code
+	Idx = [ 1, 4 ];
+	? M = Matrix( [ [16, 2, 3, 13], [5, 11, 10, 8], [9, 7, 6, 12], [4, 14, 5, 1] ] );
+	? R = GetRows( M, Idx );
+	\endcode
+	gives the result
+	
+	\code
+	M = (| 16 2 3 13|, | 5 11 10 8|, | 9 7 6 12|, | 4 14 5 1|)
+	R = (| 16 2 3 13|, | 4 14 5 1|)
+	\endcode	
+	
+**/
+matrix GetRows(matrix M, list Idx);
+
+
+/** 
+	\brief Generates an identity matrix.
+
+	\param rows The number of rows.
+	\param cols The number of columns
+	
+	\return An identity matrix of the given dimensions.
+	
+	\since v1.4
+	
+Note that only an identity matrix is returned if the given dimensions are those of a square matrix. Otherwise, this function is identical to Matrix().
+For example,
+
+\code
+
+?M = IdMatrix( 3, 3 );
+?M = IdMatrix( 3, 4 );
+\endcode
+
+produces the output
+\code
+
+M = (| 1 0 0|, | 0 1 0|, | 0 0 1|)
+M = (| 0 0 0 0|, | 0 0 0 0|, | 0 0 0 0|)
+\endcode
+**/
+matrix IdMatrix(counter rows, counter cols);
+
+/** 
+	\brief Generates a matrix from a nested list of scalar values.
+
+	\param L A nested list of matrix components.	
+	
+	\return A matrix created from the nested list of elements given by \a L.
+	
+	\since v1.0
+	
+A matrix can be created in two different ways: either a nested list is given which can represent a matrix, or the dimensions of a new matrix are given. The elements of the outer list give the rows of the new matrix. Therefore, all elements of the outer list have to be lists of equal dimension. Furthermore, each row entry must be castable to a scalar. See section \ref page_WorkWithMat "Working with Matrices" for more details. 
+For example,
+
+\code
+
+?M = Matrix( ((1, 2), (3, 4)) );
+\endcode
+
+produces the output
+\code
+
+M = (| 1 2|, | 3 4|)
+\endcode
+
+where the elements enclodes in <tt>|.|</tt> give the row elements.	
+**/
+matrix Matrix(list L);
+
+
+/**
+	\brief Transforms a tensor or part of a tensor into a matrix.
+	
+	\param T The tensor that is to be transformed.
+	
+	\return The matrix representation of the tensor.
+	
+	\since v2.2
+	
+	The variable \a T either has to be a 2-valence tensor or a tensor with two specified counting indices. For example,
+	
+	\code
+	T1 = Tensor(2, [2,3]);
+	T2 = Tensor(3, [2,3,4]);
+	
+	?M1 = Matrix(T1);
+	?M2 = Matrix(T2(1,-1,-2));
+	\endcode
+	
+	Output:
+	
+	<b>M1</b> <i>(2x3)</i>= <table border="0"><tr><td>
+	0</td><td>0</td><td>0</td></tr><tr><td>
+	0</td><td>0</td><td>0
+	</td></tr></table>
+	<br><b>M2</b> <i>(3x4)</i>= <table border="0"><tr><td>
+	0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>
+	0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>
+	0</td><td>0</td><td>0</td><td>0
+	</td></tr></table>
+	<br>	
+**/
+matrix Matrix(tensor T);
+
+/** 
+	\brief Generates a matrix with zeroed entries of the given dimension.
+
+	\param rows The number of rows.
+	\param cold The number of columns
+	
+	\return A matrix of the given dimension with zeroed entries.
+	
+	\since v1.0
+	
+For example,
+
+\code
+
+?M = Matrix( 3, 4 );
+\endcode
+
+produces the output
+\code
+
+M = (| 0 0 0 0|, | 0 0 0 0|, | 0 0 0 0|)
+\endcode
+
+where the elements enclodes in <tt>|.|</tt> give the row elements.	
+**/
+matrix Matrix(counter rows, counter cols);
+
+
+
+/** 
+	\brief Generates a symmetric 3 by 3 matrix from a vector from 2D-conic space.
+
+	\param A The vector from 2D-conic space.
+	
+	\return A symmetric 3 by 3 matrix.
+	
+	\since v2.0
+	
+For example,
+
+\code
+
+A = VecC2(1,2);
+?M = Matrix( A );
+\endcode
+
+produces the output
+\code
+
+M = (| 1 2 1|, | 2 4 2|, | 1 2 1|)
+\endcode
+
+**/
+matrix Matrix(multivector A);
+
+
+/** 
+	\brief Generates a multivector from a column vector or the column vectors of a matrix.
+
+	\param M A matrix.
+	\param Mask An embedding mask. This parameter is \b optional.
+	
+	\return A multivector.
+	
+	\since v1.4
+
+	This function transforms a matrix into one or a set of multivectors.
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+	
+	For example,
+	\code
+	DefVarsE3();
+	
+	?A = 1*e1 + 2*e2^e3 + 3*I;
+	?MA = MV2Matrix(A);
+	?B = Matrix2MV(MA);
+	
+	Mask = (0, 1, 0, 0, 2, 0, 0, 3);
+	?MA2 = MV2Matrix(A, Mask);
+	?B2 = Matrix2MV(MA2, Mask);
+	\endcode
+	
+	produces the output
+	\code
+	A = 1^e1 + 2^e23 + 3^I
+	MA = (| 0|, | 1|, | 0|, | 0|, | 2|, | 0|, | 0|, | 3|)
+	B = 1^e1 + 2^e23 + 3^I
+	MA2 = (| 1|, | 2|, | 3|)
+	B2 = 1^e1 + 2^e23 + 3^I
+	\endcode
+**/
+matrix Matrix2MV(matrix M, list Mask);
+
+
+/** 
+	\brief Generates a column vector based on a multivector.
+
+	\param A A multivector.
+	\param Mask An embedding mask. This parameter is \b optional.
+	
+	\return A column vector representing a multivector.
+	
+	\since v1.4
+
+	This function transforms a multivector into a column vector.	
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+	
+	For example,
+	\code
+	DefVarsE3();
+	
+	?A = 1*e1 + 2*e2^e3 + 3*I;
+	?MA = MV2Matrix(A);
+	
+	Mask = [0, 1, 0, 0, 2, 0, 0, 3];
+	?MA2 = MV2Matrix(A, Mask);
+	\endcode
+	
+	produces the output
+	\code
+	A = 1^e1 + 2^e23 + 3^I
+	MA = (| 0|, | 1|, | 0|, | 0|, | 2|, | 0|, | 0|, | 3|)
+	MA2 = (| 1|, | 2|, | 3|)
+	\endcode
+**/
+matrix MV2Matrix(multivector A, list Mask);
+
+/** 
+	\brief Generates a column vector based on a multivector.
+
+	\param L A list of multivectors.
+	\param (\b optional) Mask An embedding mask.
+	
+	\return A matrix whose columns represent the multivectors.
+	
+	\since v2.1
+
+	This function transforms a list of multivector into a matrix.	
+	Details of how this function works can be found in the section 
+	\ref page_SolveMVEqns "Solving Multivector Equations".
+	
+	For example,
+	\code
+	DefVarsE3();
+	
+	?A = 1*e1 + 2*e2^e3 + 3*I;
+	?B = 3*e1 + 1*e2^e3 + 2*I;
+	?MAB = MV2Matrix([A,B]);
+	
+	Mask = [0, 1, 0, 0, 2, 0, 0, 3];
+	?MAB2 = MV2Matrix([A,B], Mask);
+	\endcode
+	
+	produces the output
+	
+<b>A</b> = 1 <b>e1</b> + 2 <b>e23</b> + 3 <b>I</b><br><b>B</b> = 3 <b>e1</b> + 1 <b>e23</b> + 2 <b>I</b><br><b>MAB</b> <font size="12"><i>(8x2)</i></font> = <font size="12"><table><tr><td>
+0</td><td>0</td></tr><tr><td>
+1</td><td>3</td></tr><tr><td>
+0</td><td>0</td></tr><tr><td>
+0</td><td>0</td></tr><tr><td>
+2</td><td>1</td></tr><tr><td>
+0</td><td>0</td></tr><tr><td>
+0</td><td>0</td></tr><tr><td>
+3</td><td>2
+</td></tr></table>
+.<br></font><br><b>MAB2</b> <font size="12"><i>(3x2)</i></font> = <font size="12"><table><tr><td>
+1</td><td>3</td></tr><tr><td>
+2</td><td>1</td></tr><tr><td>
+3</td><td>2
+</td></tr></table>
+.<br></font><br>
+
+**/
+matrix MV2Matrix(list L, list Mask);
+
+
+/** 
+	\brief Reads a matrix from a text file.
+
+	\param filename The filename.
+	\param sepsym (\b optional) The separator symbol between elements in text file. The default is a space.
+	
+	\return The read in matrix.
+	
+	\since v2.1
+
+	Assuming the separator symbol to be a space, the text file format that can be read in with this function has to look like this.
+	
+	\code
+	[Rows] [Col]
+	[Value Row 1, Col 1] [Value Row1, Col 2] ...
+	[Value Row 2, Col 1] [Value Row2, Col 2] ...
+	...
+	\endcode	
+	
+For example, if a text file with the name '<tt>Mat.txt</tt>' looks like this
+
+\code
+	2 3
+	1 2 3
+	3 2 1
+\endcode
+
+the script
+
+\code
+	?M = ReadMatrix("Mat.txt");
+\endcode
+
+results in the output
+
+<b>M</b> <font size="12"><i>(2x3)</i></font> = <font size="12"><table><tr><td>
+1</td><td>2</td><td>3</td></tr><tr><td>
+3</td><td>2</td><td>1
+</td></tr></table>
+.<br></font><br>
+
+**/
+matrix ReadMatrix(string filename, string sepsym);
+
+
+/** 
+	\brief Changes the shape of a matrix.
+
+	\param M The initial matrix.	
+	\param Rows The new number of rows.
+	\param Cols The new number of columns.
+	\return A matrix of the new shape.
+	
+	\since v1.5
+	
+	The matrix returned has the same number of elements as the initial matrix. However,
+	the number of rows and columns have changed. This function allows you, for example,
+	to transform a NxM matrix into a (N*M)-vector.
+	
+For example,
+
+\code
+
+?M = Matrix( 2, 2 );
+M[1,1] = 1;
+M[1,2] = 2;
+M[2,1] = 3;
+M[2,2] = 4;
+?M;
+
+?V = ReshapeMatrix( M, 4, 1 );
+\endcode
+
+produces the output
+\code
+
+M = (| 0 0|, | 0 0|)
+M = (| 1 2|, | 3 4|)
+V = (| 1|, | 2|, | 3|, | 4|)
+\endcode
+**/
+matrix ReshapeMatrix(matrix M, counter Rows, counter Cols);
+
+
+/** 
+	\brief Changes the size of a matrix.
+
+	\param M The initial matrix.	
+	\param Rows The new number of rows.
+	\param Cols The new number of columns.
+	\return A matrix of the new dimensions, which kept the data of the initial matrix
+			as far as possible.
+	
+	\since v1.5
+	
+For example,
+
+\code
+
+?M = Matrix( 2, 2 );
+M[1,1] = 1;
+M[1,2] = 2;
+M[2,1] = 3;
+M[2,2] = 4;
+?M;
+
+?P = ResizeMatrix( M, 3, 3 );
+\endcode
+
+produces the output
+\code
+
+M = (| 0 0|, | 0 0|)
+M = (| 1 2|, | 3 4|)
+P = (| 1 2 0|, | 3 4 0|, | 0 0 0|)
+\endcode
+**/
+matrix ResizeMatrix(matrix M, counter Rows, counter Cols);
+
+
+/** 
+	\brief Transforms a row-vector to a diagonal matrix.
+
+	\param M The row vector.	
+	\return A matrix containing the components of the row vector on its diagonal.
+	
+	\since v1.4
+	
+	\deprecated Use the new name Row2Diag() instead.
+	
+For example,
+
+\code
+
+?M = Matrix( 1, 3 );
+M[1,1] = 1;
+M[1,2] = 2;
+M[1,3] = 3;
+?M;
+
+?D = RowToDiag(M);
+\endcode
+
+produces the output
+\code
+
+M = (| 0 0 0|)
+M = (| 1 2 3|)
+D = (| 1 0 0|, | 0 2 0|, | 0 0 3|)
+\endcode
+**/
+matrix RowToDiag(matrix M);
+
+
+/** 
+	\brief Transforms a row-vector to a diagonal matrix.
+
+	\param M The row vector.	
+	\return A matrix containing the components of the row vector on its diagonal.
+	
+	\since v1.5
+	
+	
+For example,
+
+\code
+
+?M = Matrix( 1, 3 );
+M[1,1] = 1;
+M[1,2] = 2;
+M[1,3] = 3;
+?M;
+
+?D = RowToDiag(M);
+\endcode
+
+produces the output
+\code
+
+M = (| 0 0 0|)
+M = (| 1 2 3|)
+D = (| 1 0 0|, | 0 2 0|, | 0 0 3|)
+\endcode
+**/
+matrix Row2Diag(matrix M);
+
+
+/** 
+	\brief Reduce matrix to those rows that span the row space and have highest magnitude.
+	
+	\param M The matrix.
+	\param prec (\b optional) A real number giving the precision for the row selection. Default is \f$1E-12\f$.
+	
+	\return A list consisting of the reduced matrix and a list of indices corresponding to the rows which have been selected.
+	
+	\since v2.0
+	
+	The list of indices is sorted according to the \f$L_2\f$-norm of the rows, which was at the same time the criterion
+	for selecting the rows.
+	
+	In the subsequent example a matrix \a M is created which is linear dependent since \f$n+1\f$ vectors
+	in a \f$n\f$-dimensional vectorspace are always linear dependent.
+	\code
+	dFac = 1.0; // change this value to 0.2 !
+	? M = Matrix( [ [ 1,0,0,0 ], [ 0,1,0,0 ], [ 0,0,1,0 ], [ 1,2,3,0 ] * dFac, [ 0,0,0,1e-5] ] );
+	L = RowSpace( M );
+	? Rows = L(2);	
+	? R = L(1);
+	\endcode
+	The application of \a RowSpace then results in a matrix \a R which is not linear dependent any more.
+	
+	\code
+	M = (| 1 0 0 0|, | 0 1 0 0|, | 0 0 1 0|, | 1 2 3 0|, | 0 0 0 1.0e-05|)
+	Rows = [4, 1, 2, 5]
+	R = (| 1 2 3 0|, | 1 0 0 0|, | 0 1 0 0|, | 0 0 0 1.0e-05|)
+	\endcode
+	
+**/
+list RowSpace(matrix M, scalar prec);
+
+
+/** 
+	\brief Returns the dimension of a matrix.
+	
+	\param M A matrix.
+	
+	\return A list containing the number of rows and columns.
+	
+	\since v2.0
+	
+	To give a short introduction look at
+	\code
+	?M = Matrix( [ [1,2,3,4,5], [9,8,7,6,5] ] );
+	?Rows = Size(M)(1);
+	?Cols = Size(M)(2);
+	\endcode
+
+	The result will be
+	\code
+	Rows = 2
+	Cols = 5
+	\endcode
+	<tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+**/
+list Size(matrix M);
+
+
+/** 
+	\brief Evaluates a singular value decomposition (SVD) of a matrix.
+	
+	\param M The matrix.
+	
+	\return A list of three matrices \f$(U,D,V)\f$, where \f$M = UDV^T\f$ and \f$UU^T = VV^T = I\f$.
+	
+	\since v1.0
+	
+This function performs a singular value decomposition of a matrix. The diagonal values are given in ascending order and the \f$U\f$ and \f$V\f$ matrices are ordered accordingly.
+For example,
+
+\code
+
+// Define a matrix
+?M = Matrix( ((1,2), (3,4)) );
+
+// Evaluate its singular value decomposition
+L = SVD(M);
+
+// Extract the three matrices from the list L
+?U = L[1];
+?D = L[2];
+?V = L[3];
+
+// Check that M can be reconstructed
+?U*D*~V;
+
+// Check the inverse of M
+?M * (V*!D*~U);
+\endcode
+
+produces the output
+\code
+M = (| 1 2|, | 3 4|)
+U = (| 0.914514 0.404554|, | -0.404554 0.914514|)
+D = (| 0.365966 0|, | 0 5.464986|)
+V = (| -0.817416 0.576048|, | 0.576048 0.817416|)
+Constant = (| 1 2|, | 3 4|)
+Constant = (| 1 0|, | 0 1|)
+\endcode
+
+**/
+list SVD(matrix M);
+
+
+/**
+	\brief Evaluates the singular value decomposition (SVD) of a submatrix of a tensor. 
+	
+	\param T A 2-valence tensor, or a tensor with two counting indices.
+	
+	\return A list of three matrices \f$(U,D,V)\f$, where \f$M = UDV^T\f$ and \f$UU^T = VV^T = I\f$.
+	
+	\since v2.2
+	
+	This function performs a singular value decomposition of a matrix. The diagonal values are given in ascending order and the \f$U\f$ and \f$V\f$ matrices are ordered accordingly.
+**/
+list SVD(tensor T);
+
+
+/**
+	\brief Transforms the upper triangular part including the diagonal of a symmetric matrix into a column vector.
+	
+	\param M A symmetric matrix.
+	
+	\return A single column matrix.
+
+	Here is an example.
+	
+	\code
+	?M = Matrix([[1,2,3],[2,4,5],[3,5,6]]);
+	?V = Sym2Col(M);
+	\endcode	
+	
+	Output:
+	
+	<b>M</b> <i>(3x3)</i>= <table border="0"><tr><td>
+	1</td><td>2</td><td>3</td></tr><tr><td>
+	2</td><td>4</td><td>5</td></tr><tr><td>
+	3</td><td>5</td><td>6
+	</td></tr></table>
+	<br><b>V</b> <i>(6x1)</i>= <table border="0"><tr><td>
+	1</td></tr><tr><td>
+	2.83</td></tr><tr><td>
+	4.24</td></tr><tr><td>
+	4</td></tr><tr><td>
+	7.07</td></tr><tr><td>
+	6
+	</td></tr></table>
+	<br>
+
+	Note that the off-diagonal elements are multiplied with the square root of 2, such that the scalar product of the matrix M with some other symmetric matrix is equal to the scalar product of the vector V with another vector generated in this way.
+**/
+matrix Sym2Col(matrix M);
+
+
+/**
+	\brief Transforms the upper triangular part including the diagonal of a symmetric matrix into a column vector.
+	
+	\param T A symmetric tensor.
+	
+	\return A single column matrix.
+
+	The parameter T can be either a 2-valence tensor or, if T is a tensor with a higher valence, two different counting indices have to be given. Here is an example.
+	
+	\code
+	?T = Tensor(3, [2,3,3]);
+	?V = Sym2Col(T(1,-1,-2));
+	\endcode	
+	
+	Output:
+	
+	<b>T</b> <i>(2x3x3)</i>= <table border="0"><tr>
+<td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr></table>
+
+<table border="0"><tr>
+<td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr><tr>
+<td>0</td><td>0</td><td>0</td></tr></table>
+<br><b>V</b> <i>(6x1)</i>= <table border="0"><tr><td>
+0</td></tr><tr><td>
+0</td></tr><tr><td>
+0</td></tr><tr><td>
+0</td></tr><tr><td>
+0</td></tr><tr><td>
+0
+</td></tr></table>
+<br>
+
+**/
+matrix Sym2Col(tensor T);
+
+
+
+/** \}
+**/
+
+/** \}
+**/
+

@@ -1,0 +1,17 @@
+// A matrix
+M = Matrix(
+	[[1,2,3], 
+	 [4,5,6], 
+	 [7,8,9]]);
+
+// Get first row
+?M(1);
+// Get element in row 1 and col. 2
+?M(1,2);
+// Get 2x2 submatrix starting at (2, 2)
+?M(2, 2, 2, 2);
+// Get second column
+?M(1, 2, 3, 1);
+
+// Get a number of different things
+?M([ [[1], [3]], [1,2], [2,2,2,2], [1,2,3,1]]);

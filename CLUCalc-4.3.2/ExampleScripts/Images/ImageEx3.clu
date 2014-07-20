@@ -1,0 +1,49 @@
+// Image Function Example 3
+
+_FrameBoxSize = 0;
+_BGColor = White;
+
+// Read an image
+Img = ReadImg("Surf2.bmp");
+
+// This time we work in an overlay 
+// coordinate system
+StartOverlay();
+
+SetImgAlign(0,1);	// top-left align
+SetImgPos(5,5,0);
+SetImgScale(2);
+
+// Draw Image
+:Img;
+
+// Get Coordinates of image
+P = GetImgCoords(Img);
+
+/////////////////////////////////////////
+// Draw logo on top of the image
+
+// Transparency options are only applied
+// to images when they are loaded, not
+// every time they are displayed.
+
+// Enable color transparency for images
+EnableImgTransparency(1);
+// Set a color that is to be made transparent
+SetImgTransparentColor(White);
+
+Logo = ReadImg("cog_siegel.bmp");
+
+// Set alignment to bottom right
+SetImgAlign(1,0);
+
+// Set position into bottom right corner of image
+SetImgPos(P(4), P(2), P(3)+1);
+
+// Set Scale to 1
+SetImgScale(1);
+
+// Draw the logo
+:Logo;
+
+EndOverlay();

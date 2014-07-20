@@ -1,0 +1,23 @@
+// An empty list
+L = []; 
+
+// A function
+func = { _P(1)("color1") + _P(1)("color2") }
+
+// Add a name field
+L("name") = "My Colors";
+// Add an element with the name "color1"
+L("color1") = Red;
+// Add another element with the name "color2"
+L("color2") = Blue;
+// Add a field that contains the function 'func'
+L("sum") = func;
+
+?L;
+?L("name");
+?L("color1");
+?L("color2");
+
+// This calls the function 'func' with 'L' as
+// its only parameter.
+?L("sum")(L);

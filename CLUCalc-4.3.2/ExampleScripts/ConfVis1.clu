@@ -1,0 +1,95 @@
+// Visualizable Elements in Conformal Space
+
+DefVarsN3();
+:DRAW_POINT_AS_SPHERE;
+:N3_SOLID;
+
+Pnt = 
+[ 
+	VecN3(1), 
+	VecN3(0.5,0.5,0.5), 
+	VecN3(-0.5,-0.5,0.5),
+	VecN3(-0.5,0.5,-0.5)	
+];
+
+
+ElementList =
+[ 
+	"Point", 
+	"Point Pair", 
+	"Line", 
+	"Circle",
+	"Plane",
+	"Sphere"
+];
+
+MVList =
+[
+	// Point
+	Pnt(1),	
+	// Point Pair
+	Pnt(1)^Pnt(2),
+	// Line
+	Pnt(1)^Pnt(2)^e,
+	// Circle
+	Pnt(1)^Pnt(2)^Pnt(3),
+	// Plane
+	Pnt(1)^Pnt(2)^Pnt(3)^e,
+	// Sphere
+	Pnt(1)^Pnt(2)^Pnt(3)^Pnt(4)
+];
+
+CurPList =
+[
+	[ Pnt(1) ],
+	[ Pnt(1), Pnt(2) ],
+	[ Pnt(1), Pnt(2) ],
+	[ Pnt(1), Pnt(2), Pnt(3) ]
+	[ Pnt(1), Pnt(2), Pnt(3) ]
+	[ Pnt(1), Pnt(2), Pnt(3), Pnt(4) ]
+];
+
+iCurEl = Choice("Element", ElementList, 1);
+iNS = Choice("Null Space", ["Outer Product", "Inner Product", "Both"], 1);
+
+?"Current Element: " + ElementList(iCurEl);
+?" ";
+
+:OPNS;
+SetPointSize(3);
+:CurPList(iCurEl);
+SetPointSize(5);
+:Blue;
+:Pnt(1);
+
+
+if (iNS == 1)
+{
+	:Red;
+	:OPNS;
+	?"OPNS:";
+	?AnalyzeMV(MVList(iCurEl), 1);
+	?" ";
+}
+else if (iNS == 2)
+{
+	:Green;
+	:IPNS;
+	?"IPNS:";
+	?AnalyzeMV(MVList(iCurEl), 1);
+	?" ";
+}
+else if (iNS == 3)
+{
+	:Red;
+	:OPNS;
+	?"OPNS:";
+	?AnalyzeMV(MVList(iCurEl), 1);
+	?" ";
+	
+	:Green;
+	:IPNS;
+	?"IPNS:";
+	?AnalyzeMV(MVList(iCurEl), 1);
+	?" ";
+}

@@ -1,0 +1,32 @@
+// Bitmap Intro
+
+_BGColor = White;
+
+// You can now also draw bitmap files
+// that are stored in the windows .bmp format
+// as 24bit true color images.
+
+// Align the bitmaps to the center of
+// the drawing position.
+SetImgAlign(0.5, 0.5);
+
+// Draw a .bmp bitmap with the command
+DrawImg(0,0,-3, "Surf2.bmp");
+
+// You can also define a bitmap color
+// as transparent. To do this first switch
+// on transparency.
+EnableImgTransparency(1);
+
+// Now set the color that is to be transparent
+SetImgTransparentColor(White);
+
+// Now draw a bitmap that has a black background.
+// Depending on how you set the z-axis component
+// the second bitmap will appear in front or behind
+// the other.
+DrawImg(1,-1,0.5, "cog_siegel.bmp");
+
+// Switch off transparency again.
+EnableImgTransparency(0);
+

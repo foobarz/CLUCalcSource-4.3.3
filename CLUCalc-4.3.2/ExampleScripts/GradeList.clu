@@ -1,0 +1,11 @@
+DefVarsE3();
+
+?A = 1 + e1 + e2 + e1^e2;
+?"List of grades in A: " + Str(L = GradeList(A));
+?"Number of grades: " + Size(L);
+?"Lenght of \"Hallo\": " + Size("Hallo");
+?"Type of A, L: '" + Type(A) + "', '" + Type(L) + "'";
+
+?SL = [" Hello ", " World "] + [" Hello ", " World "];
+?Size(SL);
+?Size(SL(1,1));

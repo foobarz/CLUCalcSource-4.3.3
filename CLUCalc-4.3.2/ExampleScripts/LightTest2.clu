@@ -1,0 +1,193 @@
+_DoAnimate = 1;
+_FrameBoxSize = 0;
+
+?Angle = ((Time * 180) % 360) * RadPerDeg;
+R = RotorE3(0,1,0, Angle);
+
+A = VecE3(1) + VecE3(0,1,2);
+Dir = R * VecE3(0,-0.1,-1) * ~R;
+
+:Blue;
+A;
+
+
+fSpotCutOff = 30;
+
+SetAmbientLight(DWhite);//Color(0.3, 0.3, 0.3, 1));
+EnableLight(0, 0);
+EnableLight(1, 1);
+
+//if (ExecMode == EM_CHANGE)
+EnableLightFixed(1, 0);
+SetLightPos(1, A);
+SetLightAmbientCol(1, Black);
+SetLightDiffuseCol(1, MMagenta);
+SetLightSpecularCol(1, MGray);
+SetLightSpotDir(1, Dir);
+SetLightSpotCutOff(1, fSpotCutOff);
+SetLightSpotExp(1, 5);
+SetLightAttenuation(1, 0, 0, 0.2);
+
+
+DrawCone(A+VecE3(0,0,0.05), 0.3*Dir, 0.3*tan((fSpotCutOff-5)*RadPerDeg));
+
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK)
+{   
+	imgTex1 = ReadImg("tex_bluemarble.png");
+	imgTex2 = ReadImg("tex_brick.png");
+	imgTex3 = ReadImg("cog_siegel.png");
+	
+	
+	if (ReadVar("Scene1.xml", lScene) != "OK")
+	{
+		SetGaussPars(0, 0.1);
+		
+		Rad = 0.2;
+		
+		DefVarsE3();
+		?PosX = A . e1;
+		?PosY = A . e2;
+		?PosZ = A . e3;
+		
+		C = VecN3(-Rad, 0, 0) ^ VecN3(0, 0, Rad)
+			^ VecN3(Rad, 0, 0);
+		
+		T = TranslatorN3(PosX, 0, PosZ);
+		C = T*C*~T;
+		
+		T = TranslatorN3(0, PosY+0.1, 0);
+		LC = [C, T*C*~T];
+		
+		:MGreen;
+		SetTextureRepeat(0.2);
+		Cyl = DrawCircleSurface(LC);
+		SetTextureRepeat(0);
+		
+		bFirst = 1;
+		
+		StepX = 0.4;
+		StepY = 0.4;
+		
+		MinX = -5;
+		MaxX = 5;
+		MinY = -5;
+		MaxY = 5;
+		
+		NX = 1;
+		NY = 1;
+		
+		wx = 2*Pi*NX / (MaxX - MinX);
+		wy = 2*Pi*NY / (MaxY - MinY);
+		
+		fAmplitude = 0.4;
+		
+		iWaveSteps = 1;
+		iWave = 1;
+		PhaseStep = 4*Pi / (iWaveSteps + 1);
+		
+		loop
+		{
+			bFirst = 1;
+		
+			if (iWave > iWaveSteps)
+				break;
+		
+		PhaseX = (iWave - 1) * PhaseStep;
+		PhaseY = -Mouse(1,2,3);
+		
+		iRowCount = 0;
+		y = MinY;
+		loop
+		{
+			if (y > MaxY)
+				break;
+			
+			x = MinX;
+			loop
+			{
+				if (x > MaxX)
+					break;
+		
+				//fErr = Gauss();
+				X = x + PhaseX;
+				Y = y + PhaseY;
+		
+				// Points
+				fVal = fAmplitude*cos(wx*X)*cos(wy*Y);
+				A = VecP3(x, fVal, -y);
+		
+				// Normals
+				dX = VecE3(1, -wx*fAmplitude*sin(wx*X)*cos(wy*Y), 0);
+				dY = VecE3(0, -wy*fAmplitude*sin(wy*Y)*cos(wx*X), -1);
+				N = *(dX^dY);
+		/*
+				A = VecP3(x, 0, -y);
+		
+				dX = VecE3(1, 0, 0);
+				dY = VecE3(0, 0, -1);
+				N = *(dX^dY);
+		*/
+				N = N / sqrt(N.N);
+			
+				fCol = fVal / fAmplitude;
+				fCol = fCol * fCol;
+				Col = Color(fCol,fCol,0.8*(1-fCol));
+				if (bFirst)
+				{
+					bFirst = 0;
+					LP = A;
+					LN = N;
+					LC = Col;
+				}
+				else
+				{
+					LP << A;
+					LN << N;
+					LC << Col;
+				}
+		
+				x = x + StepX;
+			}
+		
+			y = y + StepY;
+			iRowCount = iRowCount + 1;
+		}
+		
+		RowCount = iRowCount; //(MaxY - MinY) / StepY + 1;
+		ColCount = Len(LP) / iRowCount; //(MaxX - MinX) / StepX + 1; 
+		
+		if (iWave == 1)
+			Surface = DrawPointSurface(ColCount, RowCount, LP, LC, 0);
+		else
+			Surface << DrawPointSurface(ColCount, RowCount, LP, LC, 0);
+		
+		iWave = iWave + 1;
+		} // loop iWave
+		
+		iWave = 1;
+		
+		lScene = [Surface, Cyl];
+		WriteVar("Scene1.xml", lScene);
+	}
+}
+else
+{
+//	if (iWave > iWaveSteps)
+//		iWave = 1;
+
+//	?iWave;
+	SetTexture(imgTex1);
+	:lScene(1);
+	
+	SetTexture(imgTex2);
+	:White;
+	:lScene(2);
+	
+	SetTexture(imgTex3);
+	:White;
+	DrawSphere(VecE3(0,0.6,0), 0.5);
+	
+	//iWave = iWave + 1;
+}

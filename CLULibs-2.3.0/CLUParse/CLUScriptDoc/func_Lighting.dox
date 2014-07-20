@@ -1,0 +1,258 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_LightFunc Lighting Functions
+
+	These functions allow you to influence the lighting of the visualizations. The functions presented here are basically only wrappers for the corresponding OpenGL lighting features. It may therefore be helpful to have a look at the OpenGL book.
+
+	One important aspects of lighting is that each light has three main light components:
+	<ol>
+		<li>ambient,
+		<li>diffuse,
+		<li>specular.
+	</ol>
+	These types of lights influence the lighting of an object in different ways.
+	Here is an example script, where the standard light is switched off, so that you can play around with all the particular lighting settings and see the effect directly.
+	
+\code
+DefVarsE3();
+
+:E3_DRAW_VEC_AS_POINT;
+:Blue;
+:A = -3*e1;
+Dir = e1;
+fSpotCutOff = 15;
+
+EnableLight(0, 0);
+EnableLight(1, 1);
+EnableLightFixed(1,0);
+
+SetAmbientLight(DWhite);
+
+SetLightPos(1, A);
+
+SetLightAmbientCol(1, Black);
+SetLightDiffuseCol(1, MMagenta);
+SetLightSpecularCol(1, MGray);
+
+SetLightSpotDir(1, Dir);
+SetLightSpotCutOff(1, fSpotCutOff);
+SetLightSpotExp(1, 2);
+SetLightAttenuation(1, 0.1, 0, 0);
+
+:N3_SOLID;
+:MWhite;
+:SphereN3(0,0,0, 1);
+
+DrawCone(A-0.05*Dir, Dir, tan(fSpotCutOff*RadPerDeg));
+\endcode
+
+This generates the following visualization.
+
+\image html LightTest1_img1.jpg
+
+The example script <tt>LightTest2.clu</tt> gives a nice example of an animated lighting effect. Here is a screenshot.
+
+\image html LightTest2_img1.jpg
+
+	\{
+**/
+
+/**
+	\brief Enables or disables a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param DoEnable If this is zero, the light is disabled, otherwise it is enabled.
+		
+	\return Nothing.
+	
+	\since v1.4
+
+	There exists one standard light and seven optional lights. By default, only the standard light is switched on. The standard light has the Id number 0. The other lights have Ids 1 to 7.
+**/
+void EnableLight(counter Light, counter DoEnable);
+
+/**
+	\brief Enables or disables a light fixed.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param DoEnable If this is zero, the light is not fixed, otherwise it is fixed.
+		
+	\return Nothing.
+	
+	\since v1.4
+
+	If a light is fixed, it does not move together with the frame, when the frame is translated or rotated by the user. The standard light is always fixed. The other seven lights may either be fixed, or be elements of the visualization scene and move with it. By default they are all \b not fixed.
+**/
+void EnableLightFixed(counter Light, counter DoEnable);
+
+
+
+/**
+	\brief Resets all lighting settings to the default ones.
+	
+	\return Nothing.
+**/
+void ResetLight();
+
+
+
+/**
+	\brief Sets the global ambient color.
+	
+	\param Col The ambient color.
+	
+	\since v1.4
+	
+	The ambient color refers to a global light that has no position and no direction. If you set the ambient color to white, this has the same effect as having no lighting at all. Everything is then just drawn in the color given to it. If the ambient color is darker, then the additional, positional lights affect the lighting.
+**/
+void SetAmbientLight(color Col);
+
+/**
+	\brief Sets the ambient color of a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param Col The ambient color.
+			
+	\return Nothing.
+	
+	\since v1.4
+**/
+void SetLightAmbientCol(color Col);
+
+
+/**
+	\brief Sets the attenuation of the light with distance from its source.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param C The constant attenuation component.
+	\param L The linear attenuation component.
+	\param Q The quadratic attenuation component.
+			
+	\return Nothing.
+	
+	\since v1.4
+	
+	This function allows you to specify the polynomial with describes the attenuation of the light with distance from its source.
+**/
+void SetLightAttenuation(counter Light, scalar C, scalar L, scalar Q);
+
+
+/**
+	\brief Sets the diffuse color of a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param Col The diffuse color.
+			
+	\return Nothing.
+	
+	\since v1.4
+**/
+void SetLightDiffuseCol(color Col);
+
+/**
+	\brief Sets the specular color of a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param Col The specular color.
+			
+	\return Nothing.
+	
+	\since v1.4
+**/
+void SetLightSpecularCol(color Col);
+
+
+/**
+	\brief Sets the position of a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param P The position of the light.
+			
+	\return Nothing.
+	
+	\since v1.4
+
+	The position vector \a P is always transformed into a projective vector. This is done, since it is also allowed to place a light at infinity, which you do by setting the homogeneous component to zero.
+**/
+void SetLightPos(counter Light, multivector P);
+
+/**
+	\brief Sets the position of a light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param X The x-component of the position vector.
+	\param Y The y-component of the position vector.
+	\param Z The z-component of the position vector.
+	\param W The homogeneous component of the position vector.
+			
+	\return Nothing.
+	
+	\since v1.4
+
+	The position vector (\a X, \a Y, \a Z, \ W) is a projective vector. This is done, since it is also allowed to place a light at infinity, which you do by setting the homogeneous component to zero (\a W = 0).
+**/
+void SetLightPos(counter Light, scalar X, scalar Y, scalar Z, scalar W);
+
+
+/**
+	\brief Sets the opening angle of a spot light.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param Angle The opening angle of the light cone.
+	
+	\return Nothing.
+	
+	\since v1.4
+**/
+void SetLightSpotCutOff(counter Light, scalar Angle);
+
+/**
+	\brief Sets the direction in which a light shines.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param D The direction in which the light shines. This has to be a Euclidean vector.
+			
+	\return Nothing.
+	
+	\since v1.4
+
+**/
+void SetLightSpotDir(counter Light, multivector D);
+
+/**
+	\brief Sets the direction in which a light shines.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param X The x-component of the direction vector.
+	\param Y The y-component of the direction vector.
+	\param Z The z-component of the direction vector.
+			
+	\return Nothing.
+	
+	\since v1.4
+
+**/
+void SetLightSpotDir(counter Light, scalar X, scalar Y, scalar Z);
+
+/**
+	\brief Sets the fuzzyness of the spot border.
+	
+	\param Light The Id-number of the light to enable or disable.
+	\param Exp The spot exponent.
+	
+	\return Nothing.
+	
+	\since v1.4
+**/
+void SetLightSpotExp(counter Light, scalar Exp);
+
+
+/** \}
+**/
+
+/** \}
+**/

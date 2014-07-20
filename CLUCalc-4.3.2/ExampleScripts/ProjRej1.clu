@@ -1,0 +1,15 @@
+DefVarsE3();
+
+// Define Plane
+:P = 4*e3^e1:MBlue;
+
+// Define Vector
+// Can be controlled through mouse mode 1
+:X = VecE3(1) + e1 + e2:Red;
+
+// Draw Projection of X onto P as Magenta vector
+:A = proj(X, P):Magenta;
+
+// Draw Rejection of X from P as Yellow vector
+:B = rej(X, P):Yellow;
+

@@ -1,0 +1,200 @@
+\form#0:$x\,y$
+\form#1:$ \frac{1}{2}\;(X Y + Y X) $
+\form#2:$A$
+\form#3:$A = \mathbf{a} + \rho e_4$
+\form#4:$\mathbf{a} = x\,e_1 + y\,e_2 + z\,e_3$
+\form#5:$\rho$
+\form#6:$\frac{1}{\rho} A = \frac{1}{\rho}\mathbf{a} + e_4$
+\form#7:$ \frac{1}{2}\;(X Y - Y X) $
+\form#8:$e_1$
+\form#9:$e_2$
+\form#10:$e_3$
+\form#11:$e_4$
+\form#12:$e_5$
+\form#13:$e_6$
+\form#14:$e_1\wedge e_2\wedge e_3\wedge e_4\wedge e_5\wedge e_6$
+\form#15:$\{ e_1, e_2, e_3, e_4, e_5, e_6 \}$
+\form#16:$+1$
+\form#17:$e_1\wedge e_2\wedge e_3$
+\form#18:$\{ e_1, e_2, e_3 \}$
+\form#19:$e_+$
+\form#20:$e_-$
+\form#21:$e$
+\form#22:$e_0$
+\form#23:$n$
+\form#24:$e_1\wedge e_2\wedge e_3\wedge e_+\wedge e_-$
+\form#25:$\{ e_1, e_2, e_3, e_+ \}$
+\form#26:$-1$
+\form#27:$e, e_0, n, e_0$
+\form#28:\[ e \equiv n := e_- + e_+\;;\quad e_0 \equiv e_0 := \frac{1}{2} (e_- - e_+) \]
+\form#29:$\{ e, e_0 \}$
+\form#30:$\{ n, \bar{n} \}$
+\form#31:$e^2 = e_0^2 = n^2 = e_0^2 = 0$
+\form#32:$e\cdot e_0 = n\cdot \bar{n} = -1$
+\form#33:$e_1\wedge e_2\wedge e_3\wedge e_4$
+\form#34:$\{ e_1, e_2, e_3, e_4 \}$
+\form#35:\[ \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1 \end{array} \right) \]
+\form#36:\[ \left( \begin{array}{ccc} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 0 \end{array} \right) \]
+\form#37:$\pi/4$
+\form#38:$x\,e_1 + y\,e_2 + z\,e_3$
+\form#39:$k$
+\form#40:$2^n$
+\form#41:$( \mathtt{val}\; != 0)$
+\form#42:$S = (A - \frac{1}{2} \rho^2 e)^*$
+\form#43:\[ x\, e_1 + y\, e_2 + z\, e_3 + \frac{1}{2}\;(x^2 + y^2 + z^2)\; e + e_0 \]
+\form#44:$ 0\le g\le 1$
+\form#45:$ [0\,\ldots\,1]$
+\form#46:$M$
+\form#47:$S$
+\form#48:\[ M = 1.2^{\frac{1}{2}\,S}. \]
+\form#49:$ \sqrt{|A\cdot \tilde{A}|} $
+\form#50:$ \cos^{-1}(x) $
+\form#51:$ \sin^{-1}(x) $
+\form#52:$ \tan^{-1}(x) $
+\form#53:$ n $
+\form#54:$ n\ge x $
+\form#55:$ \exp(x) $
+\form#56:$ !n $
+\form#57:$ \{0, 1, \ldots, 170\} $
+\form#58:$ n\le x $
+\form#59:$ a_{ij}^{-1} $
+\form#60:$ a_{ij}\neq 0$
+\form#61:$ \log_e(x) $
+\form#62:$ x^a $
+\form#63:$ A^n $
+\form#64:$ \sin(rad) $
+\form#65:$ \sqrt{x} $
+\form#66:$ \tan(rad) $
+\form#67:$M\,=\,VDV^{-1}$
+\form#68:$1\times n$
+\form#69:$n\times n$
+\form#70:$V$
+\form#71:$1E-12$
+\form#72:$L_2$
+\form#73:$n+1$
+\form#74:$(U,D,V)$
+\form#75:$M = UDV^T$
+\form#76:$UU^T = VV^T = I$
+\form#77:$U$
+\form#78:$\mathtt{Count}\choose \mathtt{Choose}$
+\form#79:${\mathtt{Count}\choose \mathtt{Choose}}\cdot\mathtt{Choose}\,!$
+\form#80:$[[a], [b], [c]]$
+\form#81:$[[a], [c], [b]]$
+\form#82:$[[b], [a], [c]]$
+\form#83:$[[b], [c], [a]]$
+\form#84:$[[c], [a], [b]]$
+\form#85:$[[c], [b], [a]]$
+\form#86:$[0,0]$
+\form#87:$[]$
+\form#88:$\pi/180$
+\form#89:$B$
+\form#90:$C$
+\form#91:$U = A\wedge B$
+\form#92:$\Sigma_{AC}$
+\form#93:$\Sigma_{BC}$
+\form#94:$\Sigma_{AA}$
+\form#95:$\Sigma_{BA} = \Sigma_{AB}^\mathsf{T}$
+\form#96:$U\cdot A$
+\form#97:$\{E_i\}_{i=1}^{2^n}$
+\form#98:\[ A = \sum_{i=1}^{2^n}\;\alpha^i\, E_i, \]
+\form#99:$\{\alpha^i\}$
+\form#100:\[ A\circ B = \sum_{k=1}^{2^n}\,\sum_{i=1}^{2^n}\,\sum_{j=1}^{2^n}\; \alpha^i\,\beta^j\; {g^k}_{ij}\,E_k, \]
+\form#101:$\circ$
+\form#102:${g^k}_{ij}$
+\form#103:\[ {h^k}_j = \sum_{i=1}^{2^n}\;\alpha^i\,{g^k}_{ij}, \]
+\form#104:$A\,\circ\,X = B$
+\form#105:$X$
+\form#106:\[ \sum_{i=1}^{2^n}\,\sum_{j=1}^{2^n}\; \alpha^i\,\xi^j\; {g^k}_{ij} = \beta^k\quad \forall\,k. \]
+\form#107:\[ \sum_{j=1}^{2^n}\; \xi^j\; {h^k}_{j} = \beta^k\quad \forall\,k, \]
+\form#108:${h^k}_j$
+\form#109:$A\,X = 0$
+\form#110:$e_1\cdot X = 0$
+\form#111:$\{1,\,e_2,\, e_3,\,e_2\wedge e_3\}$
+\form#112:$e_2 + e_3$
+\form#113:$V X \tilde{V} = Y$
+\form#114:$Y$
+\form#115:$V \tilde{V} = 1$
+\form#116:\[ V X \tilde{V} = Y \;\iff\; V X - Y V = 0. \]
+\form#117:$ A = e_1+e_2+e_3 $
+\form#118:$1.2$
+\form#119:$2\times 2$
+\form#120:\[ M = \left(\begin{array}{cc} 2 & 3 \\ 3 & 4 \end{array}\right) \]
+\form#121:$y$
+\form#122:$x$
+\form#123:$z$
+\form#124:$[0, 2\pi[$
+\form#125:$3\times 3$
+\form#126:$A / B = A B^{-1}$
+\form#127:$2\times 3$
+\form#128:$D$
+\form#129:$e_1 + e_2 + e_3$
+\form#130:$e_1 + e_2 + e_3 + e_4$
+\form#131:$e_\infty$
+\form#132:$\bar{n}$
+\form#133:$e_\infty, e_0, n, \bar{n}$
+\form#134:\[ e_\infty \equiv n := e_- + e_+\;;\quad e_0 \equiv \bar{n} := \frac{1}{2} (e_- - e_+) \]
+\form#135:$\{ e_\infty, e_0 \}$
+\form#136:$e_\infty^2 = e_0^2 = n^2 = \bar{n}^2 = 0$
+\form#137:$e_\infty\cdot e_0 = n\cdot \bar{n} = -1$
+\form#138:$A\cdot B\,C = (A\cdot B)\,C$
+\form#139:$A\wedge B\, C = (A\wedge B)\,C$
+\form#140:$A\cdot B\wedge C = A\cdot (B\wedge C)$
+\form#141:$< A >_2$
+\form#142:$X\wedge e_\infty$
+\form#143:$Y\wedge e_\infty$
+\form#144:$X\wedge e_\infty\wedge Y\wedge e_\infty$
+\form#145:$X\wedge Y\wedge e_\infty$
+\form#146:$(e_1\wedge e_\infty)\vee (e_2\wedge e_\infty) = e_\infty. $
+\form#147:$e_1\wedge e_2$
+\form#148:$-e_1\wedge e_2$
+\form#149:$A_{<k>}$
+\form#150:$A_{<k>}\wedge X = 0$
+\form#151:$A_{<k>}\cdot X = 0$
+\form#152:$(A_{<k>}\wedge X)^* = A_{<k>}\cdot X^*$
+\form#153:$TR \tilde{T}$
+\form#154:$R$
+\form#155:$T$
+\form#156:$TR$
+\form#157:$e_1 + 2e_2 + 3e_3$
+\form#158:$e1$
+\form#159:$X = \mathbf{x} + \frac{1}{2}\mathbf{x}^2 e + e_0$
+\form#160:$\mathbf{x}$
+\form#161:$S = X - \frac{1}{2}\rho^2 e$
+\form#162:$S = X + \frac{1}{2}\rho^2 e$
+\form#163:$\sqrt{-1}\,\rho$
+\form#164:$X = \mathbf{x}$
+\form#165:$\alpha \mathbf{x}$
+\form#166:$\alpha$
+\form#167:$X, Y$
+\form#168:$X\wedge Y$
+\form#169:$(X, Y)$
+\form#170:$X\wedge n$
+\form#171:$(X, n)$
+\form#172:$X,Y,Z$
+\form#173:$X\wedge Y\wedge Z$
+\form#174:$Z$
+\form#175:$X\wedge Y\wedge n$
+\form#176:$X, Y, Z, W$
+\form#177:$X\wedge Y\wedge Z\wedge n$
+\form#178:$X\wedge Y\wedge Z\wedge W$
+\form#179:$X\wedge Y\wedge Z\wedge e$
+\form#180:$X\wedge e\wedge e_0$
+\form#181:$X\wedge Y\wedge e\wedge e_0$
+\form#182:$X\wedge Y\wedge Z\wedge e\wedge e_0$
+\form#183:$e1\wedge e$
+\form#184:$e1\wedge e2\wedge e$
+\form#185:$e1\wedge e2\wedge e3\wedge e$
+\form#186:$f(x) = x^2$
+\form#187:$[-2,2]$
+\form#188:$sin(x)/x$
+\form#189:$x = 0$
+\form#190:$\pi \approx 3.14159265359$
+\form#191:$\pi/180 \approx 0.0174532925$
+\form#192:\[ A = \left(\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right), \quad B = \left(\begin{array}{cc} 2 & 3 \\ 1 & 4 \end{array}\right), \quad C_{i,k} = \sum_{j=1}^2\;A_{i,j}\,B_{j,k}. \]
+\form#193:\[ A = \left(\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right), \quad B = \left(\begin{array}{cc} 2 & 3 \\ 1 & 4 \end{array}\right), \quad C_{i,k} = \sum_{j=1}^2\;\frac{A_{i,j}}{B_{j,k}}, \]
+\form#194:\[ A = \left(\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right), \quad B = \left(\begin{array}{cc} 2 & 3 \\ 1 & 4 \end{array}\right), \quad C_{i,j} = \;A_{i,j}\,B_{i,j}. \]
+\form#195:\[ A = \left(\begin{array}{cc} 1 & 2 \\ 3 & 4 \end{array}\right), \quad B = \left(\begin{array}{cc} 2 & 3 \\ 1 & 4 \end{array}\right), \quad C_{j} = \sum_{i=1}^2 \;A_{i,j}\,B_{i,j}. \]
+\form#196:$\alpha^i$
+\form#197:$\beta^i$
+\form#198:\[ \gamma^k = \sum_i\,\sum_j\;\alpha^i\,\beta^j\;{g^k}_{ij}, \]
+\form#199:$\gamma^k$

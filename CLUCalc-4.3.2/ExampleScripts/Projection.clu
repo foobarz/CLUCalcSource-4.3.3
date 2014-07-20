@@ -1,0 +1,8 @@
+DefVarsE3();
+
+:A = VecE3(1) + e1:Red;
+:B = e3:Blue;
+:P = A^B;
+
+:X = VecE3(2) + e2:Yellow;
+:Y = (X . P)/P:Magenta;

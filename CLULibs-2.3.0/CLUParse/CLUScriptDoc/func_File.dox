@@ -1,0 +1,345 @@
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_File File Functions
+
+	Functions that deal with files.
+	
+	\{
+**/
+
+
+/**
+	\brief Create a dialog box to select a file.
+	
+	\param Name (\b optional) The name of the tool (default="Select File").
+	\param Pattern (\b optional) A string specifying a search pattern (default="*.*").
+	
+	\return A string containing the name of the selected file.
+	
+	\since v2.0
+
+	The call of this function first opens a dialog box. Depending on the value of the optional parameter <tt>Pattern</tt> the user is asked to select
+	a file. The name of the file will then be returned.
+**/
+string FileChooser(string Name, string Pattern);
+
+
+
+/** 
+	\brief This function reads a text data file.
+	
+	\param Filename The filename of the data file to be read.
+	\param Sep The separation symbol between items. This is \b optional. 
+	The default separator symbol is a space.
+	
+	\since v1.4
+
+	This function reads a text data file that contains data which is basically organized as a matrix. Each line in the text file is read in as a sublist contained in a list. The text symbol that separates elements within a line is by default a space but can be set to any other symbol. The data entries must be scalar values. The path to the data file is considered to be relative to the path where the currently executed script is located. Here is an example. Consider that the data file is called "Test.dat" and has the form
+	
+\verbatim
+1.2 3.4 -6.2
+4.3 1.2543 8.3 9.2
+\endverbatim
+
+The code
+\code
+?L = ReadData("Test.dat");
+\endcode
+
+then produces the output
+\code
+L = ((1.2, 3.4, -6.2), (4.3, 1.2543, 8.3, 9.2))
+\endcode
+
+Similarly, if the file looks like this
+\verbatim
+1.2, 3.4, -6.2
+4.3, 1.2543, 8.3, 9.2
+\endverbatim
+
+then the following code
+\code
+?L = ReadData("Test.dat", ",");
+\endcode
+
+produces the same output
+\code
+L = ((1.2, 3.4, -6.2), (4.3, 1.2543, 8.3, 9.2))
+\endcode
+	
+**/
+list ReadData(string Filename, string Sep);
+
+
+/**
+	\brief Read image from a file.
+	
+	\param sName A filename.
+	
+	\return An image variable containing the image read.
+	
+	\since v2.2
+
+	Reads an image from a file with the name \c sName. Possible file formats are '.bmp', '.jpg', '.pcx', '.png', '.raw', '.sgi', '.tga', '.tif'.
+**/
+image ReadImg(string sName);
+
+
+/**
+	\brief Read the contents of a text file and store it in a string variable.
+	
+	\param sFilename The filename.
+	\param sData The contents of the file.
+	
+	\return The string 'OK', when no error occured and an error message otherwise.
+	
+	\since v2.3
+
+	This function reads the contents of a text file and stores them as a string in \a sData.
+**/
+string ReadText(string sFilename, any_type sData);
+
+
+
+/**
+	\brief Read the contents of a data file and store the data in a variable.
+	
+	\param sName A filename.
+	\param vData A variable of any type in which the result of the read operation is stored.
+	
+	\return The string 'OK', when no error occured and an error message otherwise.
+	
+	\since v2.2
+
+	This function reads the contents of a data file generated with WriteVar() and stores the results in the variable \a vData. 
+**/
+string ReadVar(string sName, any_type vData);
+
+
+/**
+	\brief Read the contents of a XML file and store them in a nested list.
+	
+	\param sName A filename.
+	\param lData A variable of any type in which the result of the read operation is stored.
+	
+	\return The string 'OK', when no error occured and an error message otherwise.
+	
+	\since v2.3
+
+	This function reads the contents of any XML file and stores the data in a nested list, which is returned in the variable \a lData. For example, consider the following XML data file:
+	
+	\code
+	<?xml version="1.0" encoding="utf-8" ?> 
+	<test version="1.0">
+		Hello World!
+	</test>
+	\endcode
+	
+	When this data file is read with ReadXML(), it generates the following nested list in CLUCalc:
+	\code
+	[ [ test , 
+		[ [ 
+			[ version , 1.0 ] , 
+			[ _content ,  Hello World! ] , 
+			[ _subtree , [  ] ] 
+		 ] ] 
+	] ]
+	\endcode
+	
+	The reserved tags '_content' and '_subtree' are used to reference the content and the subtree of an element. Elements with the same tag name are collected in lists as the following example shows. Consider the following XML data structure.
+	
+	\code
+	<?xml version="1.0" encoding="utf-8" ?> 
+	<test version="1.0">
+		<name>a</name>
+		<fun>Hello</fun>
+		<name>b</name>
+		<fun>World</fun>
+	</test>
+	\endcode
+	
+	This is mapped to the following nested lists in CLUCalc.
+	
+	\code
+	[ [ test , 
+		[ [ 
+			[ version , 1.0 ] , 
+			[ _content ,  ] , 
+			[ _subtree , 
+				[	// List of subtree elements by name
+					[ fun , 
+						[   // List of elements with tag 'fun' 
+							[ 
+								[ _content , Hello ] , 
+								[ _subtree , [  ] ] 
+							] , 
+							[ 
+								[ _content , World ] , 
+								[ _subtree , [  ] ] 
+							]
+						] 
+					] , 
+					[ name , 
+						[   // List of elements with tag 'name' 
+							[ 
+								[ _content , a ] , 
+								[ _subtree , [  ] ] 
+							] , 
+							[ 
+								[ _content , b ] , 
+								[ _subtree , [  ] ] 
+							] 
+						] 
+					] 
+				] 
+			] 
+		] ] 
+	] ]
+	\endcode
+	
+	If this data structure is stored in the variable \a lData, then you can, for example, obtain a reference to the list of elements with tag 'name' with the following script.
+	
+	\code
+	// Get name of root element
+	sRootName = lData([1,1]);
+	
+	// Get reference to property list of root element
+	lRootProp -> lData([1,2,1]);
+	
+	// Get content of 'version' property
+	sVersion = lRootProp("version");
+	
+	// Get reference to subtree of root tree
+	lRootTree -> lRootProp("_subtree");
+	
+	// Get reference to list of elements with tag 'name'
+	lNameList -> lRootTree("name");
+	\endcode
+**/
+string ReadXML(string sName, any_type lData);
+
+
+
+/** 
+	\brief Save the actual visualization screen as bmp image to disk.
+	
+	\param Filename The name for the image.
+	
+	\return Nothing.
+	
+	\since v2.0
+	
+	The filename has to contain it's extension <tt>'.bmp'</tt>, otherwise the file won't have an extension.
+	An existing file with the same name will be overwritten. The following command saves the contents of the
+	visualization window to the parent directory:
+	\code
+	
+	SaveScreen( "..\screen.bmp" );
+	\endcode
+**/
+void SaveScreen(string Filename);
+
+
+
+/**
+	\brief Open a file and show it with the appropriate viewer set by the operating system.
+	
+	\param Name A string specifying the name of the file to load.
+	
+	\return Nothing.
+	
+	\since v2.0
+
+**/
+void ShowFile(string Name);
+
+
+/** 
+	\brief This function writes a list of scalars to a file.
+	
+	\param Filename The filename of the data file to be written.
+	\param L A list of scalars to be written.
+	\param Sep The separation symbol between items. This is \b optional. 
+	The default separator symbol is a space.
+	
+	\return Nothing.
+	
+	\since v2.0
+
+	This function writes scalar valued data which is basically organized as a matrix into a text data file. If the specified file already exists it will be overwritten. See also the description of the function <tt>ReadData</tt>.
+	
+	The code
+	\code
+	? L = [  [1.1, 2, 3, 4], [1, 2.0]  ];
+	WriteData( "Test.dat", L );
+	? L = ReadData( "Test.dat" );
+	\endcode
+
+	then produces the output
+	\code
+	L = [[1.1, 2, 3, 4], [1, 2]]
+	L = [[1.1, 2, 3, 4], [1, 2]]
+	\endcode
+**/
+void WriteData(string Filename, list L, string Sep);
+
+
+/**
+	\brief Write image to a file.
+	
+	\param sName A filename.
+	\param Img The image variable
+	
+	\return Nothing.
+	
+	\since v2.2
+
+	Stores an image in a file with the name \c sName in the format specified by the extension of the filename. Possible file formats are '.bmp', '.jpg', '.pcx', '.png', '.raw', '.sgi', '.tga', '.tif'.
+**/
+void WriteImg(string sName, image Img);
+
+
+/**
+	\brief Write the contents of a string variable to a file.
+	
+	\param sFilename The filename.
+	\param sData The string to be written.
+	
+	\return The string 'OK', when no error occured and an error message otherwise.
+	
+	\since v2.3
+
+	This function writes the contents of a string variable to a file.
+**/
+string WriteText(string sFilename, string sData);
+
+
+
+
+/**
+	\brief Write the contents of a variable to a file in XML format.
+	
+	\param sName A filename.
+	\param vData A variable of any type.
+	\param iComp The compression level of the XML file. Has to be an integer value between 0 and 9. The default is 0, which is no compression.
+	
+	\return The string 'OK', when no error occured and an error message otherwise.
+	
+	\since v2.2
+
+	This function writes the contents of a variable to a file using a XML format. In particular, the variable can be a variable list containing a number of variables of different types. Note that also vertex lists can be stored in this way.
+**/
+string WriteVar(string sName, any_type vData, counter iComp);
+
+
+
+
+/** \}
+**/
+
+/** \}
+**/
+

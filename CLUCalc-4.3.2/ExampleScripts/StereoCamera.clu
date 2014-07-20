@@ -1,0 +1,68 @@
+DefVarsP3();
+:DRAW_POINT_AS_SPHERE;
+
+th = Slider("3. Angle", 0, 90, 1, 45)*RadPerDeg;
+R = RotorP3(0,1,0, th);
+
+s2 = 1/sqrt(2);
+
+:A4 = e4 - 2*e3 - e1:MRed;
+A1 = R*e1*~R;
+A2 = e2;
+A3 = A4 + 0.5*(R*e3*~R);
+
+PA = A1^A2^A3;
+Offset(PA, A3);
+
+:B4 = e4 + 2*e3 - e1:MBlue;
+B1 = ~R*e1*R;
+B2 = e2;
+B3 = B4 - 0.5*(~R*e3*R);
+
+PB = -B1^B2^B3;
+Offset(PB, B3);
+
+
+:X = VecP3(1) + 2*e1:Green;
+LA = A4 ^ X;
+V = LA . e4;
+Offset(LA, A4, sqrt(V.V));
+
+LB = B4^X;
+V = LB . e4;
+Offset(LB, B4, sqrt(V.V));
+
+// Projections
+:XA = LA & PA:Magenta;
+:XB = LB & PB:Cyan;
+
+// Epipolar lines
+if (CheckBox("1. Show Epipoles", 0))
+{
+	:Yellow;
+	LEpi = A4 ^ B4;
+	X = LEpi . e4;
+	?fMag = sqrt(X.X);
+	Offset(LEpi, A4, fMag);
+	
+	:EA = LEpi & PA:Yellow;
+	:EB = LEpi & PB:Yellow;
+}
+
+if (CheckBox("2. Show Epi. Lines", 0))
+{
+	:LEA = (A4^LB) & PA:MYellow;
+	:LEB = (B4^LA) & PB:MYellow;
+}
+
+/*
+// Switch to N3 Space
+DefVarsN3();
+
+// Cannot project circle onto image plane
+XN = VecN3(X);
+:C = XN ^ VecN3(2, 0, 1) ^ VecN3(2, 1, 0);
+PAN = VecN3(A1)^VecN3(A2)^VecN3(A3)^e;
+:PAN & (VecN3(A4) ^ C);
+*/
+

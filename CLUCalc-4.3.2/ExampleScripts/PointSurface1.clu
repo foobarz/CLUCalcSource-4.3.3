@@ -1,0 +1,96 @@
+// Switch off the frame box
+_FrameBoxSize = 0;
+
+// Define the standard basis vector variables
+// for Euclidean space.
+DefVarsE3();
+
+// A flag needed later
+bFirst = 1;
+
+// The step width in x and y direction
+StepX = 0.1;
+StepY = 0.1;
+
+// The Plot range
+MinX = -1;
+MaxX = 1;
+MinY = -1;
+MaxY = 1;
+
+// Count the rows that we draw.
+RowCount = 0;
+
+// Set y to initial value
+y = MinY;
+// and start a loop over y
+loop
+{
+	// Check whether y is out of range
+	if (y > MaxY)
+		break; // if yes, then end loop over y
+	
+	// Set x to its initial value
+	x = MinX;
+	// and start a loop over x
+	loop
+	{
+		// check whether x is out of range
+		if (x > MaxX)
+			break; // if yes, then end loop over x
+
+		// Evaluate point a current x,y-position
+		A = x*e1 + y*e3 + x*y*e2;
+
+		// Evaluate color at current position
+		c = exp(-x*x*y*y/0.1);
+		Col = Color(c, 0, 1 - c);
+	
+		// Evaluate color for surface grid
+		c = 0.9 * c;
+		Col2 = Color(c, 0, 1-c);
+
+		// If this is the first point that was
+		// evaluated, then we need to start a new
+		// list.
+		if (bFirst)
+		{
+			// Reset flag
+			bFirst = 0;
+
+			// Initialize point list
+			LP = A;
+			// Initialize color list
+			LC = Col;
+			// Initialize second color list
+			LC2 = Col2;
+		}
+		else
+		{
+			// Add point to list
+			LP << A;
+			// Add color to list
+			LC << Col;
+			// Add color to list
+			LC2 << Col2;
+		}
+		
+		// Increase x-position by StepX
+		x = x + StepX;
+	}
+
+	// Increase y-position by StepY
+	y = y + StepY;
+
+	// Count the rows
+	RowCount = RowCount + 1;
+}
+
+// Evaluate the columns
+ColCount = Len(LP) / RowCount;
+
+// Draw Surface
+DrawPointSurface(ColCount, RowCount, LP, LC);
+
+// Draw Grid
+DrawPointGrid(ColCount, RowCount, LP, LC2);

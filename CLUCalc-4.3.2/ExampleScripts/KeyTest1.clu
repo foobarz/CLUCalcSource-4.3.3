@@ -1,0 +1,48 @@
+// Example of how to use key input.
+// Written by C. Perwass, 04.08.04
+
+// Animate this script
+_DoAnimate = 1;
+
+// Some help for the user in the output window
+?"Move box with keys 'a', 'd', 'w' and 's'"
+
+// Define E3 basis variables
+DefVarsE3();
+
+// If script is reparsed then initialize variables.
+if (ExecMode & EM_CHANGE)
+{
+	x = VecE3(0,1,0); 	// position vector
+	dy = -0.005 * e2;	// Standard y-step
+}
+// If user has pressed key down then...
+else if (ExecMode & EM_KEYDOWN)
+{
+	// Set dx depending on which key has
+	// been pressed.
+	if (ToolName == "a")
+		dx = -0.1*e1;
+	else if (ToolName == "d")
+		dx = 0.1*e1;
+	else if (ToolName == "w")
+		dx = -0.1*e3;
+	else if (ToolName == "s")
+		dx = 0.1*e3;
+}
+// If key goes up, reset dx.
+else if (ExecMode & EM_KEYUP)
+{
+	dx = VecE3(0,0,0);
+}
+
+// If box has moved out of range, then
+// invert y-movement
+if (x.e2 < -2 || x.e2 > 2)
+	dy = -dy;
+	
+// Add changes to position of box
+x = x + dx + dy;
+
+// Draw the box
+DrawBox(x, e1,e2,0.2);

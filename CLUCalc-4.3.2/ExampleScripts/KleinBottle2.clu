@@ -1,0 +1,126 @@
+_FrameBoxSize = 0;
+_BGColor = Black;
+DefVarsN3();
+
+fx = Slider("Ax", 0.1, 5, 0.1, 1);
+fy = Slider("Ay", 0.1, 5, 0.1, 2.5);
+fz = Slider("Az", 0.1, 5, 0.1, 1);
+fr = Slider("Ar", 0.1, 2, 0.1, 0.5);
+//v = Slider("v", 0, 2*Pi, Pi/180, 0);
+
+mxu = Slider("Freq. x", 0.1, 2, 0.05, 1);
+myu = Slider("Freq. y", 0.1, 2, 0.05, 1);
+mzu = Slider("Freq. z", 0, 2, 0.05, 0);
+mru = Slider("Freq. r", 0.1, 4, 0.05, 1);
+bDoCusp = CheckBox("Cusp", 1);
+
+Range = Slider("Range", 0.1, 8, 0.1, 2);
+
+if (ExecMode & EM_CHANGE || ExecMode & EM_TOOL)
+{
+
+Func =
+{
+	_u = _P(1);
+	_v = _P(2);
+
+	_x = fx*cos(mxu*_u) * (1 + sin(mxu*_u));
+	_y = fy*sin(myu*_u);
+	_rad = fr* (1 - 0.5*cos(mru*_u));
+	_z = fz*sin(mzu*_v);
+
+	VecE3(_x, _y, _z)
+}
+
+:Red;
+:CenterLine = Plot(Func(u, u), [u, 0, Range*Pi, floor(Range*21)]);
+
+u = 0;//2*Pi - 8*Pi/10;
+v = 0;
+i = 0;
+dxo = 1;
+dyo = 0;
+:Cyan;
+loop
+{
+	if (u > Range*Pi)
+		break;
+
+	x = fx*cos(mxu*u) * (1 + sin(mxu*u));
+	y = fy*sin(myu*u);
+	rad = fr*(1 - 0.5*cos(mru*u));
+	z = fz* sin(mzu*v);
+
+	dx = -fx*mxu*sin(mxu*u) * (1 + sin(mxu*u)) + fx*mxu*cos(mxu*u) * cos(mxu*u);
+	dy = fy*myu*cos(myu*u);
+	drad = fr*mru*sin(mru*u);
+	dz = fz*mzu * sin(mzu*v);
+//	s2u = sin(u/2 + Pi/4);
+//	if (s2u < 0 && bDoCusp)
+	// if the angle between the previous and this
+	// derivative vector is more than 90 degrees,
+	// we flip the normal of the circles. This
+	// creates the particular feature which makes
+	// a Klein bottle an object with just one side.
+	dcos = (dx*dxo + dy*dyo);
+	if (i > 0 && dcos < 0 && bDoCusp)
+	{
+		dx = -dx;
+		dy = -dy;
+	}
+
+	dxo = dx;
+	dyo = dy;
+
+	A = VecN3(x - 0.5*dx, y - 0.5*dy, z - 0.5*dz);
+	B = VecN3(x + 0.5*dx, y + 0.5*dy, z + 0.5*dz);
+	P = *(A - B);
+	S = SphereN3(x, y, z, rad);
+	C = *S . P;
+	
+	colrad = (rad / fr) - 0.5;
+	if (i == 0)
+	{
+		C_list = C;
+		col_list = Color(0.1, colrad, colrad);
+	}
+	else
+	{
+		C_list << C;
+		col_list << Color(0.1, colrad, colrad);
+	}
+
+	u = u + Pi/21;
+	v = v + Pi/21;
+	i = i + 1;
+} 
+
+// Uncomment the following line to also draw the circles.
+//:C_list;
+
+KleinBottle = DrawCircleSurface(C_list, col_list, 1);
+//i = 0;
+//SetFrameOrigin(0,0,5);
+}
+else
+{
+/*
+	_DoAnimate = 1;
+	?count = Len(CenterLine);
+
+	?i = i + 1;
+	if (i > count)
+		i = 1;
+	
+	TranslateFrame(-CenterLine[i][1],-CenterLine[i][2],-CenterLine[i][3]);
+*/
+	:Cyan;
+	// Uncomment the following line to also draw the circles.
+	//:C_list;
+
+	:KleinBottle;
+
+	:Red;
+	:CenterLine;
+
+}

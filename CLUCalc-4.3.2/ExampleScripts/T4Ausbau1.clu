@@ -1,0 +1,189 @@
+_FrameBoxSize = 0;
+//_BGColor = White;
+DrawBoxList =
+{
+	_data -> _P(1);
+	_scale = _P(2);
+
+	area = 0;
+	volume = 0;
+	iBoxCount = Len(_data);
+	iBox = 1;
+	loop
+	{
+		if (iBox > iBoxCount) break;
+	
+		box -> _data(iBox);
+		_w = 0.5 * _scale * box(4);
+		_box -> box(2);
+		d1 = VecE3(_scale * _box(1), _scale * _box(2), -_scale * _box(3));
+		_box -> box(3);
+		d2 = VecE3(_scale * _box(1), _scale * _box(2), -_scale * _box(3));
+
+		area = area + abs(d1/(100*_scale)) * abs(d2/(100*_scale));
+		volume = area * box(4) / 100;
+
+		_wdir = *(d1^d2);
+		_wdir = _w *_wdir / abs(_wdir);
+
+		_box -> box(1);
+		orig = VecE3(_scale * _box(1), _scale * _box(2), -_scale * _box(3)) + _wdir;
+	
+		:box(5);
+		DrawBox(orig+0.5*d1+0.5*d2, d1, d2, _scale*abs(box(4)));
+	
+		iBox = iBox + 1;
+	}
+
+	VecE3(area,volume,0)
+}
+
+w_std = 2;
+col_std = Color(0.892, 0.892, 0.892);
+col_brown = Color(0.811, 0.563, 0.134);
+col_schrank = Color(0.694, 0.402, 0.108);
+col_stür = Color(0.477, 0.277, 0.074);
+col_küche = Color(0.000, 0.050, 1.000);
+col_bank = Color(1.000, 0.447, 0.726);
+col_bank_top = Color(1.000, 0.447, 0.726, 0.8);
+col_bett = Color(0.350, 1.000, 0.513);
+col_bett_vorne = Color(0.274, 0.784, 0.402);
+col_bett_top = col_bett + Alpha;
+col_bett_mitte = Color(0.836, 1.000, 0.236, 0.8);
+col_bett_seite = Color(0.167, 0.477, 0.245);
+col_tisch = Color(1.000, 0.994, 0.091);
+col_bein_tisch = Color(0.613, 0.609, 0.056);
+
+if (CheckBox("1. Schrank transparent", 1))
+	col_schrank = col_schrank + Alpha;
+
+total_breite = tw = 163;
+total_länge = 237;
+total_höhe = 130;
+scale = 0.02;
+schrank_länge = total_länge-50;
+schrank_breite = 28;
+stür_breite = 60;
+stür_höhe = 50;
+
+küche_höhe = 60;
+küche_breite = 60;
+küche_länge = total_länge-schrank_länge;
+
+bank_breite = 146-küche_breite;
+
+bett_höhe = 40;
+bett_breite = total_breite - schrank_breite;
+bett_vorne_länge = 40;
+bett_hinten_länge = 57;
+bett_mitte_länge = schrank_länge - bett_vorne_länge - bett_hinten_länge;
+
+bett_move = Slider("Bett", 0, 70, 1, 0);
+
+tisch_höhe = bett_höhe + 25;
+tisch_länge = 70;
+tisch_breite = total_höhe-5-tisch_höhe;
+tisch_offset = 5;
+
+tisch_winkel = Slider("Tisch winkel", 90, 0, 1, 90) * RadPerDeg;
+tisch2_winkel = Slider("Tisch winkel 2", 0, 180, 1, 0) * RadPerDeg;
+
+Base = [
+[[0,0,0], [tw,0,0], [0,0,20], -w_std, col_brown],
+[[16,0,20], [tw-32,0,0], [0,0,80], -w_std, col_brown],
+[[5,0,100], [tw-10,0,0], [0,0,11], -w_std, col_brown],
+[[0,0,111], [tw-17,0,0], [0,0,120], -w_std, col_brown],
+[[0,0,231], [tw,0,0], [0,0,7], -w_std, col_brown],
+[[0,0,total_länge], [total_breite,0,0], [0,70,0], -1, col_brown],
+[[0,0,20], [16,0,0], [0,0,80], 28, col_std]
+[[tw-16,0,20], [16,0,0], [0,0,80], 28, col_std]
+];
+
+SegelSchrank = [
+[[schrank_breite-2,0,0], [0,0,schrank_länge], [0,total_höhe,0], 2, col_schrank],
+[[0,0,schrank_länge], [schrank_breite,0,0], [0,total_höhe,0], 2, col_schrank]
+];
+
+
+Tisch = [
+[[schrank_breite-2.1, tisch_höhe, schrank_länge-tisch_offset-tisch_länge],
+ 	[0,0,tisch_länge], tisch_breite*[cos(tisch_winkel),sin(tisch_winkel),0], 
+		2.4, col_tisch],
+[[schrank_breite+0.1+(tisch_breite-5)*cos(tisch_winkel), 
+	tisch_höhe+(tisch_breite-5)*sin(tisch_winkel), 
+	schrank_länge-tisch_offset-tisch_länge/2-5],
+	[0,0,10], [0,-tisch_höhe,0], -5, col_bein_tisch],
+
+[[schrank_breite-2+(tisch_breite)*cos(tisch_winkel), 
+	tisch_höhe+(tisch_breite)*sin(tisch_winkel), 
+	schrank_länge-tisch_offset-tisch_länge],
+	[0,0,tisch_länge], -tisch_breite*[cos(tisch_winkel-tisch2_winkel),sin(tisch_winkel-tisch2_winkel),0], 
+		2, col_bein_tisch]
+
+];
+
+Küche = [
+[[0,küche_höhe,schrank_länge], [küche_breite,0,0], 
+	[0,0,küche_länge], 2, col_küche],
+[[0,0,total_länge], [küche_breite,0,0], [0,total_höhe,0], 2, col_küche],
+[[0,küche_höhe/2,schrank_länge], [schrank_breite,0,0],
+	[0,0,küche_länge], 2, col_küche]
+[[0,küche_höhe+40,schrank_länge], [schrank_breite,0,0],
+	[0,0,küche_länge], 1, col_küche],
+[[0,küche_höhe+55,schrank_länge], [schrank_breite,0,0],
+	[0,0,küche_länge], 1, col_küche]
+];
+
+Bank = [
+[[küche_breite,0,total_länge], [bank_breite,0,0], [0,bett_höhe,0], 2, col_bank],
+[[küche_breite,0,total_länge-küche_länge+2], [bank_breite,0,0], [0,bett_höhe,0], 2, col_bank],
+[[küche_breite,0,total_länge-küche_länge], [0,0,küche_länge], [0,bett_höhe,0], 2, col_bank]
+[[küche_breite+bank_breite-2,0,total_länge-küche_länge], [0,0,küche_länge], [0,bett_höhe,0], 2, col_bank]
+[[küche_breite,bett_höhe,total_länge-küche_länge], [bank_breite,0,0], [0,0,küche_länge], 
+	2, col_bank_top]
+];
+
+Bett_hinten = [
+[[schrank_breite,bett_höhe,0], [bett_breite,0,0], [0,0,bett_hinten_länge], 2, col_bett],
+[[total_breite-23,0,0], [0,0,111], [0,bett_höhe,0], 2, col_bett_seite],
+[[schrank_breite,0,111], [total_breite-23-schrank_breite,0,0], [0,bett_höhe,0], 2, col_bett],
+[[schrank_breite,0,0], [0,0,schrank_länge], [0,bett_höhe,0], 2, col_bett_seite]
+];
+
+Bett_vorne = [
+[[schrank_breite,bett_höhe,total_länge-küche_länge - bett_move], 
+	[0,0,-bett_vorne_länge], [bett_breite,0,0], 2, col_bett_vorne],
+[[total_breite-20,0,total_länge-küche_länge - bett_move], 
+	[0,bett_höhe,0], [0,0,-80], 2, col_bett_vorne]
+];
+
+bett_winkel = acos((total_länge-küche_länge-bett_vorne_länge-bett_hinten_länge-bett_move)
+					/bett_mitte_länge);
+?"Bett winkel = " + bett_winkel / RadPerDeg;
+
+Bett_mitte = [
+[[schrank_breite,bett_höhe,bett_hinten_länge], [bett_breite,0,0], 
+	bett_mitte_länge/2*[0, sin(bett_winkel), cos(bett_winkel)], 2, col_bett_mitte],
+[[schrank_breite,bett_höhe, total_länge-küche_länge-bett_vorne_länge- bett_move], 
+	bett_mitte_länge/2*[0, sin(bett_winkel), -cos(bett_winkel)], 
+	[bett_breite,0,0],  2, col_bett_mitte],
+];
+
+//SetFrameOrigin(0,0,0);
+TranslateFrame(-0.5*total_breite*scale,-1,0.5*total_länge*scale);
+
+data = VecE3(0,0,0);
+
+data = data + DrawBoxList(Base, scale);
+data = data + DrawBoxList(SegelSchrank, scale);
+data = data + DrawBoxList(Küche, scale);
+data = data + DrawBoxList(Bank, scale);
+data = data + DrawBoxList(Bett_hinten, scale);
+data = data + DrawBoxList(Bett_vorne, scale);
+data = data + DrawBoxList(Bett_mitte, scale);
+data = data + DrawBoxList(Tisch, scale);
+
+?"Gesamtfläche = " + data(2) + " m^2";
+?"Gesamtvolumen = " + data(3) + " m^3";
+
+TranslateFrame(0.5*total_breite*scale,1,-0.5*total_länge*scale);

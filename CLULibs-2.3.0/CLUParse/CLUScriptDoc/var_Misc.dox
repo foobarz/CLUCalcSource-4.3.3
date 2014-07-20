@@ -1,0 +1,442 @@
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+
+	\brief Note that most of these variables can be inserted in a script through the context menu of the editor window of CLUCalc. The context menu can be accessed by pressing the right mouse button in the editor window.
+	
+	\{
+**/
+
+
+/** \defgroup grp_MathConst  Mathematical Constants
+	\{
+**/
+
+/**
+	\brief This constant has the value 0.
+	
+	\since v2.2
+**/
+counter false;
+
+
+/** 
+	\brief The value of \f$\pi \approx 3.14159265359\f$.
+	
+	\since v1.0
+	
+**/
+scalar Pi;
+
+/** 
+	\brief The ratio of radians per degree \f$\pi/180 \approx 0.0174532925\f$.
+	
+	\since v1.0
+	
+**/
+scalar RadPerDeg;
+
+
+/**
+	\brief This constant has the value 1.
+	
+	\since v2.2
+**/
+counter true;
+
+
+
+/** \}
+**/
+
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+/** \defgroup grp_AnimVars  Animation Variables
+
+	The variables in this section only take on useful values during the animation of a script.
+	\{
+**/
+
+/** 
+	\brief The time elapsed in seconds since the last execution of the script in animation mode.
+	
+	\since v1.0
+
+	The precision of the value given is one millisecond.	
+**/
+scalar dTime;
+
+/** 
+	\brief The time elapsed in seconds since the start of the animation.
+	
+	\since v1.0
+	
+	The precision of the value given is one millisecond.
+**/
+scalar Time;
+
+
+/** \}
+**/
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+/** \defgroup grp_OpIDs  Operator IDs
+	\{
+**/
+
+/** 
+	\brief The addition operation.
+	
+	\since v1.4
+	
+	This variable \b cannot be used in the function GetMVProductMatrix(). It can be used in the function EPOp().
+**/
+counter MVOP_ADD;
+
+
+/** 
+	\brief The geometric product.
+	
+	\since v1.4
+	
+	This variable can, for example, be used in the function GetMVProductMatrix().
+**/
+counter MVOP_GEO;
+
+
+/** 
+	\brief The inner product.
+	
+	\since v1.4
+	
+	This variable can, for example, be used in the function GetMVProductMatrix().
+**/
+counter MVOP_INNER;
+
+/**
+	\brief The main involution operation.
+	
+	\since v2.2
+	
+	This variable can be used in the function GAOpTensor() to generate the tensor representing the main involution.
+**/
+counter MVOP_INVOLUTE;
+
+
+/** 
+	\brief The outer product.
+	
+	\since v1.4
+	
+	This variable can, for example, be used in the function GetMVProductMatrix().
+**/
+counter MVOP_OUTER;
+
+
+/**
+	\brief The reverse operator.
+	
+	\since v2.2
+	
+	This can be used in the function GAOpTensor() to generate the tensor representing the reverse operation.
+**/
+counter MVOP_REVERSE;
+
+
+/** 
+	\brief The subtraction operation.
+	
+	\since v1.4
+	
+	This variable \b cannot be used in the function GetMVProductMatrix(). It can be used in the function EPOp().
+**/
+counter MVOP_SUB;
+
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+/** \defgroup grp_AlgIDs  Algebra IDs
+	\{
+**/
+
+
+/**
+	\brief ID of the geometric algebra over the space of 2D-conics.
+	
+	\since v2.2
+**/
+counter GA_C2;
+
+
+
+/**
+	\brief ID of the geometric algebra over Euclidean 3D-space.
+	
+	\since v2.2
+**/
+counter GA_E3;
+
+
+/**
+	\brief ID of the geometric algebra over the projective conformal space of Euclidean 3D-space.
+	
+	\since v2.2
+**/
+counter GA_N3;
+
+
+
+/**
+	\brief ID of the geometric algebra over the projective space of Euclidean 3D-space.
+	
+	\since v2.2
+**/
+counter GA_P3;
+
+
+
+/** \}
+**/
+
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+/** \defgroup grp_ExecModes  Execution Modes
+
+	These variables can be used to check in which execution mode the script is currently executed. The variable <tt>ExecMode</tt> contains the currently set execution mode. Hence, you can, for example, check whether the script is re-executed after it has been changed with the following code.
+	
+\attention From version 1.5 onwards, the current execution mode can be a bitwise combination of a number of different modes. It is therefore necessary to check for a particular execution mode with the bitwise AND operation <tt>\&</tt>.
+	
+\code
+if (ExecMode & EM_CHANGE)
+{
+	?"Script is executed after change.";
+}
+else
+{
+	?"Script is executed for some other reason.";
+}
+\endcode
+
+	\{
+**/
+
+
+
+/** 
+	\brief This variable is set to one of the values stored in the predefined variables starting with <tt>EM_</tt>.
+	
+	\since v1.4
+	
+**/
+counter ExecMode;
+
+
+
+/** 
+	\brief Indicates that the script is re-executed due to an animation.
+	
+	\since v1.4
+	
+**/
+counter EM_ANIMATE;
+
+
+/** 
+	\brief Indicates that the script is re-executed after a change.
+	
+	\since v1.4
+	
+**/
+counter EM_CHANGE;
+
+
+/** 
+	\brief Indicates that the user pressed down a key. The key itself is available through the variable #ToolName. See example scripts <tt>KeyTest1.clu</tt> and <tt>KeyTest2.clu</tt> for an application of this.
+	
+	\since v2.0
+	
+**/
+counter EM_KEYDOWN;
+
+
+/** 
+	\brief Indicates that the user pressed released a key. The key itself is available through the variable #ToolName. See example scripts <tt>KeyTest1.clu</tt> and <tt>KeyTest2.clu</tt> for an application of this.
+	
+	\since v2.0
+	
+**/
+counter EM_KEYUP;
+
+
+
+/** 
+	\brief Indicates that the user clicked on a link in the info text window. The data passed by the link is stored in the predefined variable #LinkData. See \ref page_Info for more details.
+	
+	\since v2.1
+	
+**/
+counter EM_LINK;
+
+
+/** 
+	\brief Indicates that this is the first time the script is being executed after loading.
+	
+	\since v1.4
+	
+**/
+counter EM_NEW;
+
+
+
+/** 
+	\brief Indicates that the script is re-executed since the user has changed one of the tools. Which tool has been changed can be retrieved from the variable #ToolName.
+	
+	\since v1.5
+	
+**/
+counter EM_TOOL;
+
+
+/** 
+	\brief Indicates that the script is re-executed because the user has changed one of the mouse mode variables.
+	
+	\since v1.4
+	
+**/
+counter EM_USER;
+
+
+/** \}
+**/
+
+
+
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+
+/** \defgroup grp_ToolVars  Tool Variables
+
+	Currently there exists only one variable (#ToolName) which contains the name of the tool that has caused a re-execution of the script. If the script is executed due to some other reason, then #ToolName contains the string <tt>None</tt>. Here is a small example,
+	
+\code
+
+?a = Slider("Value a", -1, 1, 0.1, 0.5);
+?b = Slider("Value b", -2, 2, 0.1, 1);
+
+if (ExecMode & EM_TOOL)
+{
+	?"Script is executed due to tool: \"" + ToolName + "\".";
+}
+else
+{
+	?"Script is executed for some other reason.";
+}
+\endcode
+
+Depending on whether you move one or the other slider, the text in the text output window will change. Recall that in order to see the tools you need to drag up the window tiler from the bottom of the visualization window.
+	\{
+**/
+
+/** 
+	\brief Contains name of tool that is responsible for current execution of script, or the string <tt>None</tt>, if no tool caused the current execution.
+	
+	\since v1.5
+	
+**/
+string ToolName;
+
+/** \}
+**/
+
+
+
+
+
+
+
+
+/** \}
+**/
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+
+
+
+/** \defgroup grp_InfoVars  Info Variables
+
+	Currently there exists only one variable (#LinkData) which contains the data passed by a link that was clicked by a user. If the script is executed due to some other reason, then #LinkData contains the string <tt>None</tt>. Links must have the following structure in order to generate a reexecution of the script in execution mode #EM_LINK. 
+	
+	\code
+	clu://data/[the data]
+	\endcode
+	
+	When the user clicks on such a link, the variable #LinkData contains the string <tt>[the data]</tt>. See \ref page_Info for more details.
+	
+	\{
+**/
+
+/** 
+	\brief Contains the data of a link clicked by the user in the info text window or the output window. If no link was clicked it contains the string <tt>None</tt>. See \ref page_Info for more details.
+	
+	\since v2.1
+	
+**/
+string LinkData;
+
+/** \}
+**/
+
+
+/** \}
+**/

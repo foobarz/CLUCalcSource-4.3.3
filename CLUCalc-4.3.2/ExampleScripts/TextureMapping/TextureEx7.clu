@@ -1,0 +1,16 @@
+
+// Set magnification step of latex rendering
+// rather high to obtain nice image.
+SetLatexMagStep(30);
+
+// Generate the image of a latex text using 
+// the color RED.
+:Red;
+imgTex = GetLatexImg("$\int_0^1\;f(x)\,dx$", "int");
+
+// Set image as texure
+SetTexture(imgTex);
+
+// Plot function 
+:Plot(VecE3(x, x*x+y*y, -y),
+	  [x,-1,1,20], [y,-1,1,20]);

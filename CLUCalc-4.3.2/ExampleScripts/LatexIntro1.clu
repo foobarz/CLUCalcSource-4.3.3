@@ -1,0 +1,106 @@
+// This script shows the new Latex features
+// introduced at CLUCalc version 2.1.0.
+// Copyright by C.Perwass, August 2003.
+
+// No Framebox
+_FrameBoxSize = 0;
+
+// You can now insert colors by selecting
+// 'Code->Insert Color' from the menu, or
+// by simply pressing CTRL+'l'. If you
+// place the text cursor on a 'Color' expression,
+// and then press CTRL+'l', the given color
+// is adapted!
+_BGColor = Color(0.811, 0.961, 1.000);
+
+DefVarsP3();
+:e1 :Red;
+:e2 :Green;
+:e3 :Blue;
+
+// Set wether Latex should be rendered.
+// 1: Render Latex
+//    In order to render latex you need to
+//    have latex, dvips and convert (ImageMagick)
+//    installed. These are also available from
+//    www.miktex.org and www.imagemagick.org.
+// 0: Do not render latex. This is useful
+//    if latex was rendered previously
+//    to a file and is now only to be drawn.
+EnableRenderLatex(0);
+
+// Set magnification step for Latex (0..30)
+SetLatexMagStep(15);
+
+// Align Latex Text vertically relative to the
+// bottom of the text.
+SetLatexAlign(0, 0);
+
+// You may still set a color as usual
+:Red;
+
+// Create a user interaction vector in P3
+// in order to also have it visualized at
+// the origin.
+:a = VecE3(1) + VecE3(0,-1,0);
+
+// Now draw some latex.
+// The last parameter of DrawLatex is optional.
+// If a name, 'f1' say, is given here, then the
+// corresponding latex is rendered to 
+// [Script Filename]_f1.bmp.
+// Note that the latex bitmap is only rendered
+// the first time round. Consecutive executions
+// display a cached version. Of course, the bitmap
+// is re-rendered when the latex text changes.
+DrawLatex(a, 
+"\[\vec{a} = \int_{-\infty}^x\;\vec{f}(x)\,dx\]",
+"f1"); // This last parameter is optional.
+
+// Once you have rendered latex to a particular
+// name, you may distribute the script together
+// with the corresponding .bmp file and set
+// 'SetRenderLatex(0)' at the beginning of the 
+// script. In this way, latex is not rendered but
+// the bitmap is loaded from the file with the
+// given name.
+
+:Blue;
+
+// You can also align text vertically relative to 
+// the start point using the function SetAlign.
+// This actually sets the alignment for all
+// bitmaps, as well.
+// Use the right mouse button in mouse mode 2
+// to change the alignment of the blue text.
+?valign = Mouse(2,2,3);
+?halign = Mouse(2,2,1);
+SetLatexAlign(halign, valign);
+
+DrawLatex(0,1,0, "$\mathcal{HELLO}$", "f2");
+:VecP3(0, 1, 0);
+SetLatexAlign(0, 0);
+
+// If you do not want your text to be rotated
+// and moved with the rest of the visulaized
+// 3d-space, you can draw into an overlay layer.
+StartOverlay();
+
+// Within the overlay the coordinates change.
+// They are:
+// left = 0, right = 100
+// top = 0, bottom = 100
+// That is, they are percent values of the size
+// of the visualization window.
+:Magenta;
+SetLatexAlign(0, 1); // Top vertical alignment
+DrawLatex(10, 5, 0, "\huge\LaTeX\ Introduction", "title");
+
+SetLatexMagStep(5);
+DrawLatex(2,95,0, "\it CLUCalc v4.0.0 by Dr. Christian Perwass", "cr");
+
+// IMPORTANT: For each StartOverlay() you need 
+// to call a EndOverlay().
+// You can also draw anything else here.
+// However, it is orthographically projected.
+EndOverlay();

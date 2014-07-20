@@ -1,0 +1,26 @@
+/// Generate Checkers Pattern
+
+//?mA = Matrix([[1,1,1,1,0,0,0,0,1,1,1,1]]);
+//?~mA * mA;
+//?mA = Matrix(1~10);
+lA = ((0~255) / 32) % 2;
+lCol = [lA < 1];
+lCol << [lA >= 1];
+lIdx = lCol(2) + 1;
+lCol = lCol(lIdx);
+
+lPat = lCol(1);
+iSize = Size(lCol);
+i = 2;
+loop
+{
+    if (i > iSize) break;
+
+    lPat .<< lCol(i);
+
+    i = i + 1;
+}
+
+mPat = Matrix(lPat) + 0.4;
+:imgPat = Matrix2Img(mPat);
+WriteImg(imgPat, "checkers2.png");

@@ -1,0 +1,11 @@
+// A nested list
+L = [1, [2, 3]];
+
+// Here are a couple of ways to extract
+// the elements of that list
+?L(2);
+?L(2)(1);
+?L([2,1]);
+?L([[2], [1]]);
+?L([[2,2], [1], [2], [1]]);
+

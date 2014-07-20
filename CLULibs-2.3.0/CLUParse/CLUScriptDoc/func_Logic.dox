@@ -1,0 +1,302 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Logic Logic Functions
+
+	Functions that perform logic operations.
+	
+	\{
+**/
+
+
+/** 
+	\brief Returns the position(s) in a list that belong to maximum values.
+	
+	\param L A list.
+	
+	\return A list of list positions.
+	
+	\since v2.0
+	
+	For more information see function <tt>argmin</tt>.
+**/
+list argmax( list L );
+
+
+/** 
+	\brief Returns the position(s) in a matrix that belong to maximum values.
+	
+	\param M A matrix.
+	
+	\return A list of matrix positions.
+	
+	\since v2.0
+	
+	The code
+	\code
+	? argmax( Matrix([ [3,2,1],[0,1,0],[-1,-2,3] ]));
+	\endcode
+	
+	finally produces
+	\code
+	Constant = [[1, 1], [2, 2], [3, 3]]
+	\endcode
+	For more information see function <tt>argmin</tt>.
+**/
+list argmax( matrix M );
+
+
+/** 
+	\brief Returns the position(s) in a list that belong to minimal values.
+	
+	\param L A list.
+	
+	\return A list of list positions.
+	
+	\since v2.0
+	
+	In contrast to the function <tt>argtrue</tt> <tt>argmin</tt> doesn't return a nested list.
+	Each elementary sublist	(i.e. not nested any more) gives one minimum value, e.g.
+	\code
+	
+	? argmin([ [ [1,2], [3,4] ], [ [0,9], [7,5,3,2,1], [4,3] ], [1,2,3,4] ]);
+	\endcode
+	
+	The result will be
+	\code
+	Constant = [[1, 1, 1], [1, 2, 1], [2, 1, 1], [2, 2, 5], [2, 3, 2], [3, 1]]
+	\endcode
+	
+**/
+list argmin( list L );
+
+
+/** 
+	\brief Returns the position(s) in a matrix that belong to minimum values.
+	
+	\param M A matrix.
+	
+	\return A list of matrix positions.
+	
+	\since v2.0
+	
+	The funtion returns a list of \f$n\f$ matrix positions, where \f$n\f$ is the number of matrix rows.
+	Each row gives one position.
+	To seek for the position in a matrix that belongs to the minimal value of the whole matrix one can write
+	\code
+	? argmin(M)(argmin(min(M))(1));
+	\endcode
+**/
+list argmin( matrix M );
+
+
+
+/** 
+	\brief Returns the position(s) in a list where the entries are not equal to zero after casting to a scalar.
+	
+	\param L A list.
+	\param RetainStructure (\b optional) A boolean flag indicating whether empty sublists should be removed (=0, default), or not.
+	
+	\return A (nested) list of indices.
+	
+	\since v2.0
+	
+	If a sublist only consists of zeros e.g. \f$[0,0]\f$ then it will first reduce to \f$[]\f$. These empty sublists
+	will then be removed (recursively) by default. But if the flag <tt>RetainStructure</tt> is set these entries are kept.
+	Here is an example:
+	\code
+	
+	? L = [ [0,-3,1,5], [0,0,0,0], [0,8,[1,0,3],0] ];
+	? T2 = argtrue( L );
+	? T1 = argtrue( L , 1);
+	? L(T2);	
+	\endcode
+	
+	The output will be
+	\code
+	L = [[0, -3, 1, 5], [0, 0, 0, 0], [0, 8, [1, 0, 3], 0]]
+	T2 = [[[1, 2], [1, 3], [1, 4]], [[3, 2], [[3, 3, 1], [3, 3, 3]]]]
+	T1 = [[[1, 2], [1, 3], [1, 4]], [], [[3, 2], [[3, 3, 1], [3, 3, 3]]]]
+	Constant = [[-3, 1, 5], [8, [1, 3]]]
+	\endcode
+	Note that the returned index list is nested and so reflects the structure of the original list.
+	The input list may be completely nested also.
+**/
+list argtrue( list L, counter RetainStructure );
+
+
+/** 
+	\brief Returns the position(s) in a matrix where the entries are not equal to zero after casting to a scalar.
+	
+	\param M A matrix.
+	
+	\return A list of indices.
+	
+	\since v2.0
+	
+	The following code gives an example for a typical application to matrices.
+	\code
+	
+	? M = Matrix( [ [0,-3,1,5], [0,0,0,0], [0,8,6,0] ] );
+	? T = argtrue( M );
+	? M(T);	
+	\endcode
+	
+	The code example produces
+	\code
+	M = (| 0 -3 1 5|, | 0 0 0 0|, | 0 8 6 0|)	
+	T = [[1, 2], [1, 3], [1, 4], [3, 2], [3, 3]]
+	Constant = [-3, 1, 5, 8, 6]
+	\endcode
+	In comparison to the function applied to lists this function just gives a simple list of matrix positions.
+**/
+list argtrue( matrix M );
+
+
+
+
+/** 
+	\brief Returns maximum value of a list.
+	
+	\param L A (nested) list.
+	
+	\return A list of maximum values.
+	
+	\since v2.0
+	
+	This function evaluates the maximum values of a regularly nested list.
+	Each elementary sublist	(i.e. not nested any more) gives one maximum.
+	For an example see <tt>min</tt>.
+
+**/
+list max( list L  );
+
+
+/** 
+	\brief Returns the maximum value for each matrix row.
+	
+	\param M A matrix.
+	
+	\return A list of maximum values.
+	
+	\since v2.0
+	
+	See also the analogous function <tt>min</tt>.
+**/
+list max( matrix M );
+
+
+/** 
+	\brief Returns minimum value of a list.
+	
+	\param L A (nested) list.
+	
+	\return A list of minimum values.
+	
+	\since v2.0
+	
+	This function evaluates the minimum values of a regularly nested list.
+	Each elementary sublist	(i.e. not nested any more) gives one minimum.
+	\code
+	
+	L = [ [ [1,2], [3,4] ], [ [0,9], [7,5,3,2,1], [4,3] ], [ 1,2,3,4] ];
+	? min( L ); // works
+	// ? min( [ 1,2,3, [1,2] ] ); // not regular - doesn't work
+	// ? min(min( L )); // not regular - doesn't work
+	\endcode
+	From the above example one obtains <tt>Constant = [[1, 3], [0, 1, 3], 1]</tt>.
+**/
+list min( list L  );
+
+
+/** 
+	\brief Returns the minimum value for each matrix row.
+	
+	\param M A matrix.
+	
+	\return A list of minimum values.
+	
+	\since v2.0
+	
+	To compute the minimum value of the whole matrix \a M , type <tt>min(min(M));</tt>.
+**/
+list min( matrix M );
+
+
+
+/**
+	\brief Sorting of a list of numbers or strings.
+	
+	\param lData A list of values that is to be sorted.
+	\param bAscend (optional) If this is non-zero, the list will be sorted in ascending order (default), otherwise in descending order.
+	\param bApply (optional) If this is non-zero, the list lData will be reordered (default), otherwise the list itself will not be reordered but the function still returns a sorting index list.
+	
+	\return The return value is an index list that gives the ordering of the initial list components.
+	
+	In its simplest form, sort() has the following effect.
+	
+	\code
+	?lData = [3,1,2];
+	?lIdx = sort(lData);
+	?lData;
+	\endcode
+	
+	Output:
+	
+	<b>lData</b> <i>(3)</i>= <br><b>[</b> 3 <b>,</b> 1 <b>,</b> 2 <b>]</b><p><br><b>lIdx</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>]</b> <b>,</b> <b>[</b> 1 <b>]</b> <b>]</b><p><br><b>lData</b> <i>(3)</i>= <br><b>[</b> 1 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br>
+	
+	The list \c lIdx contains a list of indices giving the new ordering of the initial list \c lData. 
+	
+	\code
+	?lData = [3,1,2];
+	?lIdx = sort(lData, true, false);
+	?lData;
+	?lData(lIdx);
+	\endcode
+	
+	Output:
+	
+	<b>lData</b> <i>(3)</i>= <br><b>[</b> 3 <b>,</b> 1 <b>,</b> 2 <b>]</b><p><br><b>lIdx</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>]</b> <b>,</b> <b>[</b> 1 <b>]</b> <b>]</b><p><br><b>lData</b> <i>(3)</i>= <br><b>[</b> 3 <b>,</b> 1 <b>,</b> 2 <b>]</b><p><br><b>Constant</b> <i>(3)</i>= <br><b>[</b> 1 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br>	
+	
+	Here the sorting index list is returned, but the list itself is not reordered. Note that sort() also orders lists of strings and mixed lists of scalars and string. In the latter case, scalars are always regarded as 'smaller' than strings.
+**/
+list sort(list lData, counter bAscend, counter bApply);
+
+
+/**
+	\brief Sorting of a list of numbers or strings.
+	
+	\param lData A list of values that is to be sorted.
+	\param pCode (optional) A user defined function to compare pairs of elements in the list lData.
+	\param bApply (optional) If this is non-zero, the list lData will be reordered (default), otherwise the list itself will not be reordered but the function still returns a sorting index list.
+	
+	\return The return value is an index list that gives the ordering of the initial list components.
+
+	This version of sort() allows for the sorting of lists according to arbitrary specifications. The user defined function has to accept two parameters and return a value greater than zero if the first parameter should appear to the left of the second parameter in the ordered list. Otherwise it has to return a value less or equal to zero.
+	
+	The following example sorts a list of vectors according their lengths, from the shortest to the longest.
+	
+	\code
+	SortFunc = { abs(_P(1)) < abs(_P(2)) }
+	
+	?lVec = [VecE3(1,2,0), VecE3(0,1,0), VecE3(1,-1,0)];
+	?lIdx = sort(lVec, SortFunc);
+	?lVec;
+	\endcode
+	
+	Output:
+	
+	<b>lVec</b> <i>(3)</i>= <br><b>[</b> 1 <b>e1</b> + 2 <b>e2</b> <b>,</b> 1 <b>e2</b> <b>,</b> 1 <b>e1</b> + -1 <b>e2</b> <b>]</b><p><br><b>lIdx</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>]</b> <b>,</b> <b>[</b> 1 <b>]</b> <b>]</b><p><br><b>lVec</b> <i>(3)</i>= <br><b>[</b> 1 <b>e2</b> <b>,</b> 1 <b>e1</b> + -1 <b>e2</b> <b>,</b> 1 <b>e1</b> + 2 <b>e2</b> <b>]</b><p><br>	
+	
+**/
+list sort(list lData, code pCode, counter bApply);
+
+/** \}
+**/
+
+/** \}
+**/
+

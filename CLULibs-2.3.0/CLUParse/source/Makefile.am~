@@ -1,0 +1,69 @@
+
+lib_LIBRARIES		= libCLUParse.a
+
+libCLUParse_a_SOURCES	= CLUCodeBase.cpp OCLabel.cpp \
+				CLUParse.cpp OCNumber.cpp \
+				CodeBase.cpp OCObjSepSym.cpp \
+				CodeBinaryOperator.cpp OCOpCloseRoundBracket.cpp \
+				CodeCreateVarList.cpp OCOpComma.cpp \
+				CodeElement.cpp OCOpOpenRoundBracket.cpp \
+				OCOpOpenCurlyBracket.cpp OCOpCloseCurlyBracket.cpp \
+				OCOpOpenSquareBracket.cpp OCOpCloseSquareBracket.cpp \
+				CodeElementList.cpp OCOpStd.cpp \
+				CodeErrorList.cpp OCOperator.cpp \
+				CodeFunction.cpp OCString.cpp \
+				CodeLabel.cpp ObjectClass.cpp \
+				CodeNumber.cpp Parse.cpp \
+				CodeOperator.cpp ParseBase.cpp \
+				CodeString.cpp Stack.cpp \
+				CodeVar.cpp StdAfx.cpp \
+				CodeVarList.cpp CodeCreateRefVarList.cpp TempLib.cpp \
+				ParseMessageList.cpp VarList.cpp CodeData.cpp \
+				CLUCodeBase_BMP.cpp CLUCodeBase_BitmapFont.cpp \
+				CLUCodeBase_Draw.cpp CLUCodeBase_ErrorProp.cpp \
+				CLUCodeBase_GA.cpp CLUCodeBase_Latex.cpp \
+				CLUCodeBase_Math.cpp CLUCodeBase_Matrix.cpp \
+				CLUCodeBase_Operators.cpp CLUCodeBase_Present.cpp \
+				CLUCodeBase_String.cpp CLUCodeBase_Light.cpp \
+				CLUCodeBase_List.cpp \
+				CLUCodeBase_Tool.cpp CLUCodeBase_Info.cpp \
+				CLUCodeBase_File.cpp CLUCodeBase_SerialIO.cpp \
+				CLUCodeBase_Tensor.cpp \
+				CodeIf.cpp CodeLoop.cpp CodeBreak.cpp \
+				OCKeywordBreak.cpp OCKeywordElse.cpp OCKeywordIf.cpp \
+				OCKeywordLoop.cpp OCKeywordThen.cpp \
+				ImageRepository.cpp ImageReference.cpp \
+				XMLdom.cpp XMLElement.cpp XMLTree.cpp
+
+clu_includedir = $(includedir)/clu
+
+clu_include_HEADERS =	cluparsing.h CLUCodeBase.h OCLabel.h \
+				CLUParse.h OCNumber.h \
+				CodeBase.h OCObjSepSym.h \
+				CodeBinaryOperator.h OCOpCloseRoundBracket.h \
+				CodeCreateVarList.h OCOpComma.h \
+				CodeElement.h OCOpOpenRoundBracket.h \
+				OCOpOpenCurlyBracket.h OCOpCloseCurlyBracket.h \
+				OCOpOpenSquareBracket.h OCOpCloseSquareBracket.h \
+				CodeElementList.h OCOpStd.h \
+				CodeErrorList.h OCOperator.h \
+				CodeFunction.h OCString.h \
+				CodeLabel.h ObjectClass.h \
+				CodeNumber.h Parse.h \
+				CodeOperator.h ParseBase.h \
+				CodeString.h Stack.h \
+				CodeVar.h StdAfx.h \
+				CodeVarList.h CodeCreateRefVarList.h \
+				ParseMessageList.h VarList.h CodeData.h	\
+				CodeIf.h CodeLoop.h CodeBreak.h \
+				OCKeywordBreak.h OCKeywordElse.h OCKeywordIf.h \
+				OCKeywordLoop.h OCKeywordThen.h OCIDSymDef.h \
+				ImageRepository.h ImageReference.h \
+				XML.h XMLdom.h XMLElement.h XMLTree.h
+
+
+AM_CPPFLAGS 	= -I$(srcdir)/../../CLU/source -I$(srcdir)/../../CLUDraw/source \
+				-I@CLU_OPENGL@/include -I@CLU_GLUT@/include -I$(DEVIL_HOME)/include \
+				-I$(FLTK_HOME)/include	@XML_CXXFLAGS@ 
+
+

@@ -1,0 +1,42 @@
+// Define the basis variables for Euclidean space
+DefVarsE3();
+
+// Define a multivector variable as e1
+A = e1;
+
+// Generate a mask for all bivector components
+Mask = [0, 			/* Scalar */
+		0, 0, 0, 	/* Vector */
+		1, 2, 3, 	/* Bivector */
+		0			/* Trivector (Pseudoscalar) */
+		];
+
+// Generate the multivector product matrix of A
+// for the inner product. Apply the mask
+// such that only bivector components are
+// considered.
+MA = GetMVProductMatrix(A, MVOP_INNER, Mask);
+
+// Find the null space of MA with a 
+// singular value decomposition
+W = SVD(MA);
+
+// Transform the diagonal matrix of the
+// singular values to a row vector and
+// display it
+?Diag = DiagToRow(W(2));
+
+// Transform the singular vectors to multivectors.
+// Now you need to specify the mask again, such
+// that the matrix components are mapped to the
+// correct multivector components.
+?V = Matrix2MV(W(3), Mask);
+
+// Print the first(singular) multivector
+// which spans the basis of the bivector 
+// null space of e1 w.r.t. the inner product.
+?V(1);
+
+// Test the caluculation by evaluating the
+// inner product with all singular multivectors.
+?A . V;

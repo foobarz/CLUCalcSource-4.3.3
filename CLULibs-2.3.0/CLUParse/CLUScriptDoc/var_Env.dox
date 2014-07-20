@@ -1,0 +1,69 @@
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+/** \defgroup grp_VarEnv Execution Environment Variables
+
+	These variables control the environment in which a CLUScript is executed. Whether these variables exist depends on the software that wraps the parser and the visualization libraries. 
+	\{
+**/
+
+
+/** 
+	\brief Flag to indicate whether visualization is to be done in 2d.
+	
+	\since v1.4
+	
+	If this variable is equal to 1, then the visualizations are not done in a 3-dimensional space but in 2 dimensions. In fact, you can draw just as before, only that everthing is orthographically projected onto the first two dimensions (x,y). This means that when you, for example, draw a circle in 3d that is tilted with respect to the x,y-plane, it will be drawn as an ellipse.
+	
+**/
+counter _2dView;
+
+/** 
+	\brief The background color of the visualization window.
+	
+	\since v1.3
+
+	By default this is set to black. But you can set it to any other color. For presentations, for example, a white background is very useful.
+**/
+color _BGColor;
+
+
+/** 
+	\brief Flag to indicate whether script should be re-executed at each animation step.
+	
+	\since v1.0
+	
+	If this variable is equal to 1, then the script is re-executed at each animation step if animation is switched on. See section \ref page_Animation "Animation" for more details.
+	
+**/
+counter _DoAnimate;
+
+/** 
+	\brief This value gives the size of the frame box.
+	
+	\since v1.3
+	
+	If this is set to a value smaller or equal to zero, then the frame box is not drawn.	
+**/
+scalar _FrameBoxSize;
+
+
+/**
+	\brief List of major, minor and bug-fix version of CLUCalc.
+	
+	\since v2.2
+	
+	This cannot be modified by the user.
+**/
+list VERSION;
+
+
+/** \}
+**/
+
+/** \}
+**/

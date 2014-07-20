@@ -1,0 +1,26 @@
+#!/bin/sh
+
+source ./ENV
+
+
+cd ${CLUDEVIL_SOURCE}
+./configure --prefix=${DEVIL_HOME}
+make install
+
+cd ${CLUFLTK_SOURCE}
+./configure --prefix=${FLTK_HOME}
+mkdir ${FLTK_HOME}
+cp ${CLUFLTK_SOURCE}/fltk-config ${FLTK_HOME}/.
+make install
+make
+
+cd ${CLULIBS_SOURCE}
+./configure --prefix=${CLU_HOME}
+make install
+
+cd ${CLUCALC_SOURCE}
+./configure --prefix=${CLU_HOME}
+make install
+
+
+

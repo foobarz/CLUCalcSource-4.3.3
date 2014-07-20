@@ -1,0 +1,28 @@
+// This script shows a set of functions that
+// can be applied to lists and matrices.
+
+// Here is a list. Note that also nested lists
+// can be used here.
+L = [1,2,3];
+
+?abs(L);
+?pow(L,2);
+?pow(L, [2,3]);
+?exp(L);
+?sqrt(L);
+
+// Here is a matrix
+M = Matrix([[1,0.5],[0.75,0.1]]);
+
+?abs(M);
+?pow(M, 2);
+?pow(M, [2,3]);
+?exp(M);
+?sqrt(M);
+
+?sin(M);
+?cos(M);
+?tan(M);
+?asin(M);
+?acos(M);
+?atan(M);

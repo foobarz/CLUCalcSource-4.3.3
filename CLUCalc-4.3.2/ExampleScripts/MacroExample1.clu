@@ -1,0 +1,46 @@
+DefVarsE3();
+
+// Define my own plotting of functions
+MyPlot = 
+{
+	// The first parameter needs to be the function
+	_f = _P(1);
+	if (Type(_f) != "code")
+	{
+		// Error message
+		?"Expect function as first parameter.";
+		// end this macro
+		break;
+	}
+	
+	// The minimum, maximum and step values
+	_min = _P(2);
+	_max = _P(3);
+	_step = _P(4);
+
+	// Loop over positions in range and add
+	// function values to list.
+	_pos = _min;
+	_Data = _f(_pos);
+	loop
+	{
+		_pos = _pos + _step;
+		if (_pos > _max)
+			break;
+	
+		_Data << _f(_pos);
+	}
+
+	// Draw the list of data points
+	DrawPointList(_Data);
+}
+
+// The function we want to plot
+func = 
+{
+	_x = _P(1);
+	_x*e1 + (1 - _x + sin(_x*_x))*e2 // Return value
+}
+
+// Now plot the function
+MyPlot(func, -2, 2, 0.1);

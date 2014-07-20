@@ -1,0 +1,15 @@
+// Define P3 Variables
+DefVarsP3();
+
+// Normalized homogeneous vectors
+:A = 2*e1 + e4:Red;
+:B = 3*e2 + e4:Blue;
+L = A^B;
+
+// Direction of line
+:V = L . e4:Green;
+
+// Draw line starting at A
+// with length sqrt(V.V)
+:Yellow;
+Offset(L, A, sqrt(V.V));

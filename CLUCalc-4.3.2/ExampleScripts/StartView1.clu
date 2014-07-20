@@ -1,0 +1,32 @@
+// Start a view with its bottom-left corner
+// at the bottom-left corner of the visualization
+// window, and having half its width and height.
+StartView(0,0, 0.5, 0.5);
+
+// Start an overlay
+StartOverlay();
+
+// Draw a rectangle along the 
+// outer border of the view.
+SetLineWidth(4);
+:Red;
+DrawLine(VecE3(0,0), VecE3(100,0));
+DrawLine(VecE3(100,0), VecE3(100,100));
+DrawLine(VecE3(100,100), VecE3(0,100));
+DrawLine(VecE3(0,100), VecE3(0,0));
+SetLineWidth(2);
+
+// End the overlay
+EndOverlay();
+
+// Now draw a sphere in the view
+:Blue;
+DrawSphere(VecE3(0,0,0), 1);
+
+// End the view
+EndView();
+
+// Draw the same sphere in the main view
+:Green;
+DrawSphere(VecE3(0,0,0), 1);
+

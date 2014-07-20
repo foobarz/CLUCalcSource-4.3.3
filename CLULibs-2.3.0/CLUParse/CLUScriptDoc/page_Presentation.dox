@@ -1,0 +1,378 @@
+/** \page page_Presentation Presentations
+
+A very useful new feature in CLUCalc v3.0.0 is that of presentations. All the features that are necessary to produce slides are available in CLUScript v1.4, and CLUCalc offers the framework to create a whole presentation. 
+
+Maybe first a word of warning. Preparing presentations with CLUCalc is not as easy as with Power Point or Star Office or any other professional presentation tool. However, the additional amount of work you need to put in, is rewarded by allowing you to have interactive 3d-Graphics in your slides. This can improve the impact of a presentation by quite a bit. I used it to good effect at the DAGM conference 2003 in Magdeburg, where I gave a 2 hour tutorial and a talk. The animated and interactive graphics allowed me to seemslessly integrate the slides of my talk with examples of the geometry I wanted to explain. I will also make both talks available for download. This should give you a good starting point for preparing your own presentations. There is also an example presentation in the example scripts directory of that comes with CLUCalc.
+
+
+\section sec_StdSlide The Standard Slide
+
+Before I discuss how to combine a number of slides to a presentation, let us first look at how to design a slide. One often used element of a presentation is, that there is a common element in all slides, like a logo, or the name of the presenter, or the title of the talk at the bottom of the slide. If we have to prepare a number of slides we do not really copy the same bit of code into all slides. But we also do not need to, since CLUScript v1.4 now allows you to include other CLUScripts into a script. We can therefore write a "standard slide" with definitions and visualizations that should be the same for all slides. Here is a standard slide that I used. You can find this script in the "Presentation1" sub-directory of the "ExampleScripts" sub-directory of your CLUCalc directory. It is called <tt>stdslide.clu</tt>.
+
+\code
+// Make sure to execute this script once
+// with "Parse (Force Render Latex)" from
+// the Code menu.
+// Also look at the visualization in
+// full-screen mode via the menu 
+// "Visualization -> Full Screen".
+// After you switched to full screen mode
+// you may need to press ctrl-'p' (strg-'p') 
+// again to realign the elements of the slide.
+// Return from full screen mode by pressing
+// ctrl-'f' (strg-'f').
+
+// Set the background color to white
+// You should probably always do this 
+// for presentations
+_BGColor = White;
+
+// No frame box
+_FrameBoxSize = 0;
+
+// Now define some functions that will help
+// you to prepare the text for slides.
+// The idea is that there is string variable
+// called LatexText to which the latex text
+// needed is added. Then only one call to 
+// DrawLatex is necessary to draw the whole lot.
+
+// Create a slide which introduces a new part
+// of a presentation
+Part = 
+{
+	StartOverlay();
+	SetAlign(0.5,0.5);
+	DrawLatex(40, 45, 0, 
+	"\plain:" +
+	"\input{header}\begin{document}" +
+	"\begin{center}\huge\bf " + 
+	_P(1) + "\end{center}\end{document}", 
+	"part");
+	EndOverlay();
+}
+
+// Add a title to a slide
+Title = 
+{
+	LatexText = LatexText + 
+		"{\Large\bf " + _P(1) + "}";
+}
+
+// The following functions can be instead of
+// \begin{itemize} \end{itemize}, etc.
+bi =
+{
+	LatexText = LatexText + 
+		"\begin{itemize}";
+}
+
+ei =
+{
+	LatexText = LatexText + 
+		"\end{itemize}";
+}
+
+be =
+{
+	LatexText = LatexText + 
+		"\begin{enumerate}";
+}
+
+ee =
+{
+	LatexText = LatexText + 
+		"\end{enumerate}";
+}
+
+it =
+{
+	LatexText = LatexText + 
+		"\item " + _P(1) + " ";
+}
+
+// Draw the slide
+MakeSlide = 
+{
+	StartOverlay();
+	SetAlign(0,1);
+	DrawLatex(Left,Top,0, 
+		"\plain:"
+		+ "\input{header}\begin{document}"
+		+ LatexText
+		+ "\end{document}", 
+		"text");
+	EndOverlay();
+}
+
+// Some standard settings
+SetLatexMagStep(7);
+LatexText = " ";
+
+// Some variables which allow you to draw your
+// text and images always with the same margins.
+Top = 12;
+Left = 10;
+Right = 75;
+Bottom = 85;
+
+// Start again an overlay block to render
+// some background graphics.
+StartOverlay();
+:Black;
+
+// We want to draw a logo with a 
+// transparent background.
+EnableImgTransparency(1);
+SetImgTransparentColor(White);
+
+// Draw the image centered along x,
+// and top aligned along y, ...
+SetImgAlign(0.5,1);
+
+// ... at position (92, 3).
+DrawImg(92,3,0, "cog_siegel.bmp");
+
+// Reset the image alignment
+SetImgAlign(0,0); 
+
+// Create title of talk which always appears
+// at the bottom of the slide
+SetLatexMagStep(7);
+DrawLatex(2,96.5,0, 
+"\it Presentations with CLUCalc v4.0.0", "cp");
+
+// Increase the text size
+SetLatexMagStep(8);
+
+// This part is quite cunning. Depending on
+// how you set the variable PartID in the 
+// script of a slide BEFORE this script is
+// included, you get a different header,
+// which should show in which part of your
+// talk you currently are.
+
+// Uncomment the following line and force the
+// parsing of latex again to see what happens.
+//PartID = 1;
+if (PartID != 0)
+{
+	SetLatexAlign(0, 1);
+	if (PartID == 1) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(7, 1, 0, 
+		  face 
+		+ " Introduction $\quad\longrightarrow$", 
+		"intro");
+
+	if (PartID == 2) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(Pos(4) + 2, 1, 0, 
+			  face
+			+" First Steps $\quad\longrightarrow$", 
+			"first");
+
+	if (PartID == 3) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(Pos(4) + 2, 1, 0, 
+				face
+			+ " Advanced Topics", 
+			"adv");
+}
+
+
+// Now a small notice about CLUCalc.
+// Would be nice if you could leave this in
+// when you give a talk with CLUCalc.
+// Also let me know about the talks you gave
+// with CLUCalc and the problems you encountered.
+SetLatexMagStep(4);
+SetLatexAlign(1,0);
+DrawLatex(99.5,99.5,0, "\it Created with CLUCalc v4.0", "clu");
+
+// The standard size of latex text in slides.
+SetLatexMagStep(15);
+
+// Here we draw the two blue bands at the bottom
+// and the right of the slide.
+:Color(0.409, 0.951, 1.000, 0.2);
+DrawPlane(50,96,-1, 0, 8, 0, 100, 0, 0);
+DrawPlane(98,50,-1, 0,100,0, 12, 0, 0);
+
+:Color(0.847, 0.847, 0.847);
+
+// And here come the lines.
+DrawLine(Left-6, 0, -1, Left-6, Bottom + 2, -1);
+DrawLine(0, Top-8, -1, Right+2, Top-8, -1);
+
+// The overlay ends here. 
+EndOverlay();
+
+// From here on you can do any 3d-graphics which
+// will not influenced the overlayed slide text.
+
+// We set the standard color to black.
+:Black;
+\endcode
+
+Note that latex rendering is switched off by default, so that previously rendered latex bitmaps are loaded, if they exist. You need to force latex rendering with the menu point "Code -> Parse (Force Render Latex)". Everything in the above script is also drawn in an overlay coordinate system whose coordinate system's origin is at the top left corner of the visualization window. The bottom right corner of the visualization window is at coordinate (100,100) in this coordinate system. That is, the coordinates give percentages in x- and y-direction with respect to the extension of the visualization window. Therefore, the absolute positioning of the elements drawn in an overlay coordinate system will change when the size of the visualization window is changed. After switching to full screen mode (ctrl-'f'), you will currently have to parse the script again (ctrl-'p') (no forced latex rendering), in order to get the positioning of the elements right.
+
+
+
+\section sec_TitleSlide The Title Slide
+
+There has to be a first slide which not only displays the title of the presentation, but also sets the names of the scripts that are to appear in the presentation. Here is part of the code of a title slide. This script is called <tt>start.clu</tt>.
+
+\code
+// Title page which creates presentation list
+
+// Only initialize the script list if the 
+// script has just been loaded or changed.
+if (ExecMode & EM_CHANGE)
+{
+	MyTime = Time;
+
+	// Clear the script list
+	_ClearScriptList();
+	
+	// Now add all the scripts in the order
+	// you want to present them
+
+	_AddScriptToList("Introduction Start", "intro_start.clu");
+	_AddScriptToList("Introduction", "intro_1.clu");
+
+	// Now add again this slide to return to the start
+	_AddScriptToList("Start", "start.clu");	
+}
+
+// Here our standard slide is included
+//#include "stdslide.clu"
+
+// And now the title of this talk
+StartOverlay();
+
+SetLatexAlign(0.5,1);
+DrawLatex(40,12,0, 
+"\plain:
+\input{header}
+\begin{document}
+\begin{center}
+{\huge Presentations with\\[1ex] CLUCalc}\\[5mm]
+{\large An Overview}
+\end{center}
+\end{document}
+", "title");
+
+SetLatexAlign(0.5, 1);
+DrawLatex(40, 85, 0, 
+"\sf by Christian B. U. Perwass", 
+"me");
+EndOverlay();
+
+// //////////////////////////////////////////////
+// What follows here is some code to generate
+// a rotating robot arm.
+
+/*
+	...
+*/
+\endcode
+
+The full script generates the following output when the visualization window is switched to full screen mode.
+
+\image html Presentation1_img1.jpg
+
+The important bit of code here is
+
+\code
+// Clear the script list
+_ClearScriptList();
+	
+// Now add all the scripts in the order
+// you want to present them
+
+_AddScriptToList("Introduction Start", "intro_start.clu");
+_AddScriptToList("Introduction", "intro_1.clu");
+
+// Now add again this slide to return to the start
+_AddScriptToList("Start", "start.clu");	
+\endcode
+
+Here the internal script list of CLUCalc is reset using _ClearScriptList() and the filled with the filenames and titles of all the scripts that are to be shown in the presentation using _AddScriptToList(). The title of a slide that is given in the _AddScriptToList() function, is used when a list of all scripts is displayed. 
+This may be done by selecting the menu point "Presentation -> Show List..." in the visualization window. 
+
+If you now switch the visualization window to full screen mode (ctrl-'f' or strg-'f'), you can use the page-up and page-down keys of your keyboard to switch between the different slides. With ctrl-RETURN you can show the list of slides. If you click into this list with the mouse, you jump to that slide. You can also move the cursor keys up and down. The respective slide is shown right away while you move through the list. When you found the correct slide, simply press return to exit the script list window.
+
+\todo
+Currently it is not possible to control the switching between slides with the mouse. Again something to be done for the next version :-).
+
+\attention If you have changed something in a slide without saving it and then switch to some other slide via the commands of the presentation menu, all changes are lost. This is supposed to be a feature and not a bug, since during a presentation you may want to change the code to demonstrate something, but do not want these unnerving dialog boxes to appear. Let me know what you think of this feature.
+
+
+\section sec_TypicalSlide A Typical Slide
+
+A standard slide may now look like the example script <tt>intro_1.clu</tt>.
+
+\code
+// Don't forget to force latex rendering the first
+// time you execute this script.
+
+// Set the part we are currently in for the header.
+// At this point we are in the first part of the talk
+PartID = 1;
+
+// Include the standard slide
+//#  include "stdslide.clu"
+
+// Use functions from the stdslide.clu file
+// to create a slide
+
+Title("A feature overview");
+
+// This is \begin{itemize}
+bi();
+// And this is \item 
+it("Interactive 3d-graphics directly in the slides");
+it("Render text and formulas with \LaTeX");
+// Here comes the \end{itemize}
+ei();
+
+// And now we draw the slide
+MakeSlide();
+\endcode
+
+Here we used the functions defined in <tt>stdslide.clu</tt> to generate the latex text. Do not forget to force latex rendering the first time you execute this script or whenever you change the latex code. After generating the text for the slide, you may draw anything else. Here is an example of how the above code could be extended.
+
+\code
+// And here comes the promised interactive
+// 3d-graphics.
+
+// Draw the framebox
+_FrameBoxSize = 1.5;
+
+// Move the frame origin down a bit so that
+// it lies underneath the text
+SetFrameOrigin(0, -1.3, 0);
+
+// And also rotate the frame a bit,
+// so that the graphics look good.
+SetFrameRotor(RotorE3(1,1,0, Pi/6));
+
+// User interaction through mouse mode 1
+:Red;
+:A = VecE3(1) + VecE3(1,0,0);
+
+:Blue;
+:B = VecE3(0,1,0);
+
+:Color(0.353, 1.000, 0.625, 0.8);
+:A^B;
+\endcode
+
+Note the use of SetFrameOrigin() and SetFrameRotor() to adapt the visualization to the script. The full script <tt>intro_1.clu</tt> generates the following slide.
+
+\image html Presentation1_img2.jpg
+
+
+
+**/

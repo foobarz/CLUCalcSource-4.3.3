@@ -1,0 +1,136 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Misc Miscellaneous Functions
+
+	Functions that do not fit into any particular group.
+	
+	\{
+**/
+
+
+
+/**
+	\brief Return the currently active mouse mode.
+	
+	\return The currently active mouse mode.
+	
+	\since v2.2
+**/
+counter GetMouseMode();
+
+
+/**	
+	\brief Returns the current mouse sensitivity values.
+	
+	\return A list with two scalar components, whereby the first gives the current rotation sensitity and the second the current translation sensitivity.
+**/
+list GetMouseSens();
+
+/**
+	\brief Get all mouse values for a particular mode and button.
+	
+	\param iMode The mouse mode.
+	\param iButton The mouse button, 1:left, 2:right.
+	
+	\return A list of three scalar values.
+	
+	Instead of calling the function Mouse() three times to obtain all values for a mouse button in a particular mode, you can simply call this function once.
+**/
+list GetMouseValue(counter iMode, counter iButton);
+
+
+
+
+/** 
+	\brief This function returns the value of one of the internal mouse mode variables.
+	
+	\param Mode The mouse mode. Allowed value are in the range of 1 to 9.
+	\param Button The mouse button for which the mouse mode variable is to be read.
+	\a Button equal to 1 refers to the left mouse button and \a Button equal to 2 refers to the right mouse button.
+	\param Axis The axis of rotation of translation.
+	<ul>
+		<li>1: x-axis
+		<li>2: y-axis
+		<li>3: z-axis
+	</ul>
+	
+	\return The current value of the respective mouse mode variable.
+	
+	\since v1.0
+	
+	See section \ref page_UserInteraction "User Interaction" for details on this function.
+**/
+scalar Mouse(counter Mode, counter Button, counter Axis);
+
+
+/**
+	\brief Sets the current mouse mode.
+	
+	\param iMode The mouse mode that is to be made active.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This allows you to control the current mouse mode from inside a script.
+**/
+void SetMouseMode(counter iMode);
+
+
+/**
+	\brief Set mouse sensitivity.
+	
+	\param dRot Rotation sensitivity. Default <tt>0.5</tt>.
+	\param dTrans Translation sensitivity. Default <tt>0.02</tt>.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This allows you to set the sensitivity of the mouse. 
+**/
+void SetMouseSens(scalar dRot, scalar dTrans);
+
+
+/**
+	\brief Sets the value of the mouse variables for a particular mouse mode and mouse button.
+	
+	\param iMode The mouse mode.
+	\param iButton The mouse button, 1:left, 2:right.
+	\param lVal A list of three scalar values.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function allows you to set the mouse variables which can otherwise only be controlled by the user through the mouse. 
+**/
+void SetMouseValue(counter iMode, counter iButton, list lVal);
+
+
+/**
+	\brief Sets the value of the mouse variables for a particular mouse mode and mouse button.
+	
+	\param iMode The mouse mode.
+	\param iButton The mouse button, 1:left, 2:right.
+	\param vVal A vector giving the new values.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	This function allows you to set the mouse variables which can otherwise only be controlled by the user through the mouse. 
+**/
+void SetMouseValue(counter iMode, counter iButton, multivector vVal);
+
+
+/** \}
+**/
+
+/** \}
+**/
+

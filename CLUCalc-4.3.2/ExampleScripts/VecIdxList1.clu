@@ -1,0 +1,13 @@
+// A list
+L = [
+	[1], 		// Mouse Mode 1 vector
+	[1,2], 		// vector (1,2,0)
+	[1,1,1]		// vector (1,1,1)
+	];
+	
+?VecE3(L);
+?VecP3(L);
+?VecN3(L);
+
+?VecP3(1,2,3,-1);
+?VecC2([[2,1], VecE3(1,0,0)]);

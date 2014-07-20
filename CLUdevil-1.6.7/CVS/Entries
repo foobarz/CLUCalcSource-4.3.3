@@ -1,0 +1,37 @@
+/.cvsignore/1.1/Thu Jun 24 06:04:15 2004//
+/AUTHORS/1.2/Sat Jan 26 10:39:18 2002//
+/BUGS/1.9/Fri May 28 14:39:03 2004//
+/COPYING/1.1.1.1/Sat Jan 26 01:14:16 2002//
+/CREDITS/1.12/Fri Jun 25 13:40:25 2004//
+/INSTALL/1.1.1.1/Sat Jan 26 01:14:18 2002//
+/Libraries.txt/1.6/Wed Mar 12 15:32:18 2003//
+/MSVC++.txt/1.2/Wed May 15 19:12:56 2002//
+/Makefile.am/1.10/Thu Jun 13 06:55:07 2002//
+/Makefile.in/1.19/Tue Jun 22 16:47:23 2004//
+/NEWS/1.1.1.1/Sat Jan 26 01:14:18 2002//
+/README/1.4/Tue Jun 22 21:55:13 2004//
+/README.macosx/1.7/Fri Jun 25 15:57:12 2004//
+/README.unix/1.17/Sun Jun  6 13:53:54 2004//
+/README.win/1.17/Fri May 28 14:39:03 2004//
+/acconfig.h/1.5/Tue Jun 22 16:47:23 2004//
+/acinclude.m4/1.2/Wed Jun 16 02:17:08 2004//
+/aclocal.m4/1.8/Tue Jun 22 16:47:23 2004//
+/autogen.sh/1.1/Sun Dec 28 17:42:48 2003//
+/configure/1.43/Fri Jun 25 19:07:51 2004//
+/configure.bat/1.2/Thu Jun 24 06:04:15 2004//
+/ltmain.sh/1.1/Sun Dec 28 17:42:48 2003//
+/missing/1.1/Sun Dec 28 18:13:56 2003//
+D/cpp wrapper////
+D/examples////
+D/extlibs////
+D/include////
+D/lib////
+D/libtools////
+D/projects////
+D/src-IL////
+D/src-ILU////
+D/src-ILUT////
+D/test////
+/configure.in/1.40/Mon Jun 28 07:39:33 2004//
+/ChangeLog/1.49/Fri Jul  2 21:46:31 2004//
+/TODO/1.5/Thu Jul  8 07:59:42 2004//

@@ -1,0 +1,177 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(CLU/source/clu.h)
+AM_INIT_AUTOMAKE(CLULibs,2.3.0)
+
+dnl CXXFLAGS="-O3 -Wall"
+CXXFLAGS="-D_GNUCPP3_ -O2"
+
+dnl AC_CHECK_LIB(glut,glutHideWindow,GLUT_CXXFLAGS="-DCLUDRAW_GLUT")
+GLUT_CXXFLAGS="-DCLUDRAW_GLUT"
+AC_SUBST(GLUT_CXXFLAGS)
+
+CXXFLAGS="$CXXFLAGS ${GLUT_CXXFLAGS}"
+
+dnl AC_PATH_PROG(FLTK_CONFIG,fltk-config)
+dnl Uncomment this to use gnu compiler version 2.95 on solaris
+dnl CXX=/usr/local/bin/c++
+dnl CXX=/opt/gnu/bin/cpp
+
+dnl Checks for programs.
+dnl AC_PROG_AWK
+dnl AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CPP
+AC_PROG_INSTALL 
+dnl AC_PROG_MAKE_SET
+AC_PROG_LIBTOOL
+dnl AC_PROG_YACC
+
+echo Compiler: ${CXX}
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+AC_PROG_GCC_TRADITIONAL
+
+dnl Checks for X11
+AC_PATH_XTRA
+AC_SUBST(X_CFLAGS)
+AC_SUBST(X_PRE_LIBS)
+AC_SUBST(X_EXTRA_LIBS)
+AC_SUBST(X_LIBS)
+AC_SUBST(x_libraries)
+
+dnl use GNU libtool
+AM_PROG_LIBTOOL
+
+AC_PATH_PROG(PKG_CONFIG,pkg-config)
+
+echo
+echo "Checking required libraries for PACBase..."
+echo
+
+
+echo
+echo "Checking FLTK configuration..."
+echo 
+
+if test "$FLTK_HOME"; then
+   FLTK_CONFIG="${FLTK_HOME}/fltk-config"
+   if test -e "$FLTK_CONFIG"; then
+      echo "fltk-config command: " $FLTK_CONFIG
+      FLTK_CXXFLAGS=`exec ${FLTK_CONFIG} --use-gl --use-images --use-glut --cxxflags`
+      FLTK_CXXFLAGS="${FLTK_CXXFLAGS} -DCLUDRAW_FLTK"
+      CXXFLAGS="$CXXFLAGS ${FLTK_CXXFLAGS}"
+   else
+      echo
+      echo "*************************************************************"
+      echo "* FLTK seems to be installed but the 'fltk-config' script"
+      echo "* does not exist. Please execute the 'BUILD' script in the"
+      echo "* FLTK directory first, before compiling the CLU libraries."
+      echo "*"
+      echo "* Will now carry on with no FLTK support."
+      echo "*************************************************************"
+      echo
+   fi
+else
+   echo
+   echo "*****************************************************************"
+   echo "* FLTK not installed. Need to install CLUfltk if you want to use"
+   echo "* FLTK together with CLUDraw. Also do not forget to set the"
+   echo "* environment variable FLTK_HOME to the directory where you"
+   echo "* installed CLUfltk."
+   echo "*"
+   echo "* Will carry on without FLTK support."
+   echo "*****************************************************************"
+   echo
+fi
+
+AC_SUBST(FLTK_CXXFLAGS)
+
+if test "$PKG_CONFIG"; then
+   echo "pkg-config dir: " $PKG_CONFIG
+
+   echo
+   echo Checking libxml2 configuration
+   echo
+
+   if `exec ${PKG_CONFIG} libxml-2.0 --exists`; then
+      XML_CXXFLAGS=`exec ${PKG_CONFIG} libxml-2.0 --cflags`
+      XML_LIBS=`exec ${PKG_CONFIG} libxml-2.0 --libs`
+   else
+      echo
+      AC_MSG_ERROR("XML2 library cannot be found. Might need to set PKG_CONFIG_PATH variable to appropriate path.")
+   fi
+else
+   AC_MSG_ERROR("pkg-config not installed.")
+   echo
+fi
+
+AC_SUBST(XML_CXXFLAGS)
+AC_SUBST(XML_LIBS)
+
+echo "C-Flags:" $CXXFLAGS
+echo
+
+echo
+echo "Checking OpenGL and GLUT status..."
+echo
+
+if test "${CLU_OPENGL}"; then
+   echo "OpenGL dir. set to: " ${CLU_OPENGL}
+   AC_SUBST(CLU_OPENGL)
+else
+   echo "OpenGL dir. not set. Assuming '/usr'."
+   CLU_OPENGL=/usr
+   AC_SUBST(CLU_OPENGL)
+fi
+
+if test "${CLU_GLUT}"; then
+   echo "GLUT dir. set to: " ${CLU_GLUT}
+   AC_SUBST(CLU_GLUT)
+else
+   echo "GLUT dir. not set. Assuming '/usr'."
+   CLU_GLUT=/usr
+   AC_SUBST(CLU_GLUT)
+fi
+
+AC_CHECK_FILE(${CLU_OPENGL}/include/GL/gl.h,HAVE_OPENGL=1,)
+AC_CHECK_FILE(${CLU_GLUT}/include/GL/glut.h,HAVE_GLUT=1,)
+
+echo 
+
+if test "${HAVE_OPENGL}"; then
+   echo "OpenGL header found."
+else
+   echo
+   AC_MSG_ERROR("OpenGL header NOT found in ${CLU_OPENGL}/include/GL.")
+fi
+
+if test "${HAVE_GLUT}"; then
+   echo "GLUT header found."
+else
+   echo
+   AC_MSG_ERROR("GLUT header NOT found in ${CLU_GLUT}/include/GL.")
+fi
+
+
+
+
+echo
+
+
+
+AC_OUTPUT(Makefile
+CLU/Makefile 
+CLU/source/Makefile
+CLUDraw/Makefile 
+CLUDraw/source/Makefile 
+CLUParse/Makefile
+CLUParse/source/Makefile
+cluproject.pc)

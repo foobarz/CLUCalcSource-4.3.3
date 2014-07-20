@@ -1,0 +1,94 @@
+_DoAnimate = 1;
+_FrameBoxSize = 0;
+
+EnableLight(0, 0);
+EnableLight(1, 1);
+EnableLightFixed(1, 0);
+
+SetAmbientLight(Black);
+
+SunCol = Color(0.977, 1.000, 0.400);
+
+SetLightPos(1, 0, 0, 0, 1 );
+SetLightAmbientCol(1, Black);
+SetLightDiffuseCol(1, SunCol);
+SetLightSpecularCol(1, Black);
+SetLightAttenuation(1, 0, 0.2, 0);
+
+
+
+dAEarth = ((Time * 45) % 360) * RadPerDeg;
+dAMoon = ((Time * 270) % 360) * RadPerDeg;
+dASaturn = ((Time * 20) % 360) * RadPerDeg;
+
+SetMode(N3_OPNS, N3_SOLID);
+
+DefVarsE3();
+EnableLight(2, 1);
+SetLightAmbientCol(2, Black);
+SetLightDiffuseCol(2, Red);
+SetLightAttenuation(2, 0, 0.2, 0);
+
+angle = ((Time * 30)) * RadPerDeg;
+
+R1 = RotorE3(0,1,1, angle);
+R2 = RotorE3(0,1,1, 0.1*angle);
+X = VecE3(2,0,0);
+
+:Red;
+Y = R2*(R1*(X + 8*e1)*~R1 - 8*e1)*~R2;
+:SY = SphereN3(Y(2), Y(3), Y(4), 0.2);
+SetLightPos(2, Y);
+
+DefVarsN3();
+
+:DWhite;
+SetLightAmbientCol(1, SunCol);
+:Sun = SphereN3(0,0,0, 1);
+SetLightAmbientCol(1, Black);
+
+Earth = SphereN3(0,0,0, 0.5);
+Moon = SphereN3(0,0,0, 0.1);
+Saturn = SphereN3(0,0,0, 0.6);
+
+D = DilatorN3(0.97);
+Ring = *(VecN3(-1,0,0)^VecN3(1,0,0)^VecN3(0,0,1));
+
+TEarth = TranslatorN3(4, 0, 0);
+TMoon = TranslatorN3(1,0,0);
+TSat = TranslatorN3(10, 0, 0);
+
+REarth = RotorN3(0,1,0, dAEarth);
+RMoon = RotorN3(0,1,0, dAMoon);
+RSat = RotorN3(0,1,0, dASaturn);
+RRing = RotorN3(0,0,1, 20*RadPerDeg);
+
+MEarth = REarth * TEarth;
+MMoon = MEarth * RMoon * TMoon;
+MSat = RSat * TSat;
+
+:Color(0.1, 0.2, 0.8);
+:MEarth * Earth * ~MEarth;
+
+:Color(0.4, 0.4, 0.1);
+:MMoon * Moon * ~MMoon;
+
+:IPNS;
+:MCyan;
+
+Ring = RRing * Ring * ~RRing;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+Ring = D * Ring * ~D;
+:MSat * Ring * ~MSat;
+
+:OPNS;
+:Color(0.2, 0.3, 0.5);
+:MSat * Saturn * ~MSat;

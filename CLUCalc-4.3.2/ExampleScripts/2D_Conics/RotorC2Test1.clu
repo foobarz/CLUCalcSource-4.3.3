@@ -1,0 +1,29 @@
+_2dView = 1;
+_BGColor = White;
+:DRAW_POINT_AS_SPHERE;
+
+// Draw user interactive point
+:Magenta;
+:A = VecC2(VecE3(1) + VecE3(-1.5, 1.5));
+
+// Draw conic
+:Blue;
+:C = A^VecC2(1,0) ^ VecC2(0,1) ^ VecC2(-1,0) ^ VecC2(0,-1);
+
+// Create rotor operator with
+// user defined angle
+?angle = Slider("Angle", 0, 2*Pi, Pi/64, 0);
+?R = RotorC2(angle);
+
+// Draw reflection line
+:Cyan;
+:VecE3(cos(angle), sin(angle));
+
+// Draw reflected conic
+:Green;
+:D = R*C*~R;
+
+// Intersection of Conics
+// Evaluated using MEET operation
+:Red;
+:C & D;

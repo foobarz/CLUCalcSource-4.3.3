@@ -1,0 +1,126 @@
+/** \page page_CLUScript CLUScript v2.3 Documentation
+
+\section sec_CLUScriptIntro Introduction to CLUScript
+
+Welcome to the CLUScript help pages. 
+\b CLUScript is a simple scripting language that implements calculations with 
+multivectors and matrices. CLUScript was developed in order to enable people interested 
+in Clifford algebra to do simple calculations with this algebra and to visualize the 
+geometric meaning of these calculations immediately. Currently multivectors in 
+Euclidean 3-space, projective space, conformal space and 2D-conic space can be used and visualized. 
+CLUScript also contains features to easily implement <b>user interaction</b> and 
+<b>animation</b>. For an introduction to Clifford algebra and its applications in Euclidean, 
+projective and conformal space see the technical report <em>"Aspects of Clifford Algebra in Euclidean, Projective and Conformal Space"</em> by C. Perwass and D. Hildenbrand, which can be downloaded from the
+<a target="_blank" href="http://www.ks.informatik.uni-kiel.de/modules.php/name+Mitarbeiter,func+hp,mid+7">Cognitive Systems Group Kiel</a> webpage.
+ 
+CLUScript is implemented by the Open Source library <b>CLUParse</b>. 
+CLUParse in turn uses \b CLU and \b CLUDraw to implement multivector calculations and 
+visualization. 
+
+This manual describes version 2.3 of CLUScript. <b>Note that important aspects of the syntax have changed</b> from version 1.5 to version 2.0. Please make <b>sure to read the</b> \ref page_ChangeLog "Change Log", where all changes are listed.
+
+I tried to test CLUScript thoroughly, but since this parser grew much more complex than anticipated, there may still be some bugs present. If you find one, please let me know by sending an email to <tt>help@clucalc.info</tt>. If you miss certain features or have any other suggestions, I would be happy to hear from you, as well. In
+particuar, if you would like to help me improve the CLU-libraries or CLUCalc, I'd be 
+happy to hear from you.
+
+
+In the following sections, the different features of CLUScript are discussed.
+	<ul>
+		<li>
+		\ref page_GettingStarted
+		<br>A first peek at CLUScript.
+		<li>
+		\ref page_TheLanguage "The Language"
+		<br>Elements of the CLUScript language.
+		<br>
+		<ul>
+			<li>\ref subsec_Basics
+			<li>\ref subsec_Labels
+			<li>\ref subsec_Operators
+			<li>\ref subsec_StructProg
+			<li>\ref subsec_VarLists
+			<li>\ref subsec_Strings	
+			<li>\ref subsec_Macros
+		</ul>
+
+		<li>
+		\ref page_WorkWithMV "Working with Multivectors"
+		<br>Defining, evaluating and drawing multivectors.
+		<br>
+		<ul>
+			<li>\ref sec_CreateMV
+			<li>\ref sec_CalcMV
+			<li>\ref sec_VisMV
+			<li>\ref sec_Plot
+		</ul>
+
+		<li>
+		\ref page_WorkWithMat "Working with Matrices"
+		<br>Defining, evaluating and drawing matrices.
+		<br>
+        <ul>
+			<li> \ref sec_MatrixBasics
+			<li> \ref sec_MatrixPointOperators
+			<li> \ref sec_MatrixLogic
+			<li> \ref sec_MatrixPrint
+			<li> \ref sec_MatrixExamples
+		</ul>
+
+       <li>
+        \ref page_WorkWithTensors
+        <br>Defining, evaluating and calculating with tensors.
+        <br>
+        <ul>
+			<li> \ref sec_TensorBasics
+			<li> \ref sec_TensorLoops
+			<li> \ref sec_TensorGA
+		</ul>
+
+		<li>
+		\ref page_SolveMVEqns "Solving Multivector Equations"
+		<br> How to solve multivector equations.
+		<br>
+		<li>
+		\ref page_ErrProp "Error Propagation"
+		<br> Error propagation in Clifford algebra and for other operations.
+		<br>
+		<li>
+		\ref page_UserInteraction "User Interaction"
+		<br>User interaction in scripts.
+		<br>
+		<li>
+		\ref page_Animation "Animation"
+		<br>Animation of scripts.
+		<br>
+		<li>
+		\ref page_Tools 
+		<br>User interaction with tools.
+		<br>
+		<li>
+		\ref page_Info 
+		<br>User interactive text.
+		<br>
+		<li>
+		\ref page_Images
+		<br>Reading, writing, displaying and modifying images.
+		<br>
+		<li>
+		\ref page_Latex
+		<br>Rendering Latex text for annotations and visualization titles.
+		<br>
+		<li>
+		\ref page_TextureMapping
+		<br>Texture mapping of surfaces.
+		<br>
+		<li>
+		\ref page_Presentation "Presentations"
+		<br>How to prepare presentations.
+		<br>
+		<li>
+        \ref page_SerialPort
+        <br>How to access the serial port.
+        <br>
+	</ul>
+
+
+**/

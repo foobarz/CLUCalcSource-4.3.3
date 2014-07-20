@@ -1,0 +1,97 @@
+This text will give some help on compiling and
+installing CLUCalc.
+
+Be aware that the CLUCalc sources are distributed
+under the GNU General Public License. This implies that
+you MUST NOT use CLUCalc or any part of it in
+proprietry software. The full license text can be
+found in the file 'license.txt' distributed with
+this package.
+
+
+Before you build CLUCalc 4.3.2 you need to build the
+following libraries in this order:
+
+   1. CLUfltk 1.1.5, the CLU version of FLTK
+   2. CLULibs 2.3.0, which includes CLU, CLUDraw and CLUParse
+
+Both may be downloaded from www.clucalc.info. 
+
+See further down for how to prepare a proper 
+environment for the CLUCalc binary.
+
+
+Windows Install
+===============
+
+Load the CLUCalc.sln workspace with Visual Studio .NET and
+build CLUCalc. That's it.
+
+
+Linux Install
+=============
+
+You have to make sure that pkg-config is
+installed on your system and that the environment
+variable PKG_CONFIG_PATH contains the path 
+
+   ${CLU_HOME}/lib/pgkconfig
+
+If everything is ready a simple call to
+
+   ./BUILD
+
+should do the trick. You will find the CLUCalc binary
+under '${CLU_HOME}/bin'. 
+
+
+CLUCalc environment
+===================
+
+The first time you start up CLUCalc, it won't show the
+Latex rendered text. To generate the appropriate bitmaps
+select 'Parse (force render latex)' from the 'Code' menu.
+The bitmaps generated are called '_title.rlb' and '_web.rlb',
+and will appear in the same directory as the CLUCalc binary.
+From now on when you start CLUCalc, it will show the bitmaps
+right away.
+
+If you want to use the help feature, you will also need to
+generate and install the html help files. For this purpose
+you need to install 'doxygen' on your system. Then change
+into the 'CLUCalcDoc' subdirectory of the CLUCalc sources
+and edit the 'doxygen.ini' file. Look for the entry 'INPUT'
+and set the path to the CLUScript document doxygen files.
+If you have the CLU libraries installed under
+
+   /home/foo/CLUProject/CLULibs-2.3.0
+
+then the path you want is
+
+   /home/foo/CLUProject/CLULibs-2.3.0/CLUParse/CLUScriptDoc/
+
+Once you have modified the doxygen.ini file execute
+
+   doxygen doxygen.ini
+
+You should now have the html documentation files under
+
+   CLUCalc/doc/html
+
+In order to make them accessible through CLUCalc, copy them
+to a sub-directory named 'Documentation' in the directory
+where the CLUCalc binary lies.
+
+That's all!
+
+-----------------------------------------------------------
+
+If you have any problems or comments, let me know under
+
+   help@clucalc.info
+
+
+
+Kiel, 25. October 2005,
+
+Christian Perwass.

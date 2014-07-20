@@ -1,0 +1,1321 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_GAFunc Geometric Algebra Functions
+
+	Functions that create and evaluate operations between multivectors.
+	
+	\{
+**/
+
+/** 
+	\brief Evaluates the anti-commutator product of \a X and \a Y.
+	
+	\param X A multivector.
+	\param Y A multivector.
+	
+	\return The anti-commutator product of \a X and \a Y, i.e. \f$ \frac{1}{2}\;(X Y + Y X) \f$.
+	\since v1.0
+**/
+multivector acp(multivector X, multivector Y);
+
+/** 
+	\brief Projects a homogeneous vector in projective space to the affine plane.
+	
+	\param A A homogeneous vector, i.e. a multivector of grade one in projective space.
+	
+	\return The projection of \a A onto the affine plane.
+	
+	\since v1.0
+	
+	Given a vector \f$A\f$ in projective space with \f$A = \mathbf{a} + \rho e_4\f$, where \f$\mathbf{a} = x\,e_1 + y\,e_2 + z\,e_3\f$ and \f$\rho\f$ a real number, this function returns the vector \f$\frac{1}{\rho} A = \frac{1}{\rho}\mathbf{a} + e_4\f$.
+
+**/
+multivector AffineVecP3(multivector A);
+
+/** 
+	\brief Projects a list of homogeneous vectors in projective space to the affine plane.
+	
+	\param L A list of homogeneous vectors, i.e. multivectors of grade one in projective space.
+	
+	\return The list of projections of the elements of \a L onto the affine plane.
+	
+	\since v1.0
+	
+	Given a vector \f$A\f$ in projective space with \f$A = \mathbf{a} + \rho e_4\f$, where \f$\mathbf{a} = x\,e_1 + y\,e_2 + z\,e_3\f$ and \f$\rho\f$ a real number, this function returns the vector \f$\frac{1}{\rho} A = \frac{1}{\rho}\mathbf{a} + e_4\f$.
+
+**/
+multivector AffineVecP3(list L);
+
+
+
+/** 
+	\brief Returns data concerning the geometric representaion of actual multivector.
+	
+	\param X A multivector.
+	\param DoDraw (\b optional) A boolean flag indicating whether the entity to analyze is to be drawn or not (default).
+	
+	\return A nested list of data obtained from multivector \a X. The output also depends on the 
+	choosen nullspace (IPNS or OPNS).
+	
+	\since v2.0
+	
+	The application to a multivector representing a pointpair results e.g. in the output
+	\code
+	
+	C = [point_pair, [mag, 2.06155], [pos1, [ -2^e1 + 1^e3 ]], [pos2, [ 1^e1 + 2^e2 + 3^e3 ]]]
+	\endcode
+	
+	Note that each piece of information can be extracted by using list operations. Recreate for example the above point pair in the conformal space
+	by the expression
+	
+	\code
+	PP = VecN3( C(3,2) ) ^ VecN3( C(4,2) );
+	\endcode
+	For more information according to list operations see section \ref subsec_VarLists "Variable Lists".
+**/
+list AnalyzeMV(multivector X, counter DoDraw );
+
+
+/** 
+	\brief Get the indices of the basisblades which build up the multivector \a X.
+	
+	\param X A multivector.
+	
+	\return An ascending list of indices which build up the multivector \a X.
+	\since v2.0
+
+	\code
+
+	DefVarsN3();
+	
+    A = 3*e1^e2 + I - 2*e3 + 1;
+    B = e1 + e2 + e3 + ep + em;
+    ? L = BladeIdxList( A );
+    ? BladeIdxList( B );
+	\endcode
+	
+	produces the output
+	\code
+	
+	L = [1, 4, 9, 32]
+	IndexList = [2, 3, 4, 5, 6]	
+	\endcode
+**/
+list BladeIdxList(multivector X);
+
+
+/** 
+	\brief Evaluates the commutator product of \a X and \a Y.
+	
+	\param X A multivector.
+	\param Y A multivector.
+	
+	\return The commutator product of \a X and \a Y, i.e. \f$ \frac{1}{2}\;(X Y - Y X) \f$.
+	\since v1.0
+**/
+multivector cp(multivector X, multivector Y);
+
+
+/** 
+	\brief Defines a set of variables for basis vectors of 2D-conic space.
+
+	\return Nothing.
+	
+	\since v2.0
+
+The following variables are defined.	
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td>Function </td>
+	<td> Variable </td>
+	<td> Content</td>
+</tr>
+<tr>
+	<td><tt>DefVarsC2()</tt> </td>
+	<td> <tt>id</tt> </td>
+	<td> 1</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e1</tt> </td>
+	<td> \f$e_1\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e2</tt> </td>
+	<td> \f$e_2\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e3</tt> </td>
+	<td> \f$e_3\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e4</tt> </td>
+	<td> \f$e_4\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e5</tt> </td>
+	<td> \f$e_5\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>e6</tt> </td>
+	<td> \f$e_6\f$</td>
+</tr>
+<tr>
+	<td></td>
+	<td> <tt>I</tt> </td>
+	<td> \f$e_1\wedge e_2\wedge e_3\wedge e_4\wedge e_5\wedge e_6\f$</td>
+</tr>
+</table>
+
+The six basis vectors of conic space \f$\{ e_1, e_2, e_3, e_4, e_5, e_6 \}\f$ all square to \f$+1\f$. Vectors in this space basically encode symmetric 3 by 3 matrices. Details on the embedding can be found in the technical report <i>"Analysis of Local Image Structure using Intersections of Conics"</i> (<a href="http://www.perwass.de/published/perwass_tr0403_v1.pdf">download</a>). Given a symmetric 3 by 3 matrix it can be embedded in conic space by passing it through the function VecC2(). The opposite is also possible, by passing a vector in conic space to the function Matrix(). See section \ref page_WorkWithMV "Working with Multivectors" for more details.
+	
+**/
+void DefVarsC2();
+
+
+/** 
+	\brief Defines a set of variables for basis vectors of Euclidean space.
+
+	\return Nothing.
+	
+	\since v1.0
+
+The following variables are defined.	
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td> Variable </td>
+	<td> Content </td>
+</tr>
+<tr>
+	<td> <tt>id</tt> </td>
+	<td> 1 </td>
+</tr>
+<tr>
+	<td> <tt>e1</tt> </td>
+	<td> \f$e_1\f$</td>
+</tr>
+<tr>
+	<td> <tt>e2</tt> </td>
+	<td> \f$e_2\f$</td>
+</tr>
+<tr>
+	<td> <tt>e3</tt> </td>
+	<td> \f$e_3\f$</td>
+</tr>
+<tr>
+	<td> <tt>I</tt> </td>
+	<td> \f$e_1\wedge e_2\wedge e_3\f$</td>
+</tr>
+</table>
+
+The three basis vectors of Euclidean space \f$\{ e_1, e_2, e_3 \}\f$ all square to \f$+1\f$. The variable <tt>id</tt> is defined in order to create grade zero multivectors in Euclidean space. See section \ref page_WorkWithMV "Working with Multivectors" for more details.
+	
+**/
+void DefVarsE3();
+
+
+/** 
+	\brief Defines a set of variables for basis vectors of conformals space.
+
+	\return Nothing.
+	
+	\since v1.0
+
+The following basis vectors are defined.
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td> Variable </td>
+	<td> Content</td>
+</tr>
+<tr>
+	<td> <tt>id</tt> </td>
+	<td> 1</td>
+</tr>
+<tr>
+	<td> <tt>e1</tt> </td>
+	<td> \f$e_1\f$</td>
+</tr>
+<tr>
+	<td> <tt>e2</tt> </td>
+	<td> \f$e_2\f$</td>
+</tr>
+<tr>
+	<td> <tt>e3</tt> </td>
+	<td> \f$e_3\f$</td>
+</tr>
+<tr>
+	<td> <tt>ep</tt> </td>
+	<td> \f$e_+\f$</td>
+</tr>
+<tr>
+	<td> <tt>em</tt> </td>
+	<td> \f$e_-\f$</td>
+</tr>
+<tr>
+	<td> <tt>e</tt> </td>
+	<td> \f$e\f$</td>
+</tr>
+<tr>
+	<td> <tt>e0</tt> </td>
+	<td> \f$e_0\f$</td>
+</tr>
+<tr>
+	<td> <tt>n</tt> </td>
+	<td> \f$n\f$</td>
+</tr>
+<tr>
+	<td> <tt>nb</tt> </td>
+	<td> \f$e_0\f$</td>
+</tr>
+<tr>
+	<td> <tt>I</tt> </td>
+	<td> \f$e_1\wedge e_2\wedge e_3\wedge e_+\wedge e_-\f$</td>
+</tr>
+</table>
+
+In conformal space the four basis vectors \f$\{ e_1, e_2, e_3, e_+ \}\f$ square to \f$+1\f$ and \f$e_-\f$ squares to \f$-1\f$. The composite elements \f$e, e_0, n, e_0\f$ are defined as
+
+\f[ e \equiv n := e_- + e_+\;;\quad
+e_0 \equiv e_0 := \frac{1}{2} (e_- - e_+) \f]
+
+The pairs \f$\{ e, e_0 \}\f$ and \f$\{ n, \bar{n} \}\f$ are complementary null vectors. That is, \f$e^2 = e_0^2 = n^2 = e_0^2 = 0\f$ and \f$e\cdot e_0 = n\cdot \bar{n} = -1\f$. The two naming conventions for these null vector pairs are used by different researchers. Here both are defined so that nobody gets confused. See section \ref page_WorkWithMV "Working with Multivectors" for more details.
+
+**/
+void DefVarsN3();
+
+
+/** 
+	\brief Defines a set of variables for basis vectors of conformals space.
+
+	\return Nothing.
+	
+	\since v1.0
+
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td> Variable </td>
+	<td> Content</td>
+</tr>
+<tr>
+	<td> <tt>id</tt> </td>
+	<td> 1</td>
+</tr>
+<tr>
+	<td> <tt>e1</tt> </td>
+	<td> \f$e_1\f$</td>
+</tr>
+<tr>
+	<td> <tt>e2</tt> </td>
+	<td> \f$e_2\f$</td>
+</tr>
+<tr>
+	<td> <tt>e3</tt> </td>
+	<td> \f$e_3\f$</td>
+</tr>
+<tr>
+	<td> <tt>e4</tt> </td>
+	<td> \f$e_4\f$</td>
+</tr>
+<tr>
+	<td> <tt>I</tt> </td>
+	<td> \f$e_1\wedge e_2\wedge e_3\wedge e_4\f$</td>
+</tr>
+</table>
+
+The four basis vectors of projective space \f$\{ e_1, e_2, e_3, e_4 \}\f$ all square to \f$+1\f$. Note that this differs from some researchers which prefer to use a space-time basis for projective space, i.e. \f$\{ e_1, e_2, e_3 \}\f$ square to \f$-1\f$ and \f$e_4\f$ squares to \f$+1\f$. The variable <tt>id</tt> is defined in order to create grade zero multivectors in projective space. See section \ref page_WorkWithMV "Working with Multivectors" for more details.
+
+**/
+void DefVarsP3();
+
+
+/** 
+	\brief Makes a given projective conic degenerate.
+
+	\param conic The conic to be made degenerate.
+
+	\return A list containing as first element the degenerate conic and as second element a distance value of the degenerate conic to the initial conic.
+	
+	\since v2.0
+
+	This function can be useful for hyperbolas, since the corresponding degenerate conic gives the asymptotes of the hyperbola. For example, if you pass a multivector representing a hyperbola centered on the origin with the matrix representation
+\f[ \left( \begin{array}{ccc}
+1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & -1
+\end{array} \right) \f]
+then this function returns a multivector with the matrix representation
+\f[ \left( \begin{array}{ccc}
+1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & 0
+\end{array} \right) \f]
+
+The script
+\code
+	// The switch IPNS is important here,
+	// since DegConic interprets the multivector
+	// passed to it with respect to this setting.
+	:IPNS; 
+	?M = Matrix( [[1,0,0], [0,-1,0], [0,0,-1]] );
+	:C = VecC2(M);
+	?lCd = DegConic(C);
+	
+	?"Distance to conic: " + lCd(2);
+	
+	?Md = Matrix(lCd(1));
+\endcode
+produces the output
+\code
+	M = (| 1 0 0|, | 0 -1 0|, | 0 0 -1|)
+	lCd = [[ 0.707107^e4 + -0.707107^e5 ], 1]
+	Distance to conic: 1
+	Md = (| 1 0 0|, | 0 -1 0|, | 0 0 0|)
+\endcode
+
+**/
+list DegConic(multivector conic);
+
+
+
+
+/** 
+	\brief Creates a dilation operator for conformal space.
+
+	\param scale The scale by which the dilation operator scales.
+
+	\return Dilation operator.
+	
+	\since v1.0
+
+	A dilation operator cannot be visualized.	
+	For example, a rotation about the y-axis by an angle of \f$\pi/4\f$ of any multivector may be done as follows:
+	\code
+
+	:A = VecN3(1,1,1):Red;
+	D = DilatorN3(2);
+	:B = D * A * ~D:Green;
+	?A;
+	?B;
+	\endcode
+
+	This script has the following output:
+	\code
+	 
+	A = 1^e1 + 1^e2 + 1^e3 + 1.5^e + 1^e0
+	B = 2^e1 + 2^e2 + 2^e3 + 6^e + 1^e0
+	\endcode
+**/
+multivector DilatorN3(scalar scale);
+
+/** 
+	\brief Creates a "direction" vector in conformal space.
+
+	\param x x-component of direction.	
+	\param y y-component of direction.	
+	\param z z-component of direction.	
+
+	\return The direction vector (\a x, \a y, \a z) in conformal space.
+	
+	\since v1.0
+	
+	By direction vector a vector of the type \f$x\,e_1 + y\,e_2 + z\,e_3\f$ is meant.
+	For example, 
+	\code
+	
+	?A = DirVecN3(1,1,1);
+	\endcode
+	
+	produces the output
+	\code
+	
+	A = 1^e1 + 1^e2 + 1^e3;
+	\endcode
+**/
+multivector DirVecN3(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Creates a "direction" vector in projective space.
+
+	\param x x-component of direction.	
+	\param y y-component of direction.	
+	\param z z-component of direction.	
+
+	\return The direction vector (\a x, \a y, \a z) in projective space.
+	
+	\since v1.0
+	
+	By direction vector a vector of the type \f$x\,e_1 + y\,e_2 + z\,e_3\f$ is meant.
+	For example, 
+	\code
+	
+	?A = DirVecP3(1,1,1);
+	\endcode
+	
+	produces the output
+	\code
+	
+	A = 1^e1 + 1^e2 + 1^e3;
+	\endcode
+**/
+multivector DirVecP3(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Factorizes a blade into its constituent vectors.
+		
+	\param A The blade to be factorized.
+	
+	\return A list of the constituent vectors.
+	
+	\since v1.0
+	
+	\attention Form version 1.5 onwards, this function can factorize also null blades,
+	i.e. blades that square to zero.
+	
+	The factorization works only for blades and the resulting vectors are normalized. 
+	This implies that the scaling of the original blade is lost. If a multivector that
+	contains elements of a number of different grades is passed to this function, the 
+	homogeneous multivector of highest grade is used for the factorization. However,
+	even though this need not be a blade in general, there is no additional transformation
+	to the "nearest" blade, yet. If the function is applied to an element which is
+	not a blade, the factorization will simply be wrong.
+	
+	Here is an example for a standard blade.
+	\code
+	
+	DefVarsE3();
+	
+	// The initial balde
+	?a = (e1 - e3) ^ e2;
+	
+	// Factorize the blade a
+	?L = FactorizeBlade(a);
+	
+	// Extract the factorized vectors from the list
+	?L1 = L[1];
+	?L2 = L[2];
+	
+	// Their outer product gives the initial blade
+	// up to a scalar factor
+	?L1 ^ L2;
+	\endcode
+	
+	produces the output
+	\code
+	
+	a = 1^e23 + 1^e12
+	L = ([ 1^e2 ], [ -0.707107^e1 + 0.707107^e3 ])
+	L1 = 1^e2
+	L2 = -0.707^e1 + 0.707^e3
+	Constant = 0.707^e23 + 0.707^e12
+	\endcode
+	
+	In conformal space there exist also null blades, i.e. blades that square to zero. 
+	These cannot be factorized with the standard factorization algorithm. The algorithm
+	implement here therefore first removes the null component from the blade and then
+	factorizes the rest in the standard way. Here is an example,
+	\code
+	
+	DefVarsN3();
+	
+	// The initial blade
+	?a = (e1 + e2) ^ e3 ^ e;
+	
+	// Factorize the blade 'a'
+	?L = FactorizeBlade(a);
+	
+	// Extract the factorized vectors from the list
+	?L1 = L[1];
+	?L2 = L[2];
+	?L2 = L[3];
+	
+	// Their outer product gives the initial blade
+	// up to a scalar factor
+	?L1 ^ L2 ^ L3;
+
+	\endcode
+	
+	This script produces the following output,
+	\code
+
+	a = 1^(e23^e) + -1^(e31^e)
+	L = ([ -1^e+ + -1^e- ], [ 1^e3 ], [ 0.707107^e1 + 0.707107^e2 ])
+	L1 = -1^e
+	L2 = 1^e3
+	L3 = 0.707^e1 + 0.707^e2
+	Constant = 0.707^(e23^e) + -0.707^(e31^e)
+	
+	\endcode
+	
+	Note that the factorization of a null blade returns as first element always
+	the null vector component.
+**/
+multivector FactorizeBlade(multivector A);
+
+
+/** 
+	\brief Evaluates all degenerate conics that can be generated through the linear combination of two given conics.
+	
+	\param A The first conic.
+	\param B The second conic.
+	
+	\return The list of degenerate conics. There will be either one or three degenerate conics returned.
+	
+	\since v2.1
+	
+	Given two conics as multivectors, this function evaluates all degenerate conics that can be generated through linear combinations of the two. It can be shown that there exist either one or three such degenerate conics. Note that this function is actually used internally in order to find the intersections of two conics. Here is an example.
+	
+	\code
+	
+	_2dView = 1;
+	:DRAW_POINT_AS_SPHERE;
+
+	:Red;
+	:A = VecC2(-1,0)^VecC2(0,1)^VecC2(1,0)^VecC2(0,-1)^VecC2(1,1);
+
+	:Blue;
+	:B = VecC2(-1,0)^VecC2(0,1)^VecC2(1,0)^VecC2(0,-1)^VecC2(-0.5,0.1);
+
+	:Green;
+	:A & B;	// The intersections of the two conics
+
+	?lC = FindAllDegConics(A, B);
+
+	:lC(1) :Magenta;
+	:lC(2) :Cyan;
+	:lC(3) :Yellow;
+	
+	\endcode
+	
+	This generates the following visualization.
+	
+	\image html ConicDegEx1.jpg
+	
+**/
+list FindAllDegConics(multivector A, multivector B);
+
+/** 
+	\brief Gives the list of grades contained in a multivector.
+	
+	\param A The multivector to be analyzed.
+	
+	\return The list of grades contained in \a A in \b descending order.
+	
+	\since v1.0
+	
+The function returns a list containing the vector grades that are contained in the multivector \a A in \b descending order.
+	
+	\code
+	
+	DefVarsE3();
+	
+	?X = 1 + e1 + e2 + e1^e2 + I;
+	?L = GradeList(X);
+	\endcode
+	
+	produces the output
+	\code
+	
+	X = 1 + 1^e1 + 1^e2 + 1^e12 + 1^I
+	L = (3, 2, 1, 0)
+	\endcode
+**/
+list GradeList(multivector A);
+
+
+/** 
+	\brief Generates a mask from a multivector \a X for use in e.g. GetMVProductMatrix.
+	
+	\param X A multivector.
+	
+	\return A list of length \f$k\f$ of numbers, where \f$k\f$ is the dimension (\f$2^n\f$) of the actual algebra.
+	Each nonzero component of multivector \a X corresponds to an entry in that list.
+_2d	The numbers within the list are an ascending enumeration according to the predefined order of basisblades.
+	This function is not to be confused with BladeIdxList, which just gives the indices to the numbers.
+	
+	\since v2.0
+
+	\code
+
+	DefVarsN3(); // --> 32 basisblades
+	
+    X = 5*e1^e2 + I - 7*e3 + 8;
+    ? L1 = BladeIdxList( X );
+    ? L2 = MV2Mask( X );
+	\endcode
+	
+	produces the output
+	\code
+	
+	L1 = [1, 4, 9, 32]
+	L2 = [1, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
+	\endcode
+**/
+list MV2Mask(multivector X);
+
+
+
+/** 
+	\brief Evaluates the projection of \a X on \a A.
+	
+	\param X The blade to be projected.
+	\param A The blade on which \a X is to be projected.
+	
+	\return The blade component of \a X that lies in \a A.
+	\since v1.0
+**/
+multivector proj(multivector X, multivector A);
+
+
+/** 
+	\brief Creates a reflector. In conic space this is a multivector of mixed grades zero and two.
+
+	\param angle of reflection vector to x-axis in radians.
+
+	\return Reflector operator in 2D-conic space.
+	
+	\since v2.0
+	
+	For example, a reflection of any multivector may be done as follows:
+	\code
+	R = ReflectorC2(Slider("fac", 0, 2, 0.05, 0) *Pi);
+	
+	:Red;
+	// A hyperbola in the OPNS
+	:x = *VecC2(Matrix( [[1,0,0], [0,-2,0], [0,0,-1]] ));
+	
+	:Blue;
+	// The rotated hyperbola
+	:y = R * x * ~R;
+	\endcode
+**/
+multivector ReflectorC2(scalar angle);
+
+
+
+/** 
+	\brief Evaluates the rejection of \a X from \a A.
+	
+	\param X The blade to be rejected.
+	\param A The blade from which \a X is to be rejected.
+	
+	\return The blade component of \a X that is orthogonal to \a A.
+	\since v1.0
+**/
+multivector rej(multivector X, multivector A);
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero, two and four, 
+		in 2D-conic space.
+
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in 2D-conic space, for a rotation about the given 
+	angle.
+	
+	\since v2.0
+	
+	For example, a rotation of any multivector may be done as follows:
+	\code
+	R = RotorC2(Slider("fac", 0, 2, 0.05, 0) *Pi);
+	
+	:Red;
+	// A hyperbola in the OPNS
+	:x = *VecC2(Matrix( [[1,0,0], [0,-2,0], [0,0,-1]] ));
+	
+	:Blue;
+	// The rotated hyperbola
+	:y = R * x * ~R;
+	\endcode
+**/
+multivector RotorC2(scalar angle);
+
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in Euclidean space.
+
+	\param x x-component of rotation axis.	
+	\param y y-component of rotation axis.	
+	\param z z-component of rotation axis.	
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in Euclidean space, for a rotation about the given 
+	angle and the rotation axis.
+	
+	\since v1.0
+	
+	For example, a rotation about the y-axis by an angle of \f$\pi/4\f$ of any multivector may be done as follows:
+	\code
+	
+	R = RotorE3(0,1,0, Pi/4);
+	
+	:Red;
+	:x = VecE3(1,0,0);
+	
+	:Blue;
+	:y = R * x * ~R;
+	\endcode
+**/
+multivector RotorE3(scalar x, scalar y, scalar z, scalar angle);
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in Euclidean space.
+
+	\param U Rotation plane or axis.
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in Euclidean space, for a rotation about the given 
+	angle and the rotation axis or plane.
+	
+	\since v1.0
+
+The multivector <tt>U</tt> either gives the rotation axis or the rotation plane. If <tt>U</tt> contains any vector components it is assumed to give the rotation axis. If, on the other hand, all vector components are zero, it is assumed to give the rotation plane. The rotation angle is given in degrees.
+	\code
+	
+	DefVarsE3();
+	?U = e1^e2;
+	?R = RotorE3(U, Pi/2);
+	:R :Red;
+	\endcode
+
+	This produces the following output.
+	\code
+     
+	U = 1^e12
+	R = 0.707 + -0.707^e12
+	\endcode
+**/
+multivector RotorE3(multivector U, scalar angle);
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in conformal space.
+
+	\param x x-component of rotation axis.	
+	\param y y-component of rotation axis.	
+	\param z z-component of rotation axis.	
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in conformal space, for a rotation about the given 
+	angle and the rotation axis.
+	
+	\since v1.0
+	
+	For example, a rotation about the y-axis by an angle of \f$\pi/4\f$ of any multivector may be done as follows:
+	\code
+	
+	R = RotorN3(0,1,0, Pi/4);
+	
+	:Red;
+	:x = VecN3(1,0,0);
+	
+	:Blue;
+	:y = R * x * ~R;
+	\endcode
+**/
+multivector RotorN3(scalar x, scalar y, scalar z, scalar angle);
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in conformal space.
+
+	\param U Rotation plane or axis.
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in conformal space, for a rotation about the given 
+	angle and the rotation axis or plane.
+	
+	\since v1.0
+
+The multivector <tt>U</tt> either gives the rotation axis or the rotation plane. If <tt>U</tt> contains any vector components it is assumed to give the rotation axis. If, on the other hand, all vector components are zero, it is assumed to give the rotation plane. The rotation angle is given in degrees.
+	\code
+	
+	DefVarsN3();
+	?U = e1^e2;
+	?R = RotorN3(U, Pi/2);
+	:R :Red;
+	\endcode
+
+	This produces the following output.
+	\code
+     
+	U = 1^e12
+	R = 0.707 + -0.707^e12
+	\endcode
+**/
+multivector RotorN3(multivector U, scalar angle);
+
+
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in projective space.
+
+	\param x x-component of rotation axis.	
+	\param y y-component of rotation axis.	
+	\param z z-component of rotation axis.	
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in projective space, for a rotation about the given 
+	angle and the rotation axis.
+	
+	\since v1.0
+	
+	For example, a rotation about the y-axis by an angle of \f$\pi/4\f$ of any multivector may be done as follows:
+	\code
+	
+	R = RotorP3(0,1,0, Pi/4);
+	
+	:Red;
+	:x = VecP3(1,0,0);
+	
+	:Blue;
+	:y = R * x * ~R;
+	\endcode
+**/
+multivector RotorP3(scalar x, scalar y, scalar z, scalar angle);
+
+
+/** 
+	\brief Creates a rotor, i.e. multivector of mixed grades zero and two, 
+		in projective space.
+
+	\param U Rotation plane or axis.
+	\param angle rotation angle in radians.
+
+	\return Rotor operator in projective space, for a rotation about the given 
+	angle and the rotation axis or plane.
+	
+	\since v1.0
+
+The multivector <tt>U</tt> either gives the rotation axis or the rotation plane. If <tt>U</tt> contains any vector components it is assumed to give the rotation axis. If, on the other hand, all vector components are zero, it is assumed to give the rotation plane. The rotation angle is given in degrees.
+	\code
+	
+	DefVarsP3();
+	?U = e1^e2;
+	?R = RotorP3(U, Pi/2);
+	:R :Red;
+	\endcode
+
+	This produces the following output.
+	\code
+     
+	U = 1^e12
+	R = 0.707 + -0.707^e12
+	\endcode
+**/
+multivector RotorP3(multivector U, scalar angle);
+
+
+/** 
+	\brief Returns the algebra dimension of a multivector.
+	
+	\param M A multivector.
+	
+	\return The dimension (\f$2^n\f$) of the associated algebra.
+	
+	\since v2.0
+
+	The expression <tt>? [ Size( VecN3( 1,2,3) ), Size( VecE3( 1,2,3 ) ) ];</tt> will give the answer
+	<tt>[32, 8]</tt>. <tt>Size</tt> applied to a scalar <tt>val</tt> is equivalent to \f$( \mathtt{val}\; != 0)\f$.
+	
+**/
+counter Size(multivector M);
+
+
+/** 
+	\brief Creates a multivector of grade four representing a sphere in Euclidean space.
+	
+	\param center A vector in Euclidean, projective or conformal space that gives the center of the sphere.
+	\param radius The radius of the sphere.
+
+	\return Multivector of grade 4, i.e. a 4-blade, whose outer product null space (OPNS) represents a sphere in Euclidean space.
+	
+	\since v1.5
+	
+	The formula used is \f$S = (A - \frac{1}{2} \rho^2 e)^*\f$, where A is a null vector representing the center of the sphere, and \f$\rho\f$ is the radius of the sphere.
+
+**/
+multivector SphereN3(multivector center, scalar radius);
+
+/** 
+	\brief Creates a multivector of grade four representing a sphere in Euclidean space.
+	
+	\param x x-coordinate of center point.
+	\param y y-coordinate of center point.
+	\param z z-coordinate of center point.
+	\param radius The radius of the sphere.
+
+	\return Multivector of grade 4, i.e. a 4-blade, whose outer product null space (OPNS) represents a sphere in Euclidean space.
+	
+	\since v1.0
+	
+	\attention This function now differs from its version in CLUScript 1.3, in that 
+	the multivector returned represents a sphere in its OPNS and \b not IPNS.
+	
+	The formula used is \f$S = (A - \frac{1}{2} \rho^2 e)^*\f$, where A is a null vector representing the center of the sphere, and \f$\rho\f$ is the radius of the sphere.
+
+In the following example a green sphere with center (1,1,1) and radius 0.5 is drawn. 
+
+\code
+  
+:Green;
+:Sp = SphereN3(1,1,1, 0.5);
+?*Sp;
+\endcode
+
+This script produces the following output.
+\code
+  
+Sp = 1^e1 + 1^e2 + 1^e3 + 1.375^e + 1^e0
+\endcode
+
+**/
+multivector SphereN3(scalar x, scalar y, scalar z, scalar radius);
+
+
+
+
+/** 
+	\brief Creates a multivector that acts as a translation operator in conformal space.
+	
+	\param x x-component of translation vector.
+	\param y y-component of translation vector.
+	\param z z-component of translation vector.
+
+	\return Multivector of mixed grade zero and two, that acts as a translation operator.
+	
+	\since v1.0
+	
+	The following example code creates a translator and translates a vector with it.
+	\code
+  	
+	T = TranslatorN3(1,1,1);
+	?A = VecN3(0,0,0);
+	?B = T * A * ~T;
+	\endcode
+	
+	This script produces the following output.
+	\code
+	  
+	A = 1^e0
+	B = 1^e1 + 1^e2 + 1^e3 + 1.5^e + 1^e0
+	\endcode
+
+**/
+multivector TranslatorN3(scalar x, scalar y, scalar z);
+
+
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in 2D-conic space.
+	
+	\param x x-coordinate of vector.
+	\param y y-coordinate of vector.
+
+	\return Vector at position (\a x, \a y) in 2D-conic space.
+	
+	\since v2.0
+	
+	In order to draw the conic passing through the 2D-points (1,0), (0,1), (-1,0), (0,-1) and (1.5, 1.5) simply write
+	\code
+	
+	// Define and draw the five points
+	:Red;
+	:A = VecC2(1,0);
+	:B = VecC2(0,1);
+	:C = VecC2(-1,0);
+	:D = VecC2(0,-1);
+	:E = VecC2(1.5, 1.5);
+	
+	// Now draw the conic through the points
+	:Blue;
+	:A^B^C^D^E;
+	
+	\endcode
+	
+	Also see the scripts in the folder <tt>ExampleScripts/2D_Conics</tt> for more advanced examples.
+**/
+multivector VecC2(scalar x, scalar y);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in 2D-conic space, which
+	is directly user controllable.
+	
+	\param mode Mouse mode in which vector is affected. 
+	This may have a value between 1 and 9.
+
+	\return Vector at the position controlled by the given mouse mode.
+	
+	\since v2.0
+	
+	For example, if you write <tt>A = VecC2(1)</tt>, then the value of <tt>A</tt> can be 
+	changed by switching the mouse mode in the visualization window to one, 
+	hold down the right mouse button over the visualization window and move the mouse. Try the following simple script to see how it works.
+	
+	\code
+	  
+	:Red;
+	:A = VecC2(1);
+	?A;
+	\endcode
+
+	Also see the scripts in the folder <tt>ExampleScripts/2D_Conics</tt> for more advanced examples.
+**/
+multivector VecC2(counter mode);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in 2D-conic space.
+	
+	\param A A vector in Euclidean, projective or conformal space.
+
+	\return The embedding of \a A into 2D-conic space.
+	
+	\since v2.0
+
+	See the scripts in the folder <tt>ExampleScripts/2D_Conics</tt> for a number of examples.
+**/
+multivector VecC2(multivector A);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in 2D-conic space, which is the embedding of the given symmetric 3 by 3 matrix.
+	
+	\param M A 3 by 3 symmetric matrix that is to be embedded.
+
+	\return The embedding of \a M into 2D-conic space.
+	
+	\since v2.0
+
+	Note that the 2D-conic vector space (which is six dimensional) is just an embedding of symmetric 3 by 3 matrices. This function allows you to embed such symmetric matrices directly.
+**/
+multivector VecC2(matrix M);
+
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in Euclidean space.
+	
+	\param x x-coordinate of vector.
+	\param y y-coordinate of vector.
+	\param z z-coordinate of vector.
+
+	\return Vector at position (\a x, \a y, \a z) in Euclidean space.
+	
+	\since v1.0
+**/
+multivector VecE3(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in Euclidean space, which
+	is directly user controllable.
+	
+	\param mode Mouse mode in which vector is affected. 
+	This may have a value between 1 and 9.
+
+	\return Vector at the position controlled by the given mouse mode.
+	
+	\since v1.0
+	
+	For example, if you write <tt>A = VecE3(1)</tt>, then the value of <tt>A</tt> can be 
+	changed by switching the mouse mode in the visualization window to one, 
+	hold down the right mouse button over the visualization window and move the mouse. Try the following simple script to see how it works.
+	
+	\code
+	  
+	:Red;
+	:A = VecE3(1);
+	?A;
+	\endcode
+**/
+multivector VecE3(counter mode);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in Euclidean space.
+	
+	\param A A vector in Euclidean, projective or conformal space.
+
+	\return The projection of \a A into Euclidean space.
+	
+	\since v1.4
+
+	Here is an example of how this works.	
+	\code
+	 
+	?A = VecE3(1, 1, 1);
+	?B = VecP3(A);
+	?C = VecN3(B);
+	\endcode
+
+	This produces the following output.
+	\code
+	 
+	A = 1^e1 + 1^e2 + 1^e3
+	B = 1^e1 + 1^e2 + 1^e3 + 1^e4
+	C = 1^e1 + 1^e2 + 1^e3 + 1.5^e + 1^e0
+	\endcode
+	
+**/
+multivector VecE3(multivector A);
+
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in conformal space.
+	
+	\param x x-coordinate of vector.
+	\param y y-coordinate of vector.
+	\param z z-coordinate of vector.
+
+	\return Vector in conformal space representing a point at position (\a x, \a y, \a z) 
+	in the corresponding Euclidean space.
+	
+	\since v1.0
+	
+	The following formula is used to create the conformal vector.
+	\f[
+	x\, e_1 + y\, e_2 + z\, e_3 + \frac{1}{2}\;(x^2 + y^2 + z^2)\; e + e_0
+	\f]
+**/
+multivector VecN3(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in conformal space, which
+	is directly user controllable.
+	
+	\param mode Mouse mode in which vector is affected. 
+	This may have a value between 1 and 9.
+
+	\return Vector representing point at the position controlled by the given mouse mode.
+	
+	\since v1.0
+	
+	For example, if you write <tt>A = VecN3(1)</tt>, then the value of <tt>A</tt> can be 
+	changed by switching the mouse mode in the visualization window to one, 
+	hold down the right mouse button over the visualization window and move the mouse. Try the following simple script to see how it works.
+	
+	\code
+	  
+	:Red;
+	:A = VecN3(1);
+	?A;
+	\endcode
+**/
+multivector VecN3(counter mode);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in conformal space.
+	
+	\param A A vector in Euclidean, projective or conformal space.
+
+	\return The embedding of \a A in conformal space.
+	
+	\since v1.4
+
+	Here is an example of how this works.	
+	\code
+	 
+	?A = VecE3(1, 1, 1);
+	?B = VecP3(A);
+	?C = VecN3(B);
+	\endcode
+
+	This produces the following output.
+	\code
+	 
+	A = 1^e1 + 1^e2 + 1^e3
+	B = 1^e1 + 1^e2 + 1^e3 + 1^e4
+	C = 1^e1 + 1^e2 + 1^e3 + 1.5^e + 1^e0
+	\endcode
+**/
+multivector VecN3(multivector A);
+
+
+
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in projective space.
+	
+	\param x x-coordinate of vector.
+	\param y y-coordinate of vector.
+	\param z z-coordinate of vector.
+
+	\return Vector in projective space that represents a point 
+	at position (\a x, \a y, \a z) in the corresponding Euclidean space.
+	
+	\since v1.0
+**/
+multivector VecP3(scalar x, scalar y, scalar z);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in projective space, which
+	is directly user controllable.
+	
+	\param mode Mouse mode in which vector is affected. 
+	This may have a value between 1 and 9.
+
+	\return Vector at the position controlled by the given mouse mode.
+	
+	\since v1.0
+	
+	For example, if you write <tt>A = VecP3(1)</tt>, then the value of <tt>A</tt> can be 
+	changed by switching the mouse mode in the visualization window to one, 
+	hold down the right mouse button over the visualization window and move the mouse. Try the following simple script to see how it works.
+	
+	\code
+	  
+	:Red;
+	:A = VecP3(1);
+	?A;
+	\endcode
+**/
+multivector VecP3(counter mode);
+
+/** 
+	\brief Creates a vector, i.e. multivector of grade one, in projective space.
+	
+	\param A A vector in Euclidean, projective or conformal space.
+
+	\return The embedding or projection of \a A into projective space.
+	
+	\since v1.4
+
+	Here is an example of how this works.	
+	\code
+	 
+	?A = VecE3(1, 1, 1);
+	?B = VecP3(A);
+	?C = VecN3(B);
+	\endcode
+
+	This produces the following output.
+	\code
+	 
+	A = 1^e1 + 1^e2 + 1^e3
+	B = 1^e1 + 1^e2 + 1^e3 + 1^e4
+	C = 1^e1 + 1^e2 + 1^e3 + 1.5^e + 1^e0
+	\endcode
+**/
+multivector VecP3(multivector A);
+
+
+
+
+/** \}
+**/
+
+/** \}
+**/

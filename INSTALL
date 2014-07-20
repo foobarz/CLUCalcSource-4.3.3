@@ -1,0 +1,13 @@
+#!/bin/sh
+
+source ./ENV
+
+./SETUP_ALL
+./BUILD_ALL
+
+mkdir ${CLUCALC_HOME}
+cd ${CLUCALC_HOME}
+cp ${CLU_HOME}/bin/CLUCalc .
+cp -rf ${CLUCALC_SOURCE}/Documentation .
+cp -rf ${CLUCALC_SOURCE}/ExampleScripts .
+./CLUCalc &

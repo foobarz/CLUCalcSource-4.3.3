@@ -1,0 +1,21 @@
+A = 1.2345678;
+
+SetTextPrec(1);
+?A;
+
+SetTextPrec(2);
+?A;
+
+SetTextPrec(3);
+?A;
+
+SetTextPrec(4);
+?A;
+
+SetTextPrec(5);
+?A;
+
+SetTextPrec(6);
+?A;
+
+

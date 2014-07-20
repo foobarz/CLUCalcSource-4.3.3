@@ -1,0 +1,20 @@
+#!/bin/sh
+
+source ./ENV
+
+
+cd ${CLUDEVIL_SOURCE}
+make install
+
+cd ${CLUFLTK_SOURCE}
+make install
+make
+
+cd ${CLULIBS_SOURCE}
+make install
+
+cd ${CLUCALC_SOURCE}
+make install
+
+
+

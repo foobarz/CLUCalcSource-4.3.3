@@ -1,0 +1,14 @@
+
+/** \page page_Ideas Ideas
+
+\section sec_Ideas1 
+<ol>
+	<li>Wizards for creating scripts.
+		Code split up in blocks surrounded by special comments with XML code
+		that describes the object. (is that necessary?)
+	<li>Clifford algebra in any dimensions. (without visualization)
+	<li>Be able to define functions and evaluate their derivatives numerically.
+</ol>
+
+**/
+

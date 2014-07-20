@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Mathematical Environment Macros Definitions
+%%%
+%%% Environment Definitions
+%%%
+
+\let\fraction=\frac
+\let\integral=\int
+\let\summation=\sum
+\let\limit=\lim
+\newcommand{\D}{\displaystyle}
+\newcommand{\T}{\textstyle}
+\renewcommand{\S}{\scriptstyle}
+%\newcommand{\dfrac}[2]{{\D\fraction{#1}{#2}}}
+%\newcommand{\tfrac}[2]{{\T\fraction{#1}{#2}}}
+\newcommand{\sfrac}[2]{{\S\fraction{#1}{#2}}}
+\newcommand{\dint}{\D\integral}
+\newcommand{\dsum}{\D\summation}
+\newcommand{\dlim}{\D\limit}
+
+\newcommand{\tint}{\T\integral}
+\newcommand{\tsum}{\T\summation}
+\newcommand{\tlim}{\T\limit}
+
+\newcommand{\setdispmath}%
+{ \let\frac=\dfrac
+  \let\int=\dint
+  \let\sum=\dsum
+  \let\lim=\dlim
+}
+
+\newcommand{\resetmath}%
+{ \let\frac=\fraction
+  \let\int=\integral
+  \let\sum=\summation
+  \let\lim=\limit
+}
+
+\newcommand{\thislabel}{nothing}
+
+\newcommand{\nl}{ \label{\thislabel_\alph{eqsubcnt}}\\ }
+\newcommand{\nsl}{ \vspace{2mm}\\ }
+\newcommand{\nn}{ \nonumber }
+
+\let\realnl=\nl
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Equation environment
+
+\newenvironment{adveqnarray}[1]%
+{%
+  \refstepcounter{equation}\label{#1}\addtocounter{equation}{-1}
+  \renewcommand{\thislabel}{#1}
+  \begin{subeqnarray} 
+}
+{ \label{\thislabel_\alph{eqsubcnt}}\end{subeqnarray} }
+
+\newcommand{\eqs}[1]{\begin{equation} \label{#1}}
+\newcommand{\eqe}{\end{equation}}
+
+\newcommand{\eqsn}{\begin{displaymath}}
+\newcommand{\eqen}{\end{displaymath}}
+
+\newcommand{\eqas}[1]{\begin{adveqnarray}{#1}}
+\newcommand{\eqae}{\end{adveqnarray}}
+
+\newcommand{\eqsas}{\begin{array}{rcll}}
+\newcommand{\eqsae}{\end{array}}
+
+\newcommand{\eqlas}{\begin{array}{llll}}
+\newcommand{\eqlae}{\end{array}}
+

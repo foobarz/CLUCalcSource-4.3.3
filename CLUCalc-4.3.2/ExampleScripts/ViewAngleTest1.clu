@@ -1,0 +1,12 @@
+
+?angle = Slider("View Angle", 1, 179, 1, 70);
+
+SetViewAngle(angle);
+DefVarsE3();
+lCol = 
+[	
+	Red, Magenta, Blue, Cyan, 
+	Green, Yellow, White, DWhite
+];
+
+DrawBox(VecE3(1), e1+e3,e1+e2,0.1, lCol);

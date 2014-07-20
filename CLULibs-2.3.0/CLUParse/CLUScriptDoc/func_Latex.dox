@@ -1,0 +1,154 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_LatexFunc Latex Rendering Functions
+
+	Functions that allow you to render latex text as bitmaps, which may then be used as descriptive text or to annotate visualizations. Note that for these functions to work you need to have the following software installed,
+	
+	<ol>
+		<li> LaTeX,
+		<li> dvips,
+		<li> Ghostscript.
+	</ol>
+	
+	Under a Linux standard distribution all this software should already be installed. Under Windows you will need to install MikTex from <a href="http://www.miktex.org/">www.miktex.org</a> (or something comparable) and AFPL Ghostscript v8.13 or later from <a href="http://www.ghostscript.com/">www.ghostscript.com</a>. They both come with an installer for Windows and are easy to install.
+
+	\{
+**/
+
+
+
+/**
+	\brief Enables or disables the rendering of LaTeX globally.
+	
+	\param DoEnable A boolean flag. If it is 0 then LaTeX rendering is disabled and other enabled.
+	
+	\since v1.4
+	
+**/
+void EnableRenderLatex(counter DoEnable);
+
+
+/**
+	\brief Renders a bitmap from latex code and displays it.
+
+	\param P A vector giving the position of where to draw the LaTeX code.
+	\param Text The LaTeX text.
+	\param Name (\b optional) A name from which a filename is generated to store the rendered LaTeX bitmap.
+
+	\return A list containing the actual extend of the rendered bitmap in current coordinates. This list contains six entries. The first three give the x, y and z coordinates of the bottom left corner of the bitmap, and the last three give the x, y and z coordinates of the top right corner of the bitmap. This can, for example, be used to draw two latex bitmaps next to each other.
+		
+	\since v1.4
+
+	\attention This function needs the programs latex, dvips and convert in order to work.	
+
+	See the other version of DrawLatex() for a detailed description.
+**/
+list DrawLatex(multivector P, string Text, string Name);
+
+
+
+/**
+	\brief Renders a bitmap from latex code and displays it.
+
+	\param x The x-coordinate of the drawing position origin.	
+	\param y The y-coordinate of the drawing position origin.	
+	\param z The z-coordinate of the drawing position origin.	
+	\param Text The LaTeX text.
+	\param Name (\b optional) A name from which a filename is generated to store the rendered LaTeX bitmap.
+
+	\return A list containing the actual extend of the rendered bitmap in current coordinates. This list contains six entries. The first three give the x, y and z coordinates of the bottom left corner of the bitmap, and the last three give the x, y and z coordinates of the top right corner of the bitmap. This can, for example, be used to draw two latex bitmaps next to each other.
+		
+	\since v1.4
+
+	\attention This function needs the programs latex, dvips and ghostscript installed on the system in order to work.	
+	
+	For more details see \ref page_Latex.
+**/
+list DrawLatex(scalar x, scalar y, scalar z, string Text, string Name);
+
+
+
+/**
+	\brief Returns the image of a rendered latex text.
+	
+	\param sLatex The LaTeX text.
+	\param sName A unique name for this LaTeX text.
+	
+	\return The image of the rendered LaTeX text.
+	
+	\since v2.2
+	
+	This function uses the same functionality as DrawLatex(), but instead of drawing the rendered latex text immediately it returns an image object. If you want to use the image for texture mapping, you can achieve a nicer text visualization if you set the latex magnification step (SetLatexMagStep()) to a fairly high value (20 to 30), before calling this function. See \ref sec_TexMap_Latex for more information and an example. 
+	
+	Note that the current color is used for the rendering of the latex text.
+**/
+image GetLatexImg(string sLatex, string sName);
+
+
+/**
+	\brief Creates a string with LaTeX code representing the content of the variable passed.
+	
+	\param X Any kind of object.
+	
+	\since v1.4
+	
+	\attention So far only multivectors and matrices are transformed correctly into a string representation.
+	
+	For example,
+	\code
+	?M = Matrix(((1,2), (3,4)));
+	?Latex(M);
+	\endcode
+	
+	produces the following output,
+	\code
+	M = (| 1 2|, | 3 4|)
+	\left(\begin{array}{cc}
+	1 & 2\\
+	3 & 4
+	\end{array}\right)
+	\endcode
+**/
+string Latex(any_type X);
+
+
+/**
+	\brief Sets the alignment of a LaTeX bitmap relative to the point where it should be drawn.
+	
+	\param X The alignment along the x-direction.
+	\param Y The alignment along the y-direction.
+	
+	\since v1.4
+
+	If \a X and \a Y are both zero (the default), then a rendered LaTeX bitmap is drawn with its bottom left corner at the position given in the DrawLatex() function. If \a X = 1 and \a Y = 0, then the bitmap is aligned with its bottom right corner. If \a X = 0 and \a Y = 1, then the bitmap is aligned with its top left corner. The parameters \a X and \a Y can also take on negative values. If you want to center a bitmap on the point given in DrawLatex(), set \a X = 0.5 and \a Y = 0.5.	
+**/
+void SetLatexAlign(scalar X, scalar Y);
+
+
+/**
+	\brief Sets the LaTeX magnification step.
+	
+	\param MagStep The magnification step. This has to be an integer in the range from -50 to +50.
+	
+	\since v1.4
+	
+	The formula used to evaluate the actual magnification \f$M\f$ from the magnification step \f$S\f$ is
+	\f[
+	M = 1.2^{\frac{1}{2}\,S}.
+	\f]
+	These magnification steps are used instead of a completely variable magnification, since then the fonts do not have to be rendered in too many different resolutions. This formula is also the same as used by LaTeX itself.
+**/
+void SetLatexMagStep(counter MagStep);
+
+
+
+
+/** \}
+**/
+
+/** \}
+**/

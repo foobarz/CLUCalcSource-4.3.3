@@ -1,0 +1,83 @@
+# This file is supposed to make a distribution of CLUfltk,
+# which is basically a slighly changed version of FLTK.
+# I just wrote this script for my own convenience.
+# Don't know whether it's always going to work on all
+# machines.
+
+echo
+echo Making distribution of CLUfltk...
+echo
+
+set CLUfltk_PATH=CLUfltk-1.1.5
+
+mkdir -p ${CLUfltk_PATH}
+
+# Copying files
+cp -p CHANGES ${CLUfltk_PATH}/.
+cp -p COPYING ${CLUfltk_PATH}/.
+cp -p CREDITS ${CLUfltk_PATH}/.
+cp -p Makefile ${CLUfltk_PATH}/.
+cp -p README ${CLUfltk_PATH}/.
+cp -p README.mac ${CLUfltk_PATH}/.
+cp -p README.win32 ${CLUfltk_PATH}/.
+cp -p config.h ${CLUfltk_PATH}/.
+cp -p config.status ${CLUfltk_PATH}/.
+cp -p configh.in ${CLUfltk_PATH}/.
+cp -p configure ${CLUfltk_PATH}/.
+cp -p configure.in ${CLUfltk_PATH}/.
+cp -p fltk-config ${CLUfltk_PATH}/.
+cp -p fltk-config.in ${CLUfltk_PATH}/.
+cp -p fltk.list ${CLUfltk_PATH}/.
+cp -p fltk.list.in ${CLUfltk_PATH}/.
+cp -p fltk.spec ${CLUfltk_PATH}/.
+cp -p forms.h ${CLUfltk_PATH}/.
+cp -p install-sh ${CLUfltk_PATH}/.
+cp -p makedist ${CLUfltk_PATH}/.
+cp -p makeinclude ${CLUfltk_PATH}/.
+cp -p makeinclude.in ${CLUfltk_PATH}/.
+cp -p CLUfltk_Install.txt ${CLUfltk_PATH}/.
+cp -p BUILD ${CLUfltk_PATH}/.
+
+# Copying directories
+mkdir -p ${CLUfltk_PATH}/FL
+cp -p FL/*.H ${CLUfltk_PATH}/FL/.
+cp -p FL/*.h ${CLUfltk_PATH}/FL/.
+cp -p FL/*.r ${CLUfltk_PATH}/FL/.
+cp -p FL/*.in ${CLUfltk_PATH}/FL/.
+cp -p FL/Makefile ${CLUfltk_PATH}/FL/.
+
+mkdir -p ${CLUfltk_PATH}/GL
+cp -p GL/*.h ${CLUfltk_PATH}/GL/.
+
+mkdir -p ${CLUfltk_PATH}/src
+cp -p src/*.cxx ${CLUfltk_PATH}/src/.
+cp -p src/*.c ${CLUfltk_PATH}/src/.
+cp -p src/*.h ${CLUfltk_PATH}/src/.
+cp -p src/*.xbm ${CLUfltk_PATH}/src/.
+cp -p src/Makefile ${CLUfltk_PATH}/src/.
+cp -p src/makedepend ${CLUfltk_PATH}/src/.
+cp -p src/*.H ${CLUfltk_PATH}/src/.
+cp -p src/*.fl ${CLUfltk_PATH}/src/.
+cp -p src/*.xpm ${CLUfltk_PATH}/src/.
+
+mkdir -p ${CLUfltk_PATH}/visualc
+cp -p visualc/*.vcproj ${CLUfltk_PATH}/visualc/.
+cp -p visualc/*.sln ${CLUfltk_PATH}/visualc/.
+cp -p visualc/*.h ${CLUfltk_PATH}/visualc/.
+
+# cp -rp include ${CLUfltk_PATH}/.
+
+# mkdir -p ${CLUfltk_PATH}/bin
+# cp -p bin/fltk-config ${CLUfltk_PATH}/bin/.
+
+mkdir -p ${CLUfltk_PATH}/lib
+
+chmod +x ${CLUfltk_PATH}/fltk-config
+
+tar cvf ${CLUfltk_PATH}.tar ${CLUfltk_PATH}
+gzip ${CLUfltk_PATH}.tar
+rm -rf ${CLUfltk_PATH}
+
+echo 
+echo .. finished.
+echo

@@ -1,0 +1,59 @@
+
+DefVarsE3();
+
+// Mask for scalar and bivector components
+Mask = [1,
+		0, 0, 0,
+		2, 3, 4,
+		0];
+
+/*
+Mask = (1,
+		2, 3, 4,
+		5, 6, 7,
+		8);
+*/
+
+// Create a rotor which we later want to find again
+?R = RotorE3(0,1,0, Pi/4);
+
+// Data points
+// This can also be mixed points, planes in E3.
+// In P3 or N3 any other geometric entities could be used.
+A = [VecE3(1,0,0), VecE3(0,0,1)];
+// Rotate data points A with R
+?B = R * A * ~R;
+
+// Create matrices
+// Since A and B are now a lists of multivectors,
+// an appropriate matrix which stack the separate
+// matrices for each multivector on top of each other
+// is generated.
+gpA = GetMVProductMatrix(A, MVOP_GP, Mask, 0 /* right */);
+Bgp = GetMVProductMatrix(B, MVOP_GP, Mask, 1 /* left  */);
+
+// The matrix from which we need to find the null space
+M = gpA - Bgp;
+
+// Evaluate SVD
+L = SVD(M);
+
+// Diagonal of SVD as row vector
+?Diag = DiagToRow(L(2));
+
+// There is now only one solution.
+
+// Transform the matrix L[3] which contains the
+// singular vectors as columns to multivectors.
+MV = Matrix2MV(L(3), Mask);
+
+// The first multivector in list MV is the
+// solution to the equation.
+?"";
+?"Solution for versor:";
+?V = MV(1);
+
+// Check this
+?"";
+?"Check solution:";
+?Sol = V * A * ~V;

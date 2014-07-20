@@ -1,0 +1,60 @@
+// Spherical Projection
+_FrameBoxSize = 0;
+_BGColor = MWhite;
+DefVarsE3();
+//EnableLight(0,1);
+SetAmbientLight(White);
+
+SphereFunc =
+{
+	[x, y] = _P;
+	
+	cx = cos(x);
+	cy = cos(y);
+	sx = sin(x);
+	sy = sin(y);
+	
+	vX = VecE3(cx*sy, sx*sy, -cy);
+	
+	[vX, -vX, 0, 
+		0.5*sin(::dFac*y)*VecE3(cx, sx) + VecE3(0.5, 0.5)]
+}
+
+SetFrameOrigin(0,0,5);
+
+dFac = Slider("Factor", 0.1, 2, 0.05, 1);
+Button("Render");
+
+if (ExecMode & EM_CHANGE ||
+	ToolName == "Render" ||
+	Type(imgTex) != "image")
+{	
+	// Generate vertices of spherical projection
+	// with appropriate texture coordinates.
+	vexSphere = Plot(SphereFunc(x,y), [x,0,2*Pi, 20], 
+									  [y,0, Pi/2, 10]);
+}
+
+if (Type(imgTex) != "image")
+{
+	imgTex = ReadImg("church1.jpg");
+}
+
+if (CheckBox("Texture Mapping", 1))
+{
+	SetTexture(imgTex);
+	:White;
+	:vexSphere;
+}
+else
+{
+	StartOverlay();
+	SetImgAlign(0.5, 0.5);
+	SetImgScale(1);
+	SetImgPos(50, 50, 0);
+	
+	:imgTex;
+	EndOverlay();
+}
+
+

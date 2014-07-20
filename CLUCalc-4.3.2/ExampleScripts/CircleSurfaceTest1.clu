@@ -1,0 +1,53 @@
+_BGColor = Black;
+
+// Switch on anti-aliasing for lines
+EnableSmoothLine(1);
+
+// Define the standard basis vector variables
+// for conformal space.
+DefVarsN3();
+
+// Do not show the frame box
+_FrameBoxSize = 0;
+
+// Define three spheres
+S1 = SphereN3(0,0,0, 1);
+S2 = SphereN3(0.1,0.5,0, 1);
+S3 = SphereN3(0.2,0.7,0, 1);
+
+// Draw all spheres with a solid surface
+:N3_SOLID;
+// Use a transparent color
+:Color(0.198, 0.264, 1.000, 0.8);
+// Draw a fourth sphere, whose x-position 
+// can also be influenced by the user in
+// mouse mode one with the right 
+// mouse button. 
+:S4 = SphereN3(Mouse(1,2,1),0.8,0, 1);
+
+// Set the color to red
+:Red;
+// Intersect spheres 1 and 2, and
+// draw intersection circle
+:C1 = *S1 . S2;
+
+// Set Color to green
+:Green;
+// Intersect spheres 2 and 3, and
+// draw intersection circle
+:C2 = -*S2 . S3;
+
+// Set Color to magenta
+:Magenta;
+// Intersect spheres 3 and 4, and
+// draw intersection circle
+:C3 = *S3 . S4;
+
+// Create a list of circles
+LCircle = [C1, C2, C3];
+
+// Create a list of colors
+LColor = [Red, Green, Magenta];
+
+// Draw surface spanned by circles.
+DrawCircleSurface(LCircle, LColor);

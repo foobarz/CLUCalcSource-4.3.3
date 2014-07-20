@@ -1,0 +1,22 @@
+// Image Function Example 1
+
+// Read an image
+Img = ReadImg("Surf2.bmp");
+
+// Draw the image
+// By default an image will be drawn with
+// its bottom left corner at the origin
+:Img;
+
+// You can also set the position of images.
+// The position set will remain the position
+// at which images are drawn until it is
+// changed.
+SetImgPos(-1,-1,0);
+:Img;
+
+// Use the function SetImgAlign to set
+// the alignment of the image relative
+// to the drawing position.
+SetImgAlign(0.5, 0.5);  // centered
+:Img;

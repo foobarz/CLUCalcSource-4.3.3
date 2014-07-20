@@ -1,0 +1,23 @@
+// Test indexing strings
+
+// A string
+s = "www.Hello-World.de";
+
+// Get letter at position 5
+?s(5);
+
+// Get substring from position 5 till 9
+?s(5, 9);
+// This produces the same result
+?s([5, 9]);
+
+// Get all positions of substring "Hello"
+?s("Hello");
+// Get all positions of substring "."
+?s(".");
+
+// Get a list of letters and substrings
+?s([ [5,9], [11, 15], [1], [2], ["de"] ]);
+
+// This also works directly on a string
+?"Hello"("l");

@@ -1,0 +1,9 @@
+_2dView = 1;
+
+:Blue;
+:a = VecE3(1); 
+:b = VecE3(1,0,0);
+:c = VecE3(0,1,0);
+
+:Color(0.8, 0, 0, 0.8);
+DrawTriangle(a, b, c);

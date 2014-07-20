@@ -1,0 +1,38 @@
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+/** \defgroup grp_VarDrawStyle Drawing Styles
+	\{
+**/
+
+
+
+/** 
+	\brief Switch the plotting of functions with the function <tt>Plot</tt> to a connected line.
+	
+	\since v1.0
+	
+	This style may be applied using the function <tt>SetPlotMode</tt>.
+**/
+counter CONNECTED;
+
+/** 
+	\brief Switch the plotting of functions with the function <tt>Plot</tt> to separate points.
+	
+	\since v1.0
+	
+	This style may be applied using the function <tt>SetPlotMode</tt>.
+**/
+counter POINTS;
+
+
+
+/** \}
+**/
+
+/** \}
+**/

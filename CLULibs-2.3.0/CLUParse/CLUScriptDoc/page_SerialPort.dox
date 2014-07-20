@@ -1,0 +1,42 @@
+/** \page page_SerialPort Serial Port I/O
+
+In CLUScript v2.2 functions to access the serial port have been introduced. However, CLUCalc v4.2 only implements this functionality for Windows. 
+
+The serial port access consists of three functions: OpenSP(), ReadSP() and WriteSP().
+Before you can write or read a port, you need to open it with OpenSP(). The port will only be opened once, even if you reparse the script. However, if you change any parameters of the port, it will be closed and reopened with the new parameters. Also, if you open a new script or close this one, the port will automatically be closed. The simple form of opening a port is the following.
+
+\code
+	OpenSP("COM6", // Port Name
+		   9600,  // Baud Rate
+		   1      // Time-Out in milli-seconds
+		  );
+\endcode
+
+You can also specify the type of the serial communication in more detail.
+The values passed for Bits per Byte, Stop Bits, and Partiy in the following are the default values used in the above example.
+
+\code
+	OpenSP("COM6", // Port Name
+		   9600,  // Baud Rate
+		   1,     // Time-Out in milli-seconds
+		   8, 	  // Bits per Byte, allowed: 7 or 8
+		   1,	  // Stop Bits, allowed: 1, 2
+		   "none" // Parity, allowed: "none", "even", "odd"
+		  );
+\endcode
+
+Once the port is open you can write to it and also read from it. You can write
+the string 'Hello World' with the following command.
+
+\code
+	WriteSP("COM6", "Hello World");
+\endcode
+
+To read from the port use
+
+\code
+	?sText = ReadSP("COM6");
+\endcode
+
+Note that there is no data to be read from the serial port, ReadSP() will wait for the specified time-out time, as given in OpenSP(), before it returns. If you set the time-out to one millisecond, you can write a script where the serial port is checked constantly and some action is performed if particular data is received.
+**/

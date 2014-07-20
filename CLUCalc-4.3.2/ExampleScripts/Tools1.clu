@@ -1,0 +1,19 @@
+	?r = Slider("Radius", 
+				0 	/* min. val. */, 
+				2 	/* max. val. */,
+				0.1 /* step size */,
+				1	/* init. val. */);
+
+	?bShow = CheckBox("Show Sphere", 
+						1 /* init. val. */);
+
+	?xval = Input("x pos.",			
+				0 	/* min. val. */, 
+				2 	/* max. val. */,
+				0.5	/* init. val. */);
+
+	if (bShow)
+	{
+		:Red;
+		:SphereN3(xval, 0, 0, r);
+	}

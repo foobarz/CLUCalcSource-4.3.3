@@ -1,0 +1,24 @@
+_2dView = 1;
+_BGColor = White;
+
+:DRAW_POINT_AS_SPHERE;
+
+// Draw point quadruplet
+:Yellow;
+:P = VecC2(1,0)^VecC2(0,1)^VecC2(-1,0)^VecC2(0,-1);
+
+// User interactive point
+:Magenta;
+:U = VecC2(1);
+
+// Draw Conic
+:Blue;
+:C1 = P^U;
+
+// Draw a second conic
+:Red;
+:C2 = *VecC2(Matrix([[1,0,0],[0,1,0],[0,0,-0.5]]));
+
+// Draw intersection points of both conics
+:Green;
+:C1&C2;

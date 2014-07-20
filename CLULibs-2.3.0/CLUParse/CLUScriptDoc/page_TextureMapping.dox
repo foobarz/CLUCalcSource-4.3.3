@@ -1,0 +1,217 @@
+/** \page page_TextureMapping Texture Mapping
+
+<ul>
+	<li>\ref sec_TexMap_Basics
+	<li>\ref sec_TexMap_ArbSurf
+	<li>\ref sec_TexMap_Latex
+</ul>
+
+\attention
+Texture mapping is very slow if you do not have a graphics card with OpenGL hardware acceleration.
+
+In CLUScript v2.2 texture mapping has been introduced. CLUCalc uses the OpenGL support for texture mapping to implement this feature. The basic idea behind texture mapping is to map an image onto a surface with the correct perspective distortion for the current view. 
+
+In CLUScript you can read in an image and then set it as the current texture using the function SetTexture(). Every surface object that is drawn after this command will be texture mapped with this image. The following example scripts can be found in the subfolder <tt>TextureMapping</tt> of the folder <tt>ExampleScripts</tt>. 
+
+
+<hr>
+\section sec_TexMap_Basics The Basics
+
+Here is a first example.
+
+\code
+	_FrameBoxSize = 0;
+
+	// Only read image from file when script is parsed
+	if (ExecMode & EM_CHANGE)
+	{
+		imgTex = ReadImg("tex_brick.png");
+	}
+
+	// Display image
+	:imgTex;
+
+	// Set image as texure
+	SetTexture(imgTex);
+
+	// Draw plane spanned by two vectors
+	:White;
+	:VecE3(1,1,0)^VecE3(0,1,1);	
+\endcode
+
+Output: 
+
+\image html TexEx1_1.png
+
+In this example the image 'tex_brick.png' is read and then displayed as an image, as well as used as the texture of a plane. Note that the color set before drawing the plane influences the color of the texture. 
+
+If you want to draw a brick wall, then it would be very tedious to draw lots of separate square planes each with the brick texture map. Instead you can set a repetition factor for the texture mapping. For example,
+
+\code
+	_FrameBoxSize = 0;
+
+	// Only read image from file when script is parsed
+	if (ExecMode & EM_CHANGE)
+	{
+		imgTex = ReadImg("tex_brick.png");
+	}
+
+	// Set image as texure
+	SetTexture(imgTex);
+	// Draw the texture twice in each direction
+	SetTextureRepeat(0.5);
+
+	// Draw plane
+	:White;
+	DrawPlane(VecE3(0,0,0), VecE3(1,0,0), VecE3(0,1,0));
+\endcode
+
+Output:
+
+\image html TexEx2_1.png
+
+In this example the repetition factor is relative to the whole extend of the object that is texture mapped. If you want this to depend on the absolute width of an object, you can use the function EnableAbsTexCoords(). For example, if we replace the line
+<code>SetTextureRepeat(0.5)</code> by 
+
+\code
+	// Use absolute texture coordinates
+	EnableAbsTexCoords(true);
+	// Draw the texture every 0.5 units in each direction 
+	SetTextureRepeat(0.5);
+\endcode
+
+the resultant output looks like this.
+
+\image html TexEx3_1.png
+
+If you want to disable texture mapping, simply call SetTexture() with no parameters. For example,
+
+\code
+	_FrameBoxSize = 0;
+
+	// Only read image from file when script is parsed
+	if (ExecMode & EM_CHANGE)
+	{
+		imgTex = ReadImg("tex_brick.png");
+	}
+
+	// Set image as texure
+	SetTexture(imgTex);
+	// Draw the texture twice in each direction
+	SetTextureRepeat(0.5);
+
+	// Draw plane with texture
+	:White;
+	DrawPlane(VecE3(0,0,0), VecE3(1,0,0), VecE3(0,1,0));
+	
+	// Disable texture mapping
+	SetTexture();
+	
+	// Draw plane without texture
+	:DWhite;
+	DrawPlane(VecE3(0,-1,0), VecE3(1,0,0), VecE3(0,1,0));
+\endcode
+
+Output:
+
+\image html TexEx4_1.png
+
+
+
+<hr>
+\section sec_TexMap_ArbSurf Arbitrary Surfaces
+
+Texture mapping also works when you apply it to surfaces drawn with the function Plot(). Here is a simple example.
+
+\code
+	// Only read image from file when script is parsed
+	if (ExecMode & EM_CHANGE)
+	{
+		imgTex = ReadImg("tex_brick.png");
+	}
+
+	// Set image as texure
+	SetTexture(imgTex);
+
+	:White;
+	// Plot given function
+	:Plot(VecE3(x, x*x*y*y, -y), [x,-1,1,10], [y,-1,1,10]);
+\endcode
+
+Output:
+
+\image html TexEx5_1.png
+
+
+It is also possible to specify a function that returns the texture coordinates for each point on the surface. In order to understand this, one first has to know how texture coordinates work. The bottom left corner of an image is mapped to the texure coordinates (0,0) and the top right corner to (1,1). Texture coordinates that are larger than 1 or smaller than 0, specify a partial repetition of the texture. The following example shows how a texture coordinate function can be specified such that the texture is aligned with the diagonals of the surface from the previous example.
+
+\code
+// Only read image from file when script is parsed
+if (ExecMode & EM_CHANGE)
+{
+	imgTex = ReadImg("tex_brick.png");
+}
+
+// Set image as texure
+SetTexture(imgTex);
+
+:White;
+// Plot function with given texture coordinate function
+:Plot(
+	[ VecE3(x, x*x*y*y, -y), // the function
+	  0, // no normal function
+	  0, // no color function
+	  VecE3(x-y, x+y)/2 // texture coordinate function
+	],
+	[x,-1,1,10], [y,-1,1,10]);
+\endcode
+
+Output:
+
+\image html TexEx6_1.png
+
+
+Example script <tt>SphereProj1.clu</tt> gives an example of a spherical projection of an image taken with a fish eye lens onto the inside of a half-sphere. The initial image looks like this:
+
+\image html SphereProj1_1.png
+
+And the texture mapped version like this
+
+\image html SphereProj1_2.png
+
+By the way, you can also map panoramic images onto the inside of a whole sphere and use CLUCalc to look at them.
+
+
+
+
+<hr>
+\section sec_TexMap_Latex Texture Mapping of LaTeX Text
+
+It is also easy to texture map rendered LaTeX text onto surfaces, by using the function GetLatexImg(). This function expects as parameters the LaTeX text and a name for the rendered text (see also \ref page_Latex) and it returns an image variable that contains the renderd LaTeX text. This image may then be mapped onto arbitrary surfaces as shown before. Note that GetLatexImg() generates an image of the text using the current color and the text background is transparent. Here is an example.
+
+\code
+	// Set magnification step of latex rendering
+	// rather high to obtain nice image.
+	SetLatexMagStep(30);
+
+	// Generate the image of a latex text using 
+	// the color RED.
+	:Red;
+	imgTex = GetLatexImg("$\int_0^1\;f(x)\,dx$", "int");
+
+	// Set image as texure
+	SetTexture(imgTex);
+
+	// Plot function 
+	:Plot(VecE3(x, x*x+y*y, -y),
+		[x,-1,1,20], [y,-1,1,20]);
+\endcode
+
+Output:
+
+\image html TexEx7_1.png
+
+The first time you execute this example script you need to force the rendering of the LaTeX code (<tt>ctrl + shift + p</tt>). Since the background of the rendered text is transparent you can also draw the same surface using a color or another texture to achieve an overlay effect.
+
+**/
+

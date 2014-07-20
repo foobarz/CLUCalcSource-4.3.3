@@ -1,0 +1,23 @@
+// Image Function Example 6
+
+_FrameBoxSize = 0;
+_BGColor = MWhite;
+
+// Read an image
+Img = ReadImg("cog_siegel.bmp");
+
+StartOverlay();
+
+SetImgAlign(0,1);
+SetImgPos(5,5,0);
+:Img;
+lC = GetImgCoords(Img);
+
+SetImgPos(lC(4)+5, 5, 0);
+:Img == White;
+
+SetImgPos(2*lC(4)+5, 5, 0);
+:Img != White;
+
+
+EndOverlay();

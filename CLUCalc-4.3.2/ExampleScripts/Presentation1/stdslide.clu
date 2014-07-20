@@ -1,0 +1,220 @@
+
+//!!! Make sure to execute this script once
+//!!! with "Parse (Force Render Latex)" from
+//!!! the Code menu.
+//!!! Also look at the visualization in
+//!!! full-screen mode via the menu 
+//!!! "Visualization -> Full Screen".
+//!!! After you switched to full screen mode
+//!!! you may need to press ctrl-'p' (strg-'p') 
+//!!! again to realign the elements of the slide.
+//!!! Return from full screen mode by pressing
+//!!! ctrl-'f' (strg-'f').
+
+// Set the background color to white
+// You should probably always do this 
+// for presentations
+_BGColor = White;
+
+// No frame box
+_FrameBoxSize = 0;
+
+// Now define some functions that will help
+// you to prepare the text for slides.
+// The idea is that there is string variable
+// called ::LatexText to which the latex text
+// needed is added. Then only one call to 
+// DrawLatex is necessary to draw the whole lot.
+
+// Create a slide which introduces a new part
+// of a presentation
+Part = 
+{
+	StartOverlay();
+	SetLatexAlign(0.5,0.5);
+	DrawLatex(40, 45, 0, 
+	"\plain:" +
+	"\input{header}\begin{document}" +
+	"\begin{center}\huge\bf " + 
+	_P(1) + "\end{center}\end{document}", 
+	"part");
+	EndOverlay();
+}
+
+// Add a title to a slide
+Title = 
+{
+	::LatexText = ::LatexText + 
+		"{\Large\bf " + _P(1) + "}";
+}
+
+// The following functions can be instead of
+// \begin{itemize} \end{itemize}, etc.
+bi =
+{
+	sSize = "\normalsize";
+
+	if (Size( _P ) == 1)
+	{
+		iS = _P(1);
+		if (iS == -1)
+			sSize = "\small";
+		else if (iS == -2)
+			sSize = "\tiny";
+	}
+
+	::LatexText = ::LatexText + 
+		"\begin{itemize}" + sSize;
+}
+
+ei =
+{
+	::LatexText = ::LatexText + 
+		"\end{itemize}";
+}
+
+be =
+{
+	::LatexText = ::LatexText + 
+		"\begin{enumerate}";
+}
+
+ee =
+{
+	::LatexText = ::LatexText + 
+		"\end{enumerate}";
+}
+
+it =
+{
+	::LatexText = ::LatexText + 
+		"\item " + _P(1) + " ";
+}
+
+// Draw the slide
+MakeSlide = 
+{
+	StartOverlay();
+	SetLatexAlign(0,1);
+	DrawLatex(::Left,::Top,0, 
+		"\plain:"
+		+ "\input{header}\begin{document}"
+		+ ::LatexText
+		+ "\end{document}", 
+		"text");
+	EndOverlay();
+}
+
+// Some standard settings
+SetLatexMagStep(15);
+::LatexText = " ";
+
+// Some variables which allow you to draw your
+// text and images always with the same margins.
+::Top = 12;
+::Left = 10;
+::Right = 75;
+::Bottom = 85;
+
+// Start again an overlay block to render
+// some background graphics.
+StartOverlay();
+:Black;
+
+// We want to draw a logo with a 
+// transparent background.
+EnableImgTransparency(1);
+SetImgTransparentColor(White);
+
+// Draw the image centered along x,
+// and ::Top aligned along y, ...
+SetImgAlign(0.5,1);
+
+// ... at position (92, 3).
+DrawImg(92,3,0, "cog_siegel.bmp");
+
+// Reset the image alignment
+SetImgAlign(0,0); 
+
+// Create title of talk which always appears
+// at the ::Bottom of the slide
+SetLatexMagStep(7);
+DrawLatex(2,96.5,0, 
+"\it Presentations with CLUCalc v4", "cp");
+
+// Increase the text size
+SetLatexMagStep(8);
+
+// This part is quite cunning. Depending on
+// how you set the variable PartID in the 
+// script of a slide BEFORE this script is
+// included, you get a different header,
+// which should show in which part of your
+// talk you currently are.
+
+// Uncomment the following line and force the
+// parsing of latex again to see what happens.
+//PartID = 1;
+if (PartID != 0)
+{
+	SetLatexAlign(0, 1);
+	if (PartID == 1) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(7, 1, 0, 
+		  face 
+		+ " Introduction $\quad\longrightarrow$", 
+		"intro");
+
+	if (PartID == 2) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(Pos(4) + 2, 1, 0, 
+			  face
+			+" First Steps $\quad\longrightarrow$", 
+			"first");
+
+	if (PartID == 3) { :MRed; face = "\sf"; }
+	else { :Black; face = "\sf"; }
+	Pos = DrawLatex(Pos(4) + 2, 1, 0, 
+				face
+			+ " Advanced Topics", 
+			"adv");
+}
+
+
+// Now a small notice about CLUCalc.
+// Would be nice if you could leave this in
+// when you give a talk with CLUCalc.
+// Also let me know about the talks you gave
+// with CLUCalc and the problems you encountered.
+SetLatexMagStep(4);
+SetLatexAlign(1,0);
+DrawLatex(99.5,99.5,0, "\it Created with CLUCalc v4.1", "clu");
+
+// The standard size of latex text in slides.
+SetLatexMagStep(15);
+
+// Here we draw the two blue bands at the ::Bottom
+// and the ::Right of the slide.
+:Color(0.409, 0.951, 1.000, 0.2);
+DrawPlane(50,96,-1, 0, 8, 0, 100, 0, 0);
+DrawPlane(98,50,-1, 0,100,0, 12, 0, 0);
+
+:Color(0.847, 0.847, 0.847);
+
+// And here come the lines.
+DrawLine(::Left-6, 0, -1, ::Left-6, ::Bottom + 2, -1);
+DrawLine(0, ::Top-8, -1, ::Right+2, ::Top-8, -1);
+
+// The overlay ends here. 
+EndOverlay();
+
+// From here on you can do any 3d-graphics which
+// will not influenced the overlayed slide text.
+
+// We set the standard color to black.
+:Black;
+
+
+
+
+

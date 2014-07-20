@@ -1,0 +1,4 @@
+_ClearScriptList();
+_AddScriptToList("Color", "Color1.clu");
+_AddScriptToList("Cone", "Cone1.clu");
+_AddScriptToList("Desargues", "Desargues2.clu");

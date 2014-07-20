@@ -1,0 +1,12 @@
+// Only read image from file when script is parsed
+if (ExecMode & EM_CHANGE)
+{
+	imgTex = ReadImg("tex_brick.png");
+}
+
+// Set image as texure
+SetTexture(imgTex);
+
+:White;
+// Plot given function
+:Plot(VecE3(x, x*x*y*y, -y), [x,-1,1,10], [y,-1,1,10]);

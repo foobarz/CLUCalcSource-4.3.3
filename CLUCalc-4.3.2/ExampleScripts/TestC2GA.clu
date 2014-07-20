@@ -1,0 +1,40 @@
+_BGColor = White;
+_2dView = 1;
+
+:DRAW_POINT_AS_SPHERE;
+SetPointSize(5);
+
+// Define variables e1, e2, e3, e4, e5, e6.
+DefVarsC2();
+
+// Create five user-interactive points.
+// Use mouse-modes 1 to 5 to change the points.
+// The vectors created in the following are embedded
+// in a 6D vector space, which is, in effect, the vector 
+// space of symmetric 3x3 matrices.
+
+:Red;
+:A = VecC2(VecE3(1) + VecE3(-1,0,0));
+?A;
+
+:Green;
+:B = VecC2(VecE3(2) + VecE3(-1,-1,0));
+?B;
+
+:Blue;
+:C = VecC2(VecE3(3) + VecE3(1,-1,0));
+?C;
+
+:Magenta;
+:D = VecC2(VecE3(4) + VecE3(1,1,0));
+?D;
+
+:Cyan;
+:E = VecC2(VecE3(5) + VecE3(0,1.5,0));
+?E;
+
+// Now create the conic as the outer product of 5 points
+:Orange;
+:Conic = A^B^C^D^E;
+?Conic;
+

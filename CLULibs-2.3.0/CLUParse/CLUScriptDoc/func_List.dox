@@ -1,0 +1,391 @@
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_List List Functions
+
+	Functions that deal with lists.
+	
+	\{
+**/
+
+
+
+
+/**
+	\brief Returns a list of all index combinations according to the expression 'n choose k'.
+	
+	\param Count A counter representing the number of elements in a set from that \a Choose elements are to be choosen.
+	\param Choose A counter representing the number of elements to be choosen.
+	
+	\return A list of length \f$\mathtt{Count}\choose \mathtt{Choose}\f$ containing lists of indices that have the length \a Choose.
+	
+	\since v2.0
+	
+	The elements of the returned list are sorted in ascending order.
+	The expression <tt>?CombIdxList(4,2);</tt> results in
+	
+	\code
+	
+	Constant = [[[1], [2]], [[1], [3]], [[1], [4]], [[2], [3]], [[2], [4]], [[3], [4]]]
+	\endcode	
+**/
+list CombIdxList(counter Count, counter Choose);
+
+
+
+/**
+	\brief This function inserts a given number of entries in a list.
+	
+	\param lL The list in which values are inserted.
+	\param iWhere The index of the element in the list lL before which the insertion occurs.
+	\param iCount The number of elements that are to be inserted.
+	
+	\return Nothing.
+	
+	Here is an example.
+	
+	\code
+	?lL = [1,2,3];
+	InsList(lL, 2, 2);
+	?lL;
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(3)</i>= <br><b>[</b> 1 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br><b>lL</b> <i>(5)</i>= <br><b>[</b> 1 <b>,</b> 0 <b>,</b> 0 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br>
+	
+**/
+void InsList(list lL, counter iWhere, counter iCount);
+
+
+
+/**
+	\brief This function inserts a given list in a list.
+	
+	\param lL The list in which values are inserted.
+	\param iWhere The index of the element in the list lL before which the insertion occurs.
+	\param lM The list of values that are to be inserted.
+	
+	\return Nothing.
+	
+	Here is an example.
+	
+	\code
+	?lL = [1,2,3];
+	InsList(lL, 2, [5,6]);
+	?lL;
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(3)</i>= <br><b>[</b> 1 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br><b>lL</b> <i>(5)</i>= <br><b>[</b> 1 <b>,</b> 5 <b>,</b> 6 <b>,</b> 2 <b>,</b> 3 <b>]</b><p><br>	
+**/
+void InsList(list lL, counter iWhere, list lM);
+
+
+
+
+/**
+	\brief Generates a list of size \a iSize.
+	
+	\param iSize The number of entries in the list.
+	
+	\return A list with iSize entries, which are all set to 0.
+**/
+list List(counter iSize);
+
+
+/**
+	\brief Generates a list of the components of a multivector.
+	
+	\param vA The multivector.
+	
+	\return A list with the components of vA.
+	
+	The length of the list returned is equal to the dimension of the algebra of the multivector.
+	
+	\code
+	DefVarsE3();
+	?lVec = List(1 + 2*e1 + 3*e3*e2 + 4*e1*e2 + 5*e1*e2*e3);
+	\endcode
+	
+	Output:
+	
+	<b>lVec</b> <i>(8)</i>= <br><b>[</b> 1 <b>,</b> 2 <b>,</b> 0 <b>,</b> 0 <b>,</b> -3 <b>,</b> 0 <b>,</b> 4 <b>,</b> 5 <b>]</b><p><br>
+
+**/
+list List(multivector vA);
+
+
+/**
+	\brief Generates a nested list of the components of a matrix.
+	
+	\param mA The matrix.
+	
+	\return A nested list with the components of mA.
+		
+	\code
+	?List(Matrix(2,3));
+	\endcode
+	
+	Output:
+	
+	<b>Constant</b> <i>(2)</i>= <br><b>[</b> <b>[</b> 0 <b>,</b> 0 <b>,</b> 0 <b>]</b> <b>,</b> <b>[</b> 0 <b>,</b> 0 <b>,</b> 0 <b>]</b> <b>]</b><p><br>
+**/
+list List(matrix mA);
+
+
+/**
+	\brief Generates a list of substrings from a strings by cutting the string at delimiter strings.
+	
+	\param sText The text string.
+	\param sDel The delimiter string.
+	
+	\return A list of substrings.
+	
+	The delimiter string may be a single symbol like ',', or a string itself. For example, consider the following line of code.
+		
+	\code
+	?lL = List("Hello World this is a test!", " ");
+	\endcode
+	
+	Output:
+	
+<b>lL</b> <i>(6)</i>= <br><b>[</b> Hello <b>,</b> World <b>,</b> this <b>,</b> is <b>,</b> a <b>,</b> test! <b>]</b><p><br>
+
+	This functionality can be particularly useful when analysing a list of numbers read in from a text file. For example,
+	
+	\code
+	?lL = List( "1.2, 3.4, -5.321", "," );
+	?vA = VecE3( Scalar( lL ) );
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(3)</i>= <br><b>[</b> 1.2 <b>,</b>  3.4 <b>,</b>  -5.321 <b>]</b><p><br><b>vA</b> = 1.2 <b>e1</b> + 3.4 <b>e2</b> + -5.32 <b>e3</b><br>
+**/
+list List(string sText, string sDel);
+
+
+/**
+	\brief Returns a list of index permutations that are necessary to select all possible sublists of a certain length from a given set.
+	
+	\param Count A counter representing the number of elements in a set from that \a Choose elements are to be chosen.
+	\param Choose A counter representing the number of elements to be chosen.
+	
+	\return A list of length \f${\mathtt{Count}\choose \mathtt{Choose}}\cdot\mathtt{Choose}\,!\f$ containing all possible lists of indices that have the length \a Choose.
+	
+	\since v2.0
+	
+	All permutations of elements in the return of function <tt>CombIdxList</tt> are enclosed in the return of function <tt>PermIdxList</tt>.
+	Thus if \f$[[a], [b], [c]]\f$ is element of the result of <tt>CombIdxList</tt>, then \f$[[a], [c], [b]]\f$, \f$[[b], [a], [c]]\f$, \f$[[b], [c], [a]]\f$,
+	\f$[[c], [a], [b]]\f$ and \f$[[c], [b], [a]]\f$ will be elements of the result of <tt>PermIdxList</tt>.
+	Therefore the expression <tt>?PermIdxList(3,2);</tt> results in
+	
+	\code
+	
+	Constant = [[[1], [2]], [[2], [1]], [[1], [3]], [[3], [1]], [[2], [3]], [[3], [2]]]
+	\endcode	
+**/
+list PermIdxList(counter Count, counter Choose);
+
+
+/**
+	\brief Removes a sublist from a list.
+	
+	\param L A list.
+	\param First The position in list \a L from where to start to remove the sublist.
+	\param Count The number of element to remove from \a L starting from \a First.
+	
+	\return The specified remaining part of list \a L.
+	
+	\since v2.0
+	
+	\attention The function changes list \a L directly, i.e. no futher assignment to \a L is necessary.
+	
+	This function removes a coherent part from a given list \a L. The first element that is to be removed is the element of \a L at position
+	\a First. The last element is the element of \a L at position (\a First + \a Count - 1). If \a Count is -1, then all elements of \a L starting
+	with element \a First are removed. Here is an example,
+	\code
+	
+	? L = [ 8,7,6,5,4,3 ];
+	RemList(L, 4,-1 );		// remove, starting with 4th element, up to the end
+	? L;
+	RemList(L, 1,2 );		// remove, starting with 1st element, two elements
+	? L;
+	\endcode
+	
+	This code produces the following output.
+	\code
+	L = [8, 7, 6, 5, 4]
+	L = [8, 7, 6]
+	L = [6]
+	\endcode
+
+**/
+list RemList(list L, counter First, counter Count);
+
+
+/**
+	\brief Removes selected elements from a given list.
+	
+	\param L A list.
+	\param F A list that specifies the elements of \a L to be removed.
+	
+	\return Nothing.
+	
+	\since v2.0
+	
+	This function removes top level elements from the list \a L. Single indices may also be passed to the function.
+	
+	\code
+	
+	? L = [ 8,7,6,5,4 ];
+	RemList(L, 3  );
+	? L;
+	RemList(L, [1, 3]  );
+	?L;	
+	\endcode
+	The example results in
+	\code
+	L = [8, 7, 6, 5, 4]
+	L = [8, 7, 5, 4]
+	L = [7, 4]
+	\endcode
+**/
+void RemList(list L, list F);
+
+
+
+
+/**
+	\brief Returns a sublist extracted from a given list.
+	
+	\param L A list.
+	\param First The position in list \a L from where to start to extract the sublist.
+	\param Count The number of element to extract from \a L starting from \a First.
+	
+	\return The sublist of \a L, specified by the parameters.
+	
+	\since v2.0
+	
+	This function extracts a sublist from the given list \a L. The first element in the sublist is the element of \a L at position \a First. The last element in the returned sublist is the element of \a L at position (\a First + \a Count - 1). If \a Count is -1, then all elements of \a L starting with element \a First are taken. Here is an example,
+	
+	\code
+	
+	?L = [1, 2, 3, 4, 5];
+	
+	?SubList(L, 2, 3);
+	?SubList(L, 2, -1);
+	\endcode
+	
+	This code produces the following output.
+	
+	\code
+	
+	L = [1, 2, 3, 4, 5]
+	Constant = [2, 3, 4]
+	Constant = [2, 3, 4, 5]
+	\endcode
+
+**/
+list SubList(list L, counter First, counter Count);
+
+
+/**
+	\brief Returns a sublist extracted from a given list.
+	
+	\param L A list.
+	\param F A list that determines the components to be extracted.
+	
+	\return The sublist of \a L, specified by the parameters.
+	
+	\since v2.0
+	
+	This function extracts a sublist from the given list \a L. The elements of list \a F determine how to branch within the list \a L. An element <tt>f = [ 1,2 ]</tt> in \a F stands e.g. for 'Take the 2nd element of the 1st element of \a L', that is <tt>L(1)(2)</tt>.
+	The result might be a scalar or still a sublist. Note that this function has an equivalent expressiveness as the bracket operator ( ) applied to lists.
+	Here is a comprehensive example,
+	
+	\code
+	
+	? L = [ [ [3,1],[9,1,0] ],[ -2,7,1,8 ] ];
+	? S = SubList(L, [ 1,2 ]);					// =  SubList(L, [ [1], [2] ]);
+	? S = SubList(L, [ [1,2] ]);
+	? S = SubList(L, [ [1,2,3] ]);
+	? S = SubList(L, [ [1,1,1],[2,1] ]);		// =  L([ [1,1,1], [2,1] ]);
+	\endcode
+	
+	This code produces the following output.
+	
+	\code
+	
+	L = [[[3, 1], [9, 1, 0]], [-2, 7, 1, 8]]
+	S = [[[3, 1], [9, 1, 0]], [-2, 7, 1, 8]]
+	S = [[9, 1, 0]]
+	S = [0]
+	S = [3, -2]
+	\endcode
+
+**/
+list SubList(list L, list F);
+
+
+
+
+/**
+	\brief Transposition of list elements.
+	
+	\param lL The list that is to be transposed.
+	\param iLevel (optional) The nesting level at which transposition should occur. The default is 0.
+	
+	\return The transposed list.
+	
+	This function can also be used to transform an index lists into a list of numbers. For example,
+	
+	\code
+	?lL = [[1], [2], [3]];
+	?lM = TransList(lL);
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 1 <b>]</b> <b>,</b> <b>[</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>]</b> <b>]</b><p><br><b>lM</b> <i>(1)</i>= <br><b>[</b> <b>[</b> 1 <b>,</b> 2 <b>,</b> 3 <b>]</b> <b>]</b><p><br>
+	
+	If the list \c lL is interpreted as a matrix, then it represents a single column vector. The transpose is therefore a single row vector. Note that not all sublists need to be of the same length. For example,
+	
+	\code
+	?lL = [[1,2], [3,4,5], [6,7]];
+	?lM = TransList(lL);
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 1 <b>,</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>,</b> 4 <b>,</b> 5 <b>]</b> <b>,</b> <b>[</b> 6 <b>,</b> 7 <b>]</b> <b>]</b><p><br><b>lM</b> <i>(3)</i>= <br><b>[</b> <b>[</b> 1 <b>,</b> 3 <b>,</b> 6 <b>]</b> <b>,</b> <b>[</b> 2 <b>,</b> 4 <b>,</b> 7 <b>]</b> <b>,</b> <b>[</b> 5 <b>]</b> <b>]</b><p><br>	
+	
+	The optional parameter iLevel sets the level at which the transpose is to be executed. This only has an effect for multiply nested lists. Consider the following example.
+	
+	\code
+	?lL = [ 
+			[[1,2], [3,4], [5,6]],
+			[[7,8], [9,10], [11,12]]
+		   ];
+	
+	?lM1 = TransList(lL);
+	?lM2 = TransList(lL, 1);	
+	\endcode
+	
+	Output:
+	
+	<b>lL</b> <i>(2)</i>= <br><b>[</b> <b>[</b> <b>[</b> 1 <b>,</b> 2 <b>]</b> <b>,</b> <b>[</b> 3 <b>,</b> 4 <b>]</b> <b>,</b> <b>[</b> 5 <b>,</b> 6 <b>]</b> <b>]</b> <b>,</b> <b>[</b> <b>[</b> 7 <b>,</b> 8 <b>]</b> <b>,</b> <b>[</b> 9 <b>,</b> 10 <b>]</b> <b>,</b> <b>[</b> 11 <b>,</b> 12 <b>]</b> <b>]</b> <b>]</b><p><br><b>lM1</b> <i>(3)</i>= <br><b>[</b> <b>[</b> <b>[</b> 1 <b>,</b> 2 <b>]</b> <b>,</b> <b>[</b> 7 <b>,</b> 8 <b>]</b> <b>]</b> <b>,</b> <b>[</b> <b>[</b> 3 <b>,</b> 4 <b>]</b> <b>,</b> <b>[</b> 9 <b>,</b> 10 <b>]</b> <b>]</b> <b>,</b> <b>[</b> <b>[</b> 5 <b>,</b> 6 <b>]</b> <b>,</b> <b>[</b> 11 <b>,</b> 12 <b>]</b> <b>]</b> <b>]</b><p><br><b>lM2</b> <i>(2)</i>= <br><b>[</b> <b>[</b> <b>[</b> 1 <b>,</b> 3 <b>,</b> 5 <b>]</b> <b>,</b> <b>[</b> 2 <b>,</b> 4 <b>,</b> 6 <b>]</b> <b>]</b> <b>,</b> <b>[</b> <b>[</b> 7 <b>,</b> 9 <b>,</b> 11 <b>]</b> <b>,</b> <b>[</b> 8 <b>,</b> 10 <b>,</b> 12 <b>]</b> <b>]</b> <b>]</b><p><br>
+**/
+list TransList(list lL, counter iLevel);
+
+
+/** \}
+**/
+
+/** \}
+**/
+

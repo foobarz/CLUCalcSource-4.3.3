@@ -1,0 +1,39 @@
+
+:N3_SOLID;
+:DRAW_POINT_AS_SPHERE;
+SetPointSize(6);
+SetLineWidth(4);
+
+DefVarsN3();
+
+// A slider for the radius
+?rad = Slider("1. Radius", 0.1, 3, 0.1, 1);
+
+:MRed;
+// Create a sphere
+:S = SphereN3(VecE3(1), rad);
+
+:Color(0.587, 0.922, 1.000, 0.8);
+// Create a plane 
+:P = 20 * VecN3(0,0,0) ^ VecN3(1,0,0) ^ VecN3(0,0,1) ^ e;
+
+if (CheckBox("2. Show 2nd Sphere", 0))
+{
+	:MWhite;
+	:S2 = SphereN3(0.5,0,0, 1);
+
+	if (CheckBox("3. Sphere1 v Sphere2", 0))
+	{
+		:Green;
+		// Evaluate the intersection circle
+		:C = S & S2;
+
+		if (CheckBox("4. Circle v Plane", 0))
+		{
+			:Cyan;
+			// Evaluate the intersection points
+			:X = C & P;
+		}
+	}
+}
+

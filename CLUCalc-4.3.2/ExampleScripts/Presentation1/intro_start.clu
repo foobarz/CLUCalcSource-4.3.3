@@ -1,0 +1,13 @@
+// Don't forget to force latex rendering the first
+// time you execute this script.
+
+// Set the part we are currently in for the header.
+// At this point we do not want a header
+PartID = 0;
+
+// Include the standard slide
+//#  include "stdslide.clu"
+
+// Use a function from the stdslide.clu file
+// to create a large centered title
+Part("Introduction");

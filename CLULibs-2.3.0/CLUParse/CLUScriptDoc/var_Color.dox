@@ -1,0 +1,234 @@
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+/** \defgroup grp_ColVars Color Variables
+	\{
+**/
+
+/**
+	\brief A colorvalue where only the alpha-channel is set (0.0, 0.0, 0.0, -0.7).
+	
+	\since v1.6
+**/
+color Alpha;
+
+/**
+	\brief The color Red (1.0, 0.0, 0.0).
+	
+	\since v1.0
+**/
+color Red;
+
+/**
+	\brief The color Green (0.0, 1.0, 0.0).
+	
+	\since v1.0
+**/
+color Green;
+
+/**
+	\brief The color Blue (0.0, 0.0, 1.0).
+	
+	\since v1.0
+**/
+color Blue;
+
+
+/**
+	\brief The color Cyan (0.0, 1.0, 1.0).
+	
+	\since v1.0
+**/
+color Cyan;
+
+/**
+	\brief The color Yellow (1.0, 1.0, 0.0).
+	
+	\since v1.0
+**/
+color Yellow;
+
+/**
+	\brief The color Magenta (1.0, 0.0, 1.0).
+	
+	\since v1.0
+**/
+color Magenta;
+
+/**
+	\brief The color Orange   (1.0, 0.7, 0.0).
+	
+	\since v1.0
+**/
+color Orange;
+
+/**
+	\brief The color White (1.0, 1.0, 1.0).
+	
+	\since v1.0
+**/
+color White;
+
+/**
+	\brief The color Black  (0.0, 0.0, 0.0).
+	
+	\since v1.0
+**/
+color Black;
+
+/**
+	\brief A colorvalue where only the alpha-channel is set (0.0, 0.0, 0.0, -0.4).
+	
+	\since v1.6
+**/
+color MAlpha;
+
+/**
+	\brief The color medium Red   (0.6, 0.0, 0.0).
+	
+	\since v1.0
+**/
+color MRed;
+
+/**
+	\brief The color medium Green (0.0, 0.6, 0.0).
+	
+	\since v1.0
+**/
+color MGreen;
+
+/**
+	\brief The color medium Blue  (0.0, 0.0, 0.6).
+	
+	\since v1.0
+**/
+color MBlue;
+
+
+/**
+	\brief The color medium Cyan   (0.0, 0.6, 0.6).
+	
+	\since v1.0
+**/
+color MCyan;
+
+/**
+	\brief The color medium Yellow (0.6, 0.6, 0.0).
+	
+	\since v1.0
+**/
+color MYellow;
+
+/**
+	\brief The color medium Magenta  (0.6, 0.0, 0.6).
+	
+	\since v1.0
+**/
+color MMagenta;
+
+
+/**
+	\brief The color medium Orange   (0.6, 0.1, 0.0).
+	
+	\since v1.0
+**/
+color MOrange;
+
+/**
+	\brief The color medium Gray (0.6, 0.6, 0.6).
+	
+	\since v1.0
+**/
+color MGray;
+
+/**
+	\brief The color medium White (0.6, 0.6, 0.6).
+	
+	\since v1.0
+**/
+color MWhite;
+
+/**
+	\brief A colorvalue where only the alpha-channel is set (0.0, 0.0, 0.0, -0.2).
+	
+	\since v1.6
+**/
+color DAlpha;
+
+
+/**
+	\brief The color dark Red   (0.3, 0.0, 0.0).
+	
+	\since v1.0
+**/
+color DRed;
+
+
+/**
+	\brief The color dark Green (0.0, 0.3, 0.0).
+	
+	\since v1.0
+**/
+color DGreen;
+
+/**
+	\brief The color dark Blue  (0.0, 0.0, 0.3).
+	
+	\since v1.0
+**/
+color DBlue;
+
+
+/**
+	\brief The color dark Cyan   (0.0, 0.3, 0.3).
+	
+	\since v1.0
+**/
+color DCyan;
+
+/**
+	\brief The color dark Yellow (0.3, 0.3, 0.0).
+	
+	\since v1.0
+**/
+color DYellow;
+
+/**
+	\brief The color dark Magenta  (0.3, 0.0, 0.3).
+	
+	\since v1.0
+**/
+color DMagenta;
+
+/**
+	\brief The color dark Orange   (0.3, 0.1, 0.0).
+	
+	\since v1.0
+**/
+color DOrange;
+
+
+/**
+	\brief The color dark Gray (0.3, 0.3, 0.3).
+	
+	\since v1.0
+**/
+color DGray;
+
+/**
+	\brief The color dark White (0.3, 0.3, 0.3).
+	
+	\since v1.0
+**/
+color DWhite;
+
+	
+/** \}
+**/
+
+
+/** \}
+**/

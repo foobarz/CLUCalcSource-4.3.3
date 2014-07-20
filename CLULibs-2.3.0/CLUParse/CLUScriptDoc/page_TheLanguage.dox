@@ -1,0 +1,1679 @@
+/** \page page_TheLanguage The Language
+
+\section Contents
+<ul>
+	<li>\ref subsec_Basics
+	<li>\ref subsec_Labels
+	<li>\ref subsec_Operators
+	<li>\ref subsec_StructProg
+	<li>\ref subsec_VarLists
+	<li>\ref subsec_Strings	
+	<li>\ref subsec_Macros
+</ul>
+
+
+<hr>
+\section subsec_Basics The Basics
+
+The first thing to be said about CLUScript is that it is somewhat similar to the C-programming language. However, the syntax checking is not very strict, such that meaningless scripts may not produce an error message. Given enough time I will try to improve this.
+
+First of all, every line has to be ended by a semicolon. Comments can be included in the script in the same way as in C and C++. For example,
+
+\code
+
+// This is a single line comment
+A = 1 + 2;
+
+/* This
+   is a block
+   comment.
+*/
+
+?A = A + 1;
+\endcode
+
+The end of a script does not have to be signalled with a particular keyword. By the way, a question mark at the beginning of a line prints the result after evaluation of the corresponding line in the output window. Placing a colon (:) at the beginning of a line draws the result after evaluation of the line in the visualization window, if the result has a geometric interpretation.
+
+In order to execute a script you have to press <b>ctrl + p</b> in CLUCalc. Note that you can simply copy-paste the example given in these help files into the editor window of CLUCalc and then execute them.
+
+<table width="400" bgcolor="#EEEEEE" align="center" border="0">
+<tr><td>
+<b>By the way...</b>
+<br>
+Before a script can be executed it has to be parsed. During parsing a code tree is generated. This code tree may then be executed any number of times. For the user, this two step process is usually hidden. The first time a user executes a script it is parsed. Subsequent executions only execute the code tree. This two-step process has the advantage that a lot of processing only has to be done once. This is particularly important in the present case, since a script may have to be executed many times per second in order to achieve an animated presentation.
+</td></tr>
+</table>
+
+
+<hr>
+\section subsec_Labels Labels
+
+A label can be two things: either it represents a variable that stands for some value, or it refers to a function. Anything that starts with any of the following characters is interpreted as a label.
+
+\code
+
+_abcdefghijklmnopqrstuvwxyzäöüß
+ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ
+\endcode
+
+A label may also include the characters 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, but these must not be the first character of a label. For example, "A1" is a label but "1A" is interpreted as the number 1 followed by label "A". The parser does not recognize the latter case as an error. The "Umlaute" ä, ö, ü and ß are also valid letters in a label, which allows you to use any German word as a label. 
+
+Variables do not have to be declared explicitly. Instead, when the parser encounters an unknown label, it assumes it to be a variable of type "counter", i.e. an integer, and initializes it with zero.
+
+The type of a variable is automatically changed appropriately when it is assigned a particular value. For example,
+
+\code
+
+A = 1.2;
+// Now A is of type 'Scalar'
+
+A = VecE3(1, 1, 1);
+// Now A is of type 'Multivector'
+
+A = "Hello World";
+// Now A is of type 'String'
+\endcode
+
+Variables can be of the following types: 
+<ul>
+<li> \c counter. This is equivalent to an integer variable. A corresponding variable is created by assigning a label a whole number not followed by a '.', eg. <tt>A = 2</tt>.
+
+<li> \c scalar. This is equivalent to a double variable. You can create a variable of this type by writing for example, <tt>A = 3.1415</tt>, or <tt>A = 31415e-4</tt>. Counter variables are automatically casted into Scalar variables if needed. However, the reverse is only possible if the value of a Scalar variable is equal to an integer value.
+
+<li> \c multivector. Multivectors can be created using the functions <tt>VecE3</tt>, <tt>VecP3</tt> and <tt>VecN3</tt>, which create multivectors of grade 1 (ie. vectors) in Euclidean, projective and conformal space, respectively. Note that you cannot apply operators to multivectors from different spaces. Nevertheless, you can use the above mentioned functions to convert multivectors from one space into another. For example, 
+
+\code
+
+A = VecE3(1, 1, 1); 
+PA = VecP3(A);
+\endcode 
+embeds vector \f$ A = e_1+e_2+e_3 \f$ in projective space.
+
+<li> \c matrix. Matrices can be created using the function <tt>Matrix</tt>. This will be discussed later on.
+
+<li> \c string. Strings are created by enclosing an arbitrary text in double quotes, e.g. 
+<tt>A = "Hello World";</tt>. Strings can be concatenated with the '+' operator. You can also add variables of any type to a string, which converts the variable into a string and then concatenates the strings. For example, 
+
+\code
+
+A = 1.2; 
+Text = "The result is: " + A;
+\endcode
+
+Now the variable \c Text contains the string "The result is: 1.2". You can include the symbol " in a string by writing \", eg. 
+
+\code
+Text = "This is \"Text\"."
+\endcode
+
+<li> \c color. There exist a number of predefined color variables like <tt>Red, Green, Blue, Magenta, Cyan, Yellow, Black, White</tt>, etc. If you want to define your own color, use the function \c Color.
+
+<li> \c list. A variable of this type contains a list of variables. These may be of different types. Nested lists are also allowed up to a level where your computer runs out of memory or processing power ;-).
+
+<li> \c vertexlist. A variable of this type contains a list of vertices. Vertices are simply 3D-points which are used for drawing objects. A vertex list is returned by the \c Plot function. In order to draw a vertex list use the colon operator.
+
+<li> \c image. A variable of this type contains an image. This will be discussed in an extra section.
+</ul>
+
+Internally, the variables that are created in a script are saved in a list. This list of variables is only deleted every time the script is parsed. The variable list is not reset before every execution of the code-tree. Therefore, variables that are assigned a value during the first execution of a script, already contain this value at the beginning of the second execution of the script. 
+
+For example, you can count the number of times a script was executed by writing 
+\code
+
+?A = A + 1;
+\endcode
+ somewhere in the script. 
+
+
+\subsection subsubsec_ReferenceOp The Reference Operator
+
+The assignment operator <tt>=</tt> copies the value given on its RHS into the variable given on the LHS. As will be seen in later sections, it is not always desirable to copy the content of a variable. Sometimes a reference to a variable saves some writing and is sufficient. References can only be created to variables and not to constant objects. A reference to a variable is creates with the operator <tt>-\></tt>. For example,
+
+\code
+?a = 1;
+?b -> a;
+b = 2;
+?a;
+\endcode
+
+has the output
+
+\code
+a = 1
+b -> 1
+a = 2
+\endcode
+
+In this code snippet a variable <tt>a</tt> is created and assigned the value <tt>1</tt>. Then a variable <tt>b</tt> is assigned a reference to variable <tt>a</tt>. Now, when \c b is changed then so is \c a, as can be seen in the next to code lines. If a reference is made to a constant object, then the reference operator is equivalent to the assignment operator. For example,
+
+\code
+?b -> 2;
+\endcode
+
+results in
+ 
+\code
+b = 2
+\endcode
+
+Furthermore, when the reference operator is applied to a reference variable, no reference to the reference is created. Instead, the reference on the RHS is simply assigned to the LHS. For example,
+
+\code
+?a = 1;		// Initialize a with 1
+?b -> a;	// Assign b the reference to a 
+?c -> b;	// Also assigns c the reference to a (not b)
+?b -> 0;	// Sets b to 0 without changing a (or c)
+
+?a = 2;		// Set a to 2
+?c;			// Now c also returns the value of a
+\endcode
+
+has output
+
+\code
+a = 1
+b -> 1
+c -> 1
+b = 0
+a = 2
+c -> 2
+\endcode
+
+
+
+<hr>
+\section subsec_Operators Operators
+
+In CLUScript operators can either be right-sided unary or binary. For example, in <tt>-1.2</tt> the minus operator is a unary operator acting on the element on its right, whereas in <tt>2 - 1.2</tt> the minus operator is binary. Every operator also has a certain "binding strength". An operator with a higher binding strength is executed before an operator with a lower one. In the following the various operators are described.
+
+\attention Note that variables of type Multivector which only consist of a scalar part are automatically interpreted as Scalars if necessary.
+
+<table width="400" bgcolor="#EEEEEE" align="center" border="0">
+<tr><td>
+<b>By the way...</b>
+<br>
+... all operators apart from the assignment operator (<tt>=</tt>) and the print operator (<tt>?</tt>) are recursively applied to list. See section \ref subsec_VarLists for more information on that.
+</td></tr></table>
+
+
+<b>Point Operators</b>. Many of the operators described in the following also have a 'point' version. For example, there exists the operator <tt>+</tt> but also <tt>.+</tt>. These 'point' versions of the operators perform the same operation as the operators without the leading point (pointless operators ;-). However, when point operators are applied between two lists (see section \ref subsec_VarLists) or matrices (see \ref page_WorkWithMat), then the base operator version is applied between each pair of elements separately. If an operator has a point version, this is noted in the following lists.
+
+The available binary operators are the following:
+
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td>Operator</td>
+	<td>Function</td>
+	<td>LHS-Type</td>
+	<td>RHS-Type</td>
+	<td>L to R</td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td><tt>*</tt>, <tt>.*</tt> </td>
+	<td> (geometric) product </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes </td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Multivector </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> matrix product </td>
+	<td> Matrix </td>
+	<td> Matrix </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Matrix </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>/</tt>, <tt>./</tt> </td>
+	<td> (geometric) division </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Multivector </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> matrix division </td>
+	<td> Matrix </td>
+	<td> Matrix </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Matrix </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>.</tt>, <tt>..</tt> </td>
+	<td> inner product </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>^</tt>, <tt>.^</tt> </td>
+	<td> outer product </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Multivector </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>^^</tt> </td>
+	<td> power </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Multivector </td>
+	<td> Counter </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>+</tt>, <tt>.+</tt> </td>
+	<td> addition </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Matrix </td>
+	<td> Matrix </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td></td>
+	<td> concatenation </td>
+	<td> String </td>
+	<td> all types </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>-</tt>, <tt>.-</tt> </td>
+	<td> subtraction </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> Matrix </td>
+	<td> Matrix </td>
+	<td> yes</td>
+</tr>
+ <tr>
+	<td> </td>
+	<td> </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+
+
+ <tr bgcolor="#F1F1F1">
+	<td><tt>|</tt> </td>
+	<td> join </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td> </td>
+	<td> OR </td>
+	<td> Counter </td>
+	<td> Counter </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>\&</tt></td>
+	<td> meet </td>
+	<td> Multivector </td>
+	<td> Multivector </td>
+	<td> yes</td>
+</tr>
+<tr>
+	<td> </td>
+	<td> AND </td>
+	<td> Counter </td>
+	<td> Counter </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>\%</tt></td>
+	<td> modulo </td>
+	<td> Scalar </td>
+	<td> Scalar </td>
+	<td> yes</td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>°</tt> </td>
+	<td> grade projection </td>
+	<td> Multivector </td>
+	<td> Counter </td>
+	<td> no</td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>~</tt> </td>
+	<td> index list generation </td>
+	<td> Counter </td>
+	<td> Counter </td>
+	<td> yes</td>
+</tr> 
+
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>\<\< </tt>, <tt>.\<\< </tt> </td>
+	<td> list element concatenation </td>
+	<td> list </td>
+	<td> any type </td>
+	<td> no</td>
+</tr>
+<tr>
+	<td> </td>
+	<td> string concatenation </td>
+	<td> string </td>
+	<td> any type </td>
+	<td> no</td>
+</tr>
+</table>
+
+\attention The operator <code>#</code> does no longer exist in CLUScript version 2.0. 
+
+If there is a "yes" in the column "L to R" then the LHS and RHS variable types can be exchanged. For example, the second row in the table means that you can write <tt>VecE3(1,2,3) * 1.2</tt> but also <tt>1.2 * VecE3(1,2,3)</tt>. Since a variable of type Counter can always be casted to a variable of type Scalar, you can also use a Counter variable wherever you see the type Scalar in the table.
+
+The unary operators available in CLUScript are:
+
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td>Operator </td>
+	<td> Function </td>
+	<td> Variable Types </td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td>?</td>
+	<td>print element</td>
+	<td>all types</td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td>:</td>
+	<td>draw element</td>
+	<td>Multivector, Matrix</td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td>!</td>
+	<td>inverse</td>
+	<td>Multivector, Matrix, Scalar</td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td>*</td>
+	<td>dual</td>
+	<td>Multivector</td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>~</tt></td>
+	<td>reverse</td>
+	<td>Multivector</td>
+</tr>
+<tr>
+	<td></td> 
+	<td>transpose</td>
+	<td>Matrix</td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>'</tt></td>
+	<td>main involution</td>
+	<td>Multivector</td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td><tt>-</tt></td>
+	<td>negate</td>
+	<td>Counter, Scalar</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td>Multivector, Matrix</td>
+</tr>
+</table>
+
+
+Here is a list of all binary logical operators. The return type is either a scalar set to zero or unity, depending on whether the result of the logical operation if false or true. Operations between matrices and single elements or lists and single elements return a matrix or a list, respectively. These matrices or lists then contain only zero and unity entries, depending on the result of the logical operation. Note that for all logical operations the LHS and RHS may be exchanged.
+
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td> Symbol </td>
+	<td> Meaning </td>
+	<td> LHS Type </td>
+	<td> RHS Type </td>
+	<td> Return Type </td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td> <tt>==</tt>, <tt>.==</tt> </td>
+	<td> equality </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> matrix </td>
+	<td> matrix </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> multivector </td>
+	<td> multivector </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> string </td>
+	<td> string </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> image </td>
+	<td> color </td>
+	<td> image </td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>!=</tt>, <tt>.!=</tt> </td>
+	<td> inequality </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> matrix </td>
+	<td> matrix </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> multivector </td>
+	<td> multivector </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> string </td>
+	<td> string </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td> </td>
+	<td> </td>
+	<td> image </td>
+	<td> color </td>
+	<td> image </td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>\></tt>, <tt>.\></tt> </td>
+	<td> greater than </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>\< </tt>, <tt>.< </tt> </td>
+	<td> smaller than </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>\>=</tt>, <tt>.\>= </tt>  </td>
+	<td> greater or equal than </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>\<=</tt>, <tt>.\<= </tt> </td>
+	<td> smaller or equal than </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>&&</tt>, <tt>.&&</tt> </td>
+	<td> logical AND </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+
+<tr bgcolor="#F1F1F1">
+	<td> <tt>||</tt>, <tt>.||</tt> </td>
+	<td> logical OR </td>
+	<td> scalar </td>
+	<td> scalar </td>
+	<td> scalar </td>
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> scalar </td>
+	<td> matrix </td>
+</tr>
+
+</table>
+
+There is only one logical unary operator.
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td> Symbol </td>
+	<td> Meaning </td>
+	<td> RHS Type </td>
+	<td> Return Type </td>
+</tr>
+<tr bgcolor="#F1F1F1">
+	<td> <tt>!!</tt> </td>
+	<td> logical NOT </td>
+	<td> scalar </td>
+	<td> scalar </td>	
+</tr>
+<tr>
+	<td>  </td>
+	<td>  </td>
+	<td> matrix </td>
+	<td> matrix </td>	
+</tr>
+</table>
+
+
+The binding strengths of the various operators are listed in the following table from strongest to weakest binding operator.
+
+<table align="center" border="1" bgcolor="#EEEEEE">
+<tr>
+	<td>Operator(s)</td>
+	<td>Direction</td>
+</tr>
+<tr>
+	<td>Functions</td>
+	<td>RL</td>
+</tr>
+<tr>
+	<td><tt>°</tt> (grade proj.) </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>*</tt> (dual), 
+		<tt>-</tt> (negate), 
+		<tt>!</tt>, 
+		<tt>~</tt>, 
+		<tt>'</tt> 
+	</td>
+	<td> RL </td>
+</tr>
+<tr>
+	<td><tt>\%</tt> (modulo) </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>^</tt> (outer product) </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>.</tt> (inner product) </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>*</tt> (geometric product), <tt>/</tt></td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>|</tt> (join), <tt>\&</tt> (meet) </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>-</tt> </td>
+	<td> LR </td>
+</tr>
+<tr>
+	<td><tt>+</tt> </td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>~</tt> (index list)</td>
+	<td> RL </td>
+</tr>
+
+<tr>
+	<td>
+		<tt>==</tt> (equal),
+		<tt>!=</tt> (not equal), <br>
+		<tt>\< </tt>, <tt>\> </tt>, <br>
+		<tt>\<= </tt>, <tt>\>= </tt>, <br>
+	</td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>!! (NOT)</tt> </td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>&& (AND)</tt> </td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>|| (OR)</tt> </td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>\<\< (list concatenation)</tt> </td>
+	<td> LR </td>
+</tr>
+
+<tr>
+	<td><tt>=</tt> </td>
+	<td> RL </td>
+</tr>
+<tr>
+	<td><tt>:</tt> (draw), <tt>?</tt> (print) </td>
+	<td> RL </td>
+</tr>
+</table>
+
+If a number of operators appear on the same line, they bind equally strong. In the case that a number of equally strong operators are to be executed sequentially, the second column indicates whether this is done from right to left (RL) or from left to right (LR). For example, the expression <tt>A * B * C</tt> is equivalent to <tt>(A * B) * C</tt>. That is, the <tt>*</tt> operator is executed from left to right. The <tt>=</tt> operator on the other hand is executed from right to left, i.e. <tt>A = B = C</tt> is equivalent to <tt>A = (B = C)</tt>.
+
+Most operators return a temporary variable containing the result of the operation. These temporary variables are constants and cannot be assigned any value. That is, <tt>A * B = C</tt> is not allowed. The assignment operator <tt>=</tt> returns the value of the LHS variable. Therefore, it is possible to write <tt>A = B = 1</tt>, which first assigns <tt>1</tt> to <tt>B</tt> and then to <tt>A</tt>.
+
+The print operator <tt>?</tt> and the draw operator <tt>:</tt> both return no value at all. Therefore, you can write <tt>:VecE3(1,1,1):Red</tt> in order to first set the drawing color to red and then to draw the vector. Similarly, <tt>?A ?1.2</tt> first prints <tt>1.2</tt> and then the value of <tt>A</tt>.
+
+
+<table width="400" bgcolor="#EEEEEE" align="center" border="0">
+<tr><td>
+<b>By the way...</b>
+<br>
+... if you write <tt>?A = 1.2</tt> the output is <tt>A = 1.2</tt>, and <tt>?1.2</tt> produces the output <tt>Constant = 1.2</tt>. In order to obtain an output like <tt>The result is 1.2!</tt>, you need to write <tt>?"The result is " + 1.2 + "!"</tt>.
+</td></tr></table>
+
+
+
+<hr>
+
+\section subsec_StructProg Structured Programming
+
+With CLUScript v1.4 structured programming was introduced. That is, there exist conditional branching and loops. 
+
+The syntax of if-clauses is just the same as in C/C++.
+\code
+if ([condition1])
+{
+	[condition1 true branch]
+}
+else if ([condition2])
+{
+	[condition2 true branch]
+}
+else
+{
+	[false branch]
+}
+\endcode
+
+You do not need the curly brackets, if you only want to execute a single line. For example,
+\code
+if (a == 1)
+	?"'a' is equal to one";
+else
+	?"'a' is not equal to one";
+\endcode
+
+The condition in <tt>if ([condition])</tt> must be an expression that results in a scalar. If this scalar is zero, then the condition is considered false, otherwise it is considered true. The logical operators like '<tt>==</tt>' return either one or zero. 
+
+The other important functionality apart from conditional branching, is that of loops, i.e. executing a certain part of code a number of times. In CLUScript the different loops like <tt>for</tt>-loops, <tt>do-while</tt>-loops and <tt>while</tt>-loops are unified in a more simple syntax. The keyword <tt>loop</tt> asks the parser to continually execute the next line or block of code following the keyword. This is done until the keyword <tt>break</tt> is encountered. A standard <tt>for</tt>-loop may then be implemented as follows.
+
+\code
+// A for-loop executed 5 times
+
+// Reset the counter variable
+i = 0;
+loop
+{
+	// Check whether five counts
+	// have already been achieved.
+	if (i >= 5)
+		// If we are finished end the loop
+		break;
+
+	// Do something sensible
+	
+	// Increment the counter
+	i = i + 1;
+}
+\endcode
+
+If you forget to add a <tt>break</tt> command, or never allow your code to reach a <tt>break</tt> command, the loop would in principle run indefinitely. In order to avoid your programs to hang, CLUCalc has a maximum count of 10000 for loops after which the loops is exited in any case. A better solution to the problem would be to run the parser in an extra thread, but again this is something for a future version of CLUCalc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+\section subsec_VarLists Variable Lists
+
+\attention From CLUScript v2.0 onwards <b>lists are defined through square brackets</b> and not with round brackets as before. Lists of a single element are also not interpreted as the element itself, as was the case before.
+
+Variable lists are quite useful tools. A variable list is a comma separated list of elements enclosed in <b>square</b> brackets. For example, <tt>[A, 1.2, Red]</tt> is a list containing the label <tt>A</tt>, the Scalar \f$1.2\f$ and the color <tt>Red</tt>. You can also nest lists to any level, as in <tt>[A, [B, C]]</tt>.
+
+There are a number of different was of generating lists. The most obvious one is to write <code>A = [1,2,3]</code> to assign \c A the list <tt>[1,2,3]</tt>. Another method is to use the concatenation operator <tt>\<\< </tt> as in the following example.
+
+\code
+	A = []; // Create an empty list
+	A << 1;
+	A << 2 << 3;
+\endcode
+
+Now \c A also contains <tt>[1,2,3]</tt>. If it is known beforehand how many elements a list will have, but their entries can only be evaluated at a later stage, it is faster to create a list of the appropriate size and then set the components, instead of using the concatenation operator. This can be done with the function List(). For example, 
+
+\code
+	A = List(3);
+	A(1) = 1;
+	A(2) = 2;
+	A(3) = 3;
+\endcode
+
+again generates the same list as before. From CLUScript v2.2 onwards, <b>it is possible to assign to lists of variables</b>. For example, if you want to assign the values 1, 2 and 3 to variables A, B and C, you can write
+
+\code
+	[A,B,C] = [1,2,3];
+\endcode
+
+This is particularly useful when dealing with functions that return a list of values, as for example the function SVD(), which evaluates the singular value decomposition of a matrix. It return a list of three matrices, typically called U, D and V. To have direct access to these matrices you can write
+
+\code
+	[U,D,V] = SVD(M);
+\endcode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection subsubsec_OpRecurseOnLists Recursive Operators
+
+You can assign variable lists to variables, as in <tt>A = [1, 2, 3]</tt>. This is useful since most operators are applied recursively to variable lists. The only operators that are not are <tt>=</tt>. For example, <tt>[1, 2, 3] + 1</tt> is equivalent to writing <tt>[1+1, 2+1, 3+1]</tt>. Furthermore, operating with lists on lists applies the corresponding operator for every element of one list to every element of the other list, creating a nested list in the process. For example, <tt>[A, B] * [C, D]</tt> is equivalent to <tt>[ [A*C, B*C], [A*D, B*D] ]</tt>. This last expression is basically a \f$2\times 2\f$ matrix. And yes, you can convert such a nested list into a variable of type 'matrix' using the function Matrix().
+
+\code
+
+List = [1, 2] + [1, 2];
+M = Matrix(List);
+\endcode
+
+After these two lines <tt>M</tt> contains the matrix
+\f[ M = \left(\begin{array}{cc} 2 & 3 \\ 3 & 4 \end{array}\right) \f]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection subsubsec_PointOperators Point Operators
+
+In section \ref subsec_Operators point operators were already mentioned. Here we will look at their properties in some more detail. In the previous section it was shown that an operator applied between two lists results in a recursive application of the operator on the elements of the lists. This behaviour is not always desirable. For example, suppose you have two lists <tt>L1 = [1,2,3]</tt> and <tt>L2 = [1,0,-1]</tt> and you would like to add these two lists elementwise. That is, add the first element of <tt>L1</tt> to the first element of <tt>L2</tt>, etc. This can be achieved with the operator <tt>.+</tt>. Here is an example,
+
+\code
+?L1 = [1,2,3];
+?L2 = [1,0,-1];
+?Sum = L1 + L2;
+?PointSum = L1 .+ L2;
+\endcode
+
+has the output
+
+\code
+L1 = [1, 2, 3]
+L2 = [1, 0, -1]
+Sum = [[2, 1, 0], [3, 2, 1], [4, 3, 2]]
+PointSum = [2, 2, 2]
+\endcode
+
+That is, the point summation is somewhat like vector addition, if you interpret the lists <tt>L1</tt> and <tt>L2</tt> as vectors. Note that the standard operator \c + is applied between the elements of the lists. Therefore, this works for lists containing any elements for which the operator \c + is defined. An example is,
+
+\code
+?["Hello ", 2] + ["World", " times"];
+?["Hello ", 2] .+ ["World", " times"];
+\endcode
+
+results in
+
+\code
+Constant = [[Hello World, Hello  times], [2World, 2 times]]
+Constant = [Hello World, 2 times]
+\endcode
+
+This behaviour is the same for all point operators. However, we should probably say something about the list concatenation operator <tt>\<\< </tt> and its point version <tt>.\<\< <tt>. The operator <tt>\<\<<tt> concatenates the element on its left to the list on its right. For example,
+
+\code
+?L = [1,2,3];
+L << 4;
+?L;
+\endcode
+
+gives
+
+\code
+L = [1, 2, 3]
+L = [1, 2, 3, 4]
+\endcode
+
+This also works for lists on the RHS.
+
+\code
+?L = [1,2,3];
+L << [4,5];
+?L
+L << [[6,7], "Hello"];
+?L;
+\endcode
+
+which gives
+
+\code
+L = [1, 2, 3]
+L = [1, 2, 3, 4, 5]
+L = [1, 2, 3, 4, 5, [6, 7], Hello]
+\endcode
+
+The point version of this operator concatenates element wise if both lists have the same number of elements and if the elements are lists themselves. For example,
+
+\code
+?L1 = [1, 2, 3];
+?L2 = [4, 5, 6];
+?L12 = L1 .<< L2;
+\endcode
+
+gives
+
+\code
+L1 = [1, 2, 3]
+L2 = [4, 5, 6]
+L12 = [1, 2, 3, 4, 5, 6]
+\endcode
+
+whereas
+
+\code
+?L1 = [[1], [2], [3]];
+?L2 = [[4], [5], [6]];
+?L12 = L1 .<< L2;
+\endcode
+
+gives
+
+\code
+L1 = [[1], [2], [3]]
+L2 = [[4], [5], [6]]
+L12 = [[1, 4], [2, 5], [3, 6]]
+\endcode
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection subsubsec_ListElementSelection Element Selection
+
+\anchor Manual_Op_Selection
+Elements of variable lists, vertex lists, matrices and images can be retrieved using the round brackets '<tt>()</tt>' as in a function call. Applied to a list as in <tt>[1,2](2)</tt>, the operator returns the second element in the list. Applied to a nested list it returns the appropriate sublist: <tt>[[1,2], [3,4]](2)</tt> returns <tt>[3,4]</tt>. You can also apply the operator as many times as the list is nested. For example, <tt>[[1,2], [3,4]](2)(2)</tt> returns <tt>4</tt> and so does <tt>[[1,2], [3,4]](2,2)</tt>.
+
+Elements of a list can be modified as shown in the following example.
+\code
+?L = [1,2,3,4];
+L(2) = 10;
+?L;
+\endcode
+
+has output
+
+\code
+L = [1, 2, 3, 4]
+L = [1, 10, 3, 4]
+\endcode
+
+Note that <tt>?L(2)</tt> has as output <tt>Constant -> 10</tt> instead of <tt>Constant = 10</tt>, since the return value of <tt>L(2)</tt> is the reference to the second element in the list and not just the value. You can also store the reference to an element of a list using the reference operator <tt>-\></tt>. For example,
+
+\code
+?L = [1,2,3,4];
+?a -> L(2);
+a = "Hello";
+?L;
+\endcode
+
+generates the output
+
+\code
+L = [1, 2, 3, 4]
+a -> 2
+L = [1, Hello, 3, 4]
+\endcode
+
+This functionality can be quite useful if you need to access the same element in a list a large number of times, since it is much slower to evaluate the reference to an element of a list (as in <tt>L(2)</tt>), than to use the reference to an element directly. 
+
+If you have created a reference to an element of a list and then destroy the list, for example, by overwriting the respective variable with a different value, the reference variable is set to zero. Here is an example,
+
+\code
+?L = [1,2,3,4];		// Create a list and assign it to L
+?a -> L(2);			// Assign to a the reference to the second element in L
+L = 0;				// Overwrite L with an integer value. The list from above
+					// does not exist anymore now, and thus the reference 
+					// stored in a is invalid.
+?a;					// Hence, a is set to zero.
+\endcode
+
+generates the output
+
+\code
+L = [1, 2, 3, 4]
+a -> 2
+a = 0
+\endcode
+
+
+<table width="400" bgcolor="#EEEEEE" align="center" border="0">
+<tr><td>
+<b>By the way...</b>
+<br>
+... a list need not only consists of element of one type. In particular, you can overwrite elements of a list with new elements of a different type.
+</td></tr></table>
+
+
+Lists of a particular structure can be created by selecting elements of a list by a string. For example,
+
+\code
+	L = [];				// Create an empty list
+	L("Hello") = 1;		// Create an element with name 'Hello'
+	?L;					// Look at the list
+	?L("Hello");		// Get value of element 'Hello'
+\endcode
+
+has as output
+
+\code
+L = [[Hello, 1]]
+Constant -> 1
+\endcode
+
+As this short script shows, when you select an element with a name that does not exist in the list, then this element is created. If it does exist, then a reference to its value is returned. The function AnalyzeMV() returns such a type of list, for example.
+
+\code
+	P = VecP3(1,0,0)^VecP3(1,1,0)^VecP3(1,0,1);
+	?L = AnalyzeMV(P);
+	?L("pos");
+	?L("dir1");
+	?L("dir2");
+\endcode
+
+generates the output
+
+\code
+L = [plane, [mag, 1.41421], [pos, [ 1^e1 ]], [dir1, [ 1^e2 ]], [dir2, [ 1^e3 ]]]
+Constant -> [ 1^e1 ]
+Constant -> [ 1^e2 ]
+Constant -> [ 1^e3 ]
+\endcode
+
+This way of creating lists is somewhat similar to structs in C and C++. 
+
+
+
+
+\subsection subsubsec_IdxListSelection Element List Selection
+
+You can also extract more than one element of a list at a time by passing an index list through the selection operator. It's easiest to understand this property by showing a couple of examples. The script
+
+\code
+?L = [[1,2], [3,4]];
+
+?L(1);
+?L([1]);
+?L([[2], [1]]);
+?L([[1,2], [2,1]]);
+\endcode
+
+generates the following output
+
+\code
+L = [[1, 2], [3, 4]]
+Constant -> [1, 2]
+Constant = [1, 2]
+Constant = [[3, 4], [1, 2]]
+Constant = [2, 3]
+\endcode
+
+You can also use the operator <tt>~</tt> to generate an index list starting at the value given on the LHS up to the value on its RHS in interger steps of 1. For example,
+
+\code
+?1 ~ 5;
+\endcode
+ 
+results in
+
+\code
+Constant = [[1], [2], [3], [4], [5]]
+\endcode
+
+This may, for example, be used in the following way.
+
+\code
+L = [1,2,4,8,16];
+?L(2~4);
+\endcode
+
+generates the output
+
+\code
+Constant = [2, 4, 8]
+\endcode
+
+
+
+\subsection subsubsec_ListExample List Examples
+
+Although this is jumping ahead a little, using lists you can rotate a list of multivectors as follows.
+
+\code
+	// Create special variables for E3
+	// like e1, e2, e3.
+	DefVarsE3();
+
+	// Define some vectors
+	A1 = e1; A2 = e2; A3 = e3;
+
+	// Define a rotor, rotating about
+	// the e2-axis, 20 degrees.
+	R = RotorE3(0, 1, 0, 20 * RadPerDeg);
+
+	// Create a list of the basis vectors
+	Basis = [A1, A2, A3];
+
+	// Rotate all basis vectors
+	RBasis = R * Basis * ~R;
+
+	// And finally create a rotation matrix
+	// from the bases.
+	M = Matrix(Basis . RBasis);
+\endcode
+
+<tt>RBasis</tt> contains a list of the rotated basis vectors, and <tt>M</tt> is the transformation matrix from basis <tt>Basis</tt> to basis <tt>RBasis</tt>.
+
+
+<hr>
+\section subsec_Strings Strings
+
+You can do a couple of more things than just display them from CLUScript v2.0 onwards. As you have probably gathered by now, strings can be concatenated using the operator \c +. Given a variable containing a string, you can also concatenate elements to this string using the operator <tt>\<\<</tt>. For example,
+
+\code
+	?s = "Hello ";
+	s << "World" << 2 << 3;
+	?s;
+\endcode
+
+which outputs
+
+\code
+Hello 
+Hello World23
+\endcode
+
+A character in a string can be selected using the selection operator <tt>()</tt>. For example,
+
+\code
+	?s = "Hello";
+	?s(3);
+	?s([[2], [4], [1]]);
+\endcode
+
+gives
+
+\code
+Hello
+l
+Constant = [e, l, H]
+\endcode
+
+You can also search for all positions of a substring in a string as follows.
+
+\code
+	?s = "Hello World";		// The string
+	?s("l");	// All positions of 'l' in the string s
+	?s("Wo");	// All positions of 'Wo' in the string s
+\endcode
+
+This script returns
+
+\code
+Hello World
+Constant = [3, 4, 10]
+Constant = [7]
+\endcode
+
+This feature can be quite useful when you want to strip, for example, a filename returned from FileChooser() from its path and extension.
+
+\attention
+From version 2.3 onwards, strings may also contain control symbols for new line ('\\n'), tabulator ('\\t') and the backslash itself ('\\\\'). This is in line with the syntax of generating a quotation mark in a string via '\\"'. Make sure to check your old CLUScripts, where you wrote latex code. The backslash symbols need to be doubled now!
+
+
+<hr>
+\section subsec_Macros Macros
+
+This feature was introduced in CLUScript version 1.2. A CLUScript macro is the closest you can get so far to a function. There is no strict type checking when you pass parameters to macros, which can be a source of error. Nevertheless, macros facilitate many more complex operations. A macro is defined using curly brackets (<tt>{ }</tt>) as follows.
+
+\code
+	// Define a macro with the name Hello
+	Hello = { ?"Hello"; }
+	
+	// Execute the macro
+	Hello();
+\endcode
+
+This script produces the following output.
+
+\code
+Hello
+\endcode
+
+The variable <tt>Hello</tt> does in fact contain a reference to the actual function.  This means that you can also store the reference to the function in a list. For example,
+
+\code
+	// Define a list
+	L = [1,2,3];
+	
+	// Define a macro and store a reference to it in the list L
+	L(2) = { ?"Hello"; }
+
+	// What is L?
+	?L;
+	
+	// Execute the macro
+	L(2)();
+/endcode
+
+which produces the outpu
+
+\code
+L = [1, 030850C8, 3]
+Hello
+\endcode
+	
+Note that a macro is <i>not</i> executed at the point of its definition. It is also only translated once in the parsing process, such that a repeated execution of a script will not redefine a macro continuously. 
+
+You can also pass any number of parameters to a macro. There is no internal process that checks whether the number and type of parameters is correct, which means that you also do not have to declare the number and type of parameters expected when you define a macro. Parameters are passed to a macro in the same way as to any other function: a comma separated list within the round brackets. That is, <tt>Hello(1,b)</tt> passes the parameters <tt>1</tt> and <tt>b</tt> to the macro. Whether the macro uses these parameters or not, does not matter. Within the macro a variable list called <tt>_P</tt> is always available, which contains the parameters passed to the macro. You can access the different parameters with the selection operator <tt>()</tt>, just as for any other variable list. Another code example should clarify this.
+
+\code
+	// Define a macro with the name Hello
+	Hello = { ?"Hello " + _P(1); }	// Add the first parameter to the string
+	
+	// Execute the macro
+	// The following type of call would cause an error,
+	// since the macro uses the first parameter, which 
+	// does not exist.
+	// Hello();		
+	
+	// This is how you would use the macro 'Hello'
+	Hello("World");
+	
+	// The following does not cause an error.
+	// The macro simply ignores the second parameter.
+	// Hello("World", 2); 
+\endcode
+
+generates the output
+
+\code
+Hello World
+\endcode
+
+
+If you define variables in a script, then they are strictly local. That is, in CLUScript v2.0 you can no longer access global variables by simply using their variable name in a function. For example,
+
+\code
+	a = 1;		// global variable a
+
+	func =		// define macro
+	{ 
+		?a;			// This creates a local variable a
+		?a = 2;		// Set local 'a' to 2
+		?b = 1;		// Create local variable b
+	}	
+
+	func();		// execute macro
+	?a;			// global variable 'a'
+	?b;			// global variable 'b'
+\endcode
+
+The output of this script is
+
+\code
+a = 0
+a = 2
+b = 1
+a = 1
+b = 0
+\endcode
+
+The variables defined inside the macro only exist within the macro and also do not relate to global variables of the same name. You can, however, refer to global variables from within a macro by writing <tt>::</tt> in front of the respective variable name. For example, here is a modified version of the previous script.
+
+\code
+	a = 1;		// global variable a
+
+	func =		// define macro
+	{ 
+		?a = 1;		// This creates a local variable 'a'
+		?::a = 2;	// Set global 'a' to 2
+		?a;
+		?::b = 1;	// Create global variable b
+	}	
+
+	func();		// execute macro
+	?a;			// global variable 'a'
+	?b;			// global variable 'b'
+\endcode
+
+This time the output of the script is
+
+\code
+a = 1
+a = 2
+a = 1
+b = 1
+a = 2
+b = 1
+\endcode
+
+\attention The variables defined through calls of DefVarsE3(), DefVarsP3(), DefVarsN3() and DefVarsC2(), as well as all predefined variables are accesible without leading <tt>::</tt> from within macros.
+
+
+
+Note that references to macros are usually also stored in global variable. Hence, if you want to call a macro from within another macro you often also have to use <tt>::</tt> in front of the macro name. Here is an example,
+
+\code
+	func1 = { ?"Hello"; }
+	func2 = 
+	{ 
+		// Define a local version of func1
+		func1 = { ?"Hola"; }
+		
+		func1();	// Call local macro stored in func1
+		::func1();  // Call global macro stored in ::func1
+		?"World"; 
+	}
+	
+	func2();	// Execute func2
+\endcode
+
+which produces the output
+
+\code
+Hola
+Hello
+World
+\endcode
+
+
+Of course, a macro can contain more than a single line. As shown above, you can write a whole block of code, with lines separated by semicolons, within the curly brackets. The return value of a macro is the result of the last command line, <b>if this line does not end with a semicolon</b>. For example,
+
+\code
+
+	// Define a macro with the name Rot2D
+	// to rotate 2d-coordinates of a point.
+	// Expected parameters: (x, y, angle)
+	Rot2D = 
+	{ 
+		// Copy the parameters
+		x = _P(1); y = _P(2); angle = _P(3);
+	    
+		// Rotate
+		a = x*cos(angle) - y*sin(angle);
+		b = x*sin(angle) + y*cos(angle);
+	    
+		// Return the pair (a, b)
+		(a, b) 
+	}
+
+	// Now we can rotate in 2D
+	?Rot2D(1, 0, 45*RadPerDeg);
+\endcode
+
+The output of this script is
+\code
+
+Constant = (0.707107, 0.707107)
+\endcode
+
+You can also return different values at different places of a script using the <tt>break</tt> keyword. Here is an example,
+
+\code
+	func = 
+	{
+		// If the first parameter is negative then
+		// return -1
+		if (_P(1) < 0)	
+			(-1) break;
+			
+		// otherwise return the square root of the first parameter
+		sqrt(_P(1))
+	}
+	
+	?func(-4);
+	?func(4);
+\endcode
+
+which returns
+
+\code
+Constant = -1
+Constant = 2
+\endcode
+
+Another new feature of CLUScript v2.0 is that variables are passed to macros by reference. This means that you can change parameters that are passed to a function. Here is an example,
+
+\code
+	// This macro increments the variable passed
+	Incr = 
+	{ 
+		a -> _P(1); // Get reference to first parameter
+		a = a + 1;  // Increment first parameter
+	}
+	
+	?x = 1;
+	Incr(x);
+	?x;
+\endcode
+
+which returns
+
+\code
+x = 1
+x = 2
+\endcode
+
+References to parameters are also useful if you need to access the parameters at many places in a macro.
+
+Macros are particularly useful if you want to execute the same complex calculation at different places in the script. They can also make the <tt>Plot</tt> command better readable.
+
+Another nice features of macros is that you can also pass them as parameters to other macros. This works because if you define <tt>func = { //... }</tt>, then <tt>func</tt> is simply a variable that contains a referecnce to the code enclosed in the curly brackets. The reference itself is of no interest, but it can be treated like a standard variable. In the next example we pass one function to another one.
+
+\code
+
+	_2dView = 1;
+	_BGColor = White;
+	
+	DefVarsE3();
+
+	// Define my own plotting of functions
+	MyPlot = 
+	{
+		// The first parameter needs to be the function
+		f = _P(1);
+		if (Type(f) != "code")
+		{
+			// Error message
+			?"Expect function as first parameter.";
+			// end this macro
+			break;
+		}
+		
+		// The minimum, maximum and step values
+		minval = _P(2);
+		maxval = _P(3);
+		step = _P(4);
+
+		// Loop over positions in range and add
+		// function values to list.
+		pos = minval;
+		Data = f(pos);
+		loop
+		{
+			pos = pos + step;
+			if (pos > maxval)
+				break;
+		
+			Data << f(pos);
+		}
+
+		// Draw the list of data points
+		DrawPointList(Data);
+	}
+
+	// The function we want to plot
+	func = 
+	{
+		x -> _P(1);
+		
+		// Return value
+		x*e1 + (1 - x + sin(x*x))*e2 
+	}
+
+	:Black;
+	
+	// Now plot the function
+	MyPlot(func, -2, 2, 0.1);
+
+\endcode
+
+which produces the visualization
+
+\image html MacroEx1.jpg
+
+A macro like <tt>MyPlot</tt> may be stored in a separate file and included in a script via the <tt>include</tt> preprocessor directive (see \ref grp_PreProc), whenever it is needed.
+
+It is also possible to do a kind of object oriented programming using structured lists. Have a look at the following script.
+
+\code
+
+	func =
+	{
+		this -> _P(1);
+		
+		?"The name is '" + this("name") + "'";
+	}
+	
+	C = [];
+	C("name") = "My first list";
+	C("print") = func;
+	
+	// Execute macro 'func' and pass as first parameter
+	// the structured list itself.
+	C("print")(C);	
+\endcode
+
+This produces the output
+
+\code
+The name is 'My first list'
+\endcode
+
+
+**/

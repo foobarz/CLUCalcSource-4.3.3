@@ -1,0 +1,30 @@
+// Visualization of the permutations of 
+// 3 indices chosen from a set of 4.
+
+List = PermIdxList(4, 3);
+?iCount = Size(List);
+DefVarsE3();
+
+Box = 
+{
+	w = 0.5;
+	x = _P(1) * w - w/2;
+	y = _P(2) * w - w/2;
+	z = _P(3) * w - w/2;
+	
+	DrawBox(VecE3(x,y,z), w*e1, w*e2, w);
+}
+
+
+i = 1;
+loop
+{
+	if (i > iCount) break;
+
+	idx -> List(i);
+	Box(idx(1,1)-1, idx(2,1)-1, idx(3,1)-1);
+
+	i = i + 1;
+}
+:Orange + Alpha;
+DrawBox(VecE3(0.5, 0.5, 0.5), 2*e1, 2*e2, 2);

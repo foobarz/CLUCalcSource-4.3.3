@@ -1,0 +1,175 @@
+_DoAnimate = 1;
+_FrameBoxSize = 0;
+_2dView = 0;
+:DRAW_POINT_AS_SPHERE;
+SetPointSize(6);
+
+DefVarsP3();
+
+MaxLen = 40;
+SaveStep = 2;
+Scale = 0.1;
+TimeScale = Slider("2. Time Scale", 0.1, 1, 0.1, 0.4);
+ForcePower = Slider("3. Force Power", -4, 4, 0.5, -2);
+G = Input("1. Grav. Const.", -2, 2, 6.62e-1);
+
+deltaTime = 0.1 * TimeScale;
+
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK)
+{
+	Step = 0;
+
+	LM1 = M1 = VecP3(0,1.4,0);
+	M1v = DirVecP3(-13,0,0);
+	M1m = Slider("4. Red Mass", 1e-2, 1, 1e-2, 1e-2);
+//	M1g = 10;
+
+	LM2 = M2 = VecP3(0,0,0);
+	M2v = DirVecP3(0,0,0); 
+	M2m = Slider("5. Green Mass", 1, 40, 1, 25);
+//	M2g = 10; 
+
+	LM3 = M3 = VecP3(0,1.6,0);
+	M3v = DirVecP3(-10,0,0);
+	M3m = Slider("6. Blue Mass", 1e-1, 2, 1e-1, 1);
+//	M3g = 10;  
+	
+	Xold = VecP3(1);
+
+	i = 1;
+	ValStep = 1 / MaxLen;
+	Val = ValStep;
+
+	LC1 = Color(ValStep, 0, 0);
+	LC2 = Color(0, ValStep, 0);
+	LC3 = Color(0, 0, ValStep);
+
+	loop
+	{
+		if (i >= MaxLen)
+			break;
+
+		LC1 << Color(Val, 0, 0);
+		LC2 << Color(0, Val, 0);
+		LC3 << Color(0, 0, Val);
+
+		Val = Val + ValStep;
+		i = i + 1;
+	}
+}
+
+M1m = Slider("4. Red Mass");
+M2m = Slider("5. Green Mass");
+M3m = Slider("6. Blue Mass");
+
+X = VecP3(1);
+if (X != Xold)
+{
+	M1 = M1 + 0.4*(X - Xold);
+	Xold = X;
+}
+
+Fdir2to1 = M1 - M2;
+Fdir3to2 = M2 - M3;
+Fdir1to3 = M3 - M1;
+
+D12 = abs(Fdir2to1);
+D32 = abs(Fdir3to2);
+D13 = abs(Fdir1to3);
+
+fD12 = pow(D12, -ForcePower);
+fD32 = pow(D32, -ForcePower);
+fD13 = pow(D13, -ForcePower); 
+
+if (fD12 < 0.1)
+	fD12 = 0.1;
+
+if (fD32 < 0.1)
+	fD32 = 0.1;
+
+if (fD13 < 0.1)
+	fD13 = 0.1;
+
+g1to2 = G * M2m / fD12;
+g2to1 = G * M1m / fD12;
+
+g2to3 = G * M3m / fD32;
+g3to2 = G * M2m / fD32;
+
+g1to3 = G * M3m / fD13;
+g3to1 = G * M1m / fD13;
+
+Fdir2to1 = Fdir2to1 / D12;
+Fdir3to2 = Fdir3to2 / D32;
+Fdir1to3 = Fdir1to3 / D13;
+
+//dM1v = (M2g) * deltaTime;
+//dM2v = (M1g) * deltaTime;
+
+M1v = M1v + (g1to2 * -Fdir2to1 + g1to3 * Fdir1to3) * deltaTime;
+M2v = M2v + (g2to1 * Fdir2to1 + g2to3 * -Fdir3to2) * deltaTime;
+M3v = M3v + (g3to1 * -Fdir1to3 + g3to2 * Fdir3to2) * deltaTime;
+
+:Red;
+SetPointSize(pow(M1m*800, 1/3));
+:M1 = M1 + Scale * M1v * deltaTime;
+
+:Green;
+SetPointSize(pow(M2m*800, 1/3));
+:M2 = M2 + Scale * M2v * deltaTime;
+
+:Blue;
+SetPointSize(pow(M3m*800, 1/3));
+:M3 = M3 + Scale * M3v * deltaTime;
+
+if (Step % SaveStep == 0)
+{
+	:Red;
+	LM1 << M1;
+	if (Len(LM1) > MaxLen)
+		RemList(LM1, 1);
+	//:LM1;
+	vl_LM1 = DrawPointList(LM1, LC1);
+
+	:Green;
+	LM2 << M2;
+	if (Len(LM2) > MaxLen)
+		RemList(LM2, 1);
+	//:LM2;
+	vl_LM2 = DrawPointList(LM2, LC2);
+
+	:Blue;
+	LM3 << M3;
+	if (Len(LM3) > MaxLen)
+		RemList(LM3, 1);
+	//:LM3;
+	vl_LM3 = DrawPointList(LM3, LC3);
+
+	Step = 0;
+}
+else
+{
+
+	:Red;
+	:vl_LM1;
+	:Green;
+	:vl_LM2;
+	:Blue;
+	:vl_LM3;
+
+/*
+	DrawPointList(LM1, LC1);
+	DrawPointList(LM2, LC2);
+	DrawPointList(LM3, LC3);
+*/
+}
+
+:MWhite + MAlpha;
+PushFrame();
+TranslateFrame(M2);
+:9*VecE3(1,0,0)^VecE3(0,1,0); 
+PopFrame();
+
+Step = Step + 1;

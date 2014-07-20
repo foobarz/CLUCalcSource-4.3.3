@@ -1,0 +1,667 @@
+ObjectClass.o ObjectClass.o: ObjectClass.cpp StdAfx.h \
+  ../../CLU/source/clu.h ../../CLU/source/CLUDebug.h \
+  ../../CLU/source/CLUException.h /usr/include/c++/4.0.2/string \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++config.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/os_defines.h \
+  /usr/include/features.h /usr/include/sys/cdefs.h \
+  /usr/include/gnu/stubs.h /usr/include/c++/4.0.2/bits/stringfwd.h \
+  /usr/include/c++/4.0.2/bits/char_traits.h \
+  /usr/include/c++/4.0.2/cstring /usr/include/c++/4.0.2/cstddef \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/stddef.h \
+  /usr/include/string.h /usr/include/xlocale.h \
+  /usr/include/c++/4.0.2/bits/stl_algobase.h \
+  /usr/include/c++/4.0.2/climits \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/limits.h \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/syslimits.h \
+  /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+  /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+  /usr/include/bits/stdio_lim.h /usr/include/c++/4.0.2/cstdlib \
+  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/types.h \
+  /usr/include/bits/types.h /usr/include/bits/wordsize.h \
+  /usr/include/bits/typesizes.h /usr/include/time.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h /usr/include/alloca.h \
+  /usr/include/c++/4.0.2/iosfwd \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++locale.h \
+  /usr/include/c++/4.0.2/cstdio /usr/include/stdio.h /usr/include/libio.h \
+  /usr/include/_G_config.h /usr/include/wchar.h /usr/include/bits/wchar.h \
+  /usr/include/gconv.h \
+  /usr/lib/gcc/i586-suse-linux/4.0.2/include/stdarg.h \
+  /usr/include/bits/sys_errlist.h /usr/include/bits/stdio.h \
+  /usr/include/c++/4.0.2/clocale /usr/include/locale.h \
+  /usr/include/bits/locale.h /usr/include/langinfo.h \
+  /usr/include/nl_types.h /usr/include/iconv.h /usr/include/libintl.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++io.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/gthr.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/gthr-default.h \
+  /usr/include/pthread.h /usr/include/sched.h /usr/include/signal.h \
+  /usr/include/bits/initspin.h /usr/include/bits/sigthread.h \
+  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
+  /usr/include/bits/environments.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h /usr/include/c++/4.0.2/cctype \
+  /usr/include/ctype.h /usr/include/c++/4.0.2/bits/postypes.h \
+  /usr/include/c++/4.0.2/cwchar /usr/include/c++/4.0.2/ctime \
+  /usr/include/stdint.h /usr/include/c++/4.0.2/bits/functexcept.h \
+  /usr/include/c++/4.0.2/exception_defines.h \
+  /usr/include/c++/4.0.2/bits/stl_pair.h \
+  /usr/include/c++/4.0.2/bits/cpp_type_traits.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator_base_types.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/4.0.2/bits/concept_check.h \
+  /usr/include/c++/4.0.2/bits/stl_iterator.h \
+  /usr/include/c++/4.0.2/debug/debug.h /usr/include/c++/4.0.2/cassert \
+  /usr/include/assert.h /usr/include/c++/4.0.2/memory \
+  /usr/include/c++/4.0.2/bits/allocator.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/c++allocator.h \
+  /usr/include/c++/4.0.2/ext/new_allocator.h /usr/include/c++/4.0.2/new \
+  /usr/include/c++/4.0.2/exception \
+  /usr/include/c++/4.0.2/bits/stl_construct.h \
+  /usr/include/c++/4.0.2/bits/stl_uninitialized.h \
+  /usr/include/c++/4.0.2/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/4.0.2/limits \
+  /usr/include/c++/4.0.2/bits/stl_function.h \
+  /usr/include/c++/4.0.2/bits/basic_string.h \
+  /usr/include/c++/4.0.2/bits/atomicity.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/atomic_word.h \
+  /usr/include/c++/4.0.2/algorithm /usr/include/c++/4.0.2/bits/stl_algo.h \
+  /usr/include/c++/4.0.2/bits/stl_heap.h \
+  /usr/include/c++/4.0.2/bits/stl_tempbuf.h \
+  /usr/include/c++/4.0.2/bits/basic_string.tcc \
+  /usr/include/c++/4.0.2/sstream /usr/include/c++/4.0.2/istream \
+  /usr/include/c++/4.0.2/ios /usr/include/c++/4.0.2/bits/localefwd.h \
+  /usr/include/c++/4.0.2/bits/ios_base.h \
+  /usr/include/c++/4.0.2/bits/locale_classes.h \
+  /usr/include/c++/4.0.2/streambuf \
+  /usr/include/c++/4.0.2/bits/streambuf.tcc \
+  /usr/include/c++/4.0.2/bits/basic_ios.h \
+  /usr/include/c++/4.0.2/bits/streambuf_iterator.h \
+  /usr/include/c++/4.0.2/bits/locale_facets.h \
+  /usr/include/c++/4.0.2/cwctype /usr/include/wctype.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_base.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_inline.h \
+  /usr/include/c++/4.0.2/bits/codecvt.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/time_members.h \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/messages_members.h \
+  /usr/include/c++/4.0.2/bits/basic_ios.tcc \
+  /usr/include/c++/4.0.2/bits/istream.tcc /usr/include/c++/4.0.2/locale \
+  /usr/include/c++/4.0.2/bits/locale_facets.tcc \
+  /usr/include/c++/4.0.2/typeinfo /usr/include/c++/4.0.2/ostream \
+  /usr/include/c++/4.0.2/bits/ostream.tcc \
+  /usr/include/c++/4.0.2/bits/sstream.tcc ../../CLU/source/xgaext2.h \
+  ../../CLU/source/xgalib2.h ../../CLU/source/cga.h \
+  ../../CLU/source/base.h ../../CLU/source/cstr.h ../../CLU/source/mem.h \
+  ../../CLU/source/MemBase.h ../../CLU/source/makestr.h \
+  ../../CLU/source/blade.h ../../CLU/source/bladelist.h \
+  ../../CLU/source/dynlist.h ../../CLU/source/mvs.h \
+  ../../CLU/source/multiv.h ../../CLU/source/memobj.h \
+  ../../CLU/source/xmalib.h ../../CLU/source/matrix.h \
+  ../../CLU/source/mathelp.h ../../CLU/source/tensor.h \
+  ../../CLU/source/rand.h ../../CLU/source/statistic.h \
+  ../../CLU/source/clu.h ../../CLU/source/StaticArray.h \
+  ../../CLU/source/Point.h ../../CLU/source/Array2DObj.h \
+  ../../CLU/source/Array2D.h ../../CLU/source/matinst.h \
+  ../../CLU/source/tensinst.h ../../CLU/source/ringbuf.h \
+  ../../CLU/source/cgainst.h ../../CLU/source/MVInfo.h \
+  ../../CLU/source/pga.h ../../CLU/source/xutlib.h \
+  ../../CLU/source/MessageList.h ../../CLU/source/StrMessageList.h \
+  ../../CLU/source/Notify.h ../../CLU/source/ringbinst.h \
+  ../../CLU/source/sta.h ../../CLU/source/e3ga.h \
+  ../../CLU/source/GA1p2m.h ../../CLU/source/confga.h \
+  ../../CLU/source/Cl22.h ../../CLU/source/el2ga.h \
+  ../../CLU/source/pgainst.h ../../CLU/source/stainst.h \
+  ../../CLU/source/e3gainst.h ../../CLU/source/GA1p2mInst.h \
+  ../../CLU/source/confgainst.h ../../CLU/source/el2gainst.h \
+  ../../CLU/source/xoplib.h ../../CLU/source/Macopt.h \
+  ../../CLU/source/MinFuncBase.h ../../CLUDraw/source/cludraw.h \
+  /usr/include/GL/gl.h /usr/include/GL/glext.h /usr/include/GL/glu.h \
+  /usr/include/GL/gl.h ../../CLUDraw/source/CLUDrawBase.h \
+  ../../CLUDraw/source/OGLColor.h ../../CLUDraw/source/OGLBaseElement.h \
+  ../../CLU/source/cstr.h ../../CLUDraw/source/OGLLight.h \
+  ../../CLUDraw/source/OGLMaterial.h ../../CLUDraw/source/IOGLWinBase.h \
+  /usr/include/c++/4.0.2/vector /usr/include/c++/4.0.2/bits/stl_vector.h \
+  /usr/include/c++/4.0.2/bits/stl_bvector.h \
+  /usr/include/c++/4.0.2/bits/vector.tcc \
+  ../../CLUDraw/source/OGLMVFilterBase.h ../../CLUDraw/source/OGLVertex.h \
+  /usr/include/math.h /usr/include/bits/huge_val.h \
+  /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+  /usr/include/bits/inf.h /usr/include/bits/nan.h \
+  /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+  /usr/include/bits/mathinline.h ../../CLUDraw/source/OGLVertexList.h \
+  ../../CLUDraw/source/OGLDisplayList.h \
+  ../../CLUDraw/source/OGLFilterE3.h ../../CLUDraw/source/OGLVexListE3.h \
+  ../../CLUDraw/source/OGLFilterP2.h ../../CLUDraw/source/OGLVexListP2.h \
+  ../../CLUDraw/source/OGLFilterP3.h ../../CLUDraw/source/OGLVexListP3.h \
+  ../../CLUDraw/source/OGLFilterN3.h ../../CLUDraw/source/OGLVexListN3.h \
+  ../../CLUDraw/source/OGLMVFilter.h ../../CLUDraw/source/OGLFilterEl2.h \
+  ../../CLUDraw/source/OGLLatexText.h /usr/include/c++/4.0.2/map \
+  /usr/include/c++/4.0.2/bits/stl_tree.h \
+  /usr/include/c++/4.0.2/bits/stl_map.h \
+  /usr/include/c++/4.0.2/bits/stl_multimap.h \
+  /usr/include/c++/4.0.2/fstream \
+  /usr/include/c++/4.0.2/i586-suse-linux/bits/basic_file.h \
+  /usr/include/c++/4.0.2/bits/fstream.tcc \
+  ../../CLUDraw/source/OGLBitmap.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilut.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h \
+  /home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/config.h \
+  /usr/include/GL/glu.h /usr/include/sys/stat.h /usr/include/bits/stat.h \
+  ../../CLUDraw/source/OGLBitmapText.h \
+  ../../CLUDraw/source/OGLObjColorCube.h \
+  ../../CLUDraw/source/OGLBaseElementList.h \
+  ../../CLUDraw/source/OGLBaseTransform.h ObjectClass.h
+
+StdAfx.h:
+
+../../CLU/source/clu.h:
+
+../../CLU/source/CLUDebug.h:
+
+../../CLU/source/CLUException.h:
+
+/usr/include/c++/4.0.2/string:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++config.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/os_defines.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/c++/4.0.2/bits/stringfwd.h:
+
+/usr/include/c++/4.0.2/bits/char_traits.h:
+
+/usr/include/c++/4.0.2/cstring:
+
+/usr/include/c++/4.0.2/cstddef:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/stddef.h:
+
+/usr/include/string.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/c++/4.0.2/bits/stl_algobase.h:
+
+/usr/include/c++/4.0.2/climits:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/limits.h:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/c++/4.0.2/cstdlib:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/4.0.2/iosfwd:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++locale.h:
+
+/usr/include/c++/4.0.2/cstdio:
+
+/usr/include/stdio.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/gconv.h:
+
+/usr/lib/gcc/i586-suse-linux/4.0.2/include/stdarg.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/c++/4.0.2/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/langinfo.h:
+
+/usr/include/nl_types.h:
+
+/usr/include/iconv.h:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++io.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/gthr.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/initspin.h:
+
+/usr/include/bits/sigthread.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/c++/4.0.2/cctype:
+
+/usr/include/ctype.h:
+
+/usr/include/c++/4.0.2/bits/postypes.h:
+
+/usr/include/c++/4.0.2/cwchar:
+
+/usr/include/c++/4.0.2/ctime:
+
+/usr/include/stdint.h:
+
+/usr/include/c++/4.0.2/bits/functexcept.h:
+
+/usr/include/c++/4.0.2/exception_defines.h:
+
+/usr/include/c++/4.0.2/bits/stl_pair.h:
+
+/usr/include/c++/4.0.2/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.0.2/bits/concept_check.h:
+
+/usr/include/c++/4.0.2/bits/stl_iterator.h:
+
+/usr/include/c++/4.0.2/debug/debug.h:
+
+/usr/include/c++/4.0.2/cassert:
+
+/usr/include/assert.h:
+
+/usr/include/c++/4.0.2/memory:
+
+/usr/include/c++/4.0.2/bits/allocator.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/c++allocator.h:
+
+/usr/include/c++/4.0.2/ext/new_allocator.h:
+
+/usr/include/c++/4.0.2/new:
+
+/usr/include/c++/4.0.2/exception:
+
+/usr/include/c++/4.0.2/bits/stl_construct.h:
+
+/usr/include/c++/4.0.2/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.0.2/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/4.0.2/limits:
+
+/usr/include/c++/4.0.2/bits/stl_function.h:
+
+/usr/include/c++/4.0.2/bits/basic_string.h:
+
+/usr/include/c++/4.0.2/bits/atomicity.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/atomic_word.h:
+
+/usr/include/c++/4.0.2/algorithm:
+
+/usr/include/c++/4.0.2/bits/stl_algo.h:
+
+/usr/include/c++/4.0.2/bits/stl_heap.h:
+
+/usr/include/c++/4.0.2/bits/stl_tempbuf.h:
+
+/usr/include/c++/4.0.2/bits/basic_string.tcc:
+
+/usr/include/c++/4.0.2/sstream:
+
+/usr/include/c++/4.0.2/istream:
+
+/usr/include/c++/4.0.2/ios:
+
+/usr/include/c++/4.0.2/bits/localefwd.h:
+
+/usr/include/c++/4.0.2/bits/ios_base.h:
+
+/usr/include/c++/4.0.2/bits/locale_classes.h:
+
+/usr/include/c++/4.0.2/streambuf:
+
+/usr/include/c++/4.0.2/bits/streambuf.tcc:
+
+/usr/include/c++/4.0.2/bits/basic_ios.h:
+
+/usr/include/c++/4.0.2/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.0.2/bits/locale_facets.h:
+
+/usr/include/c++/4.0.2/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_base.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/ctype_inline.h:
+
+/usr/include/c++/4.0.2/bits/codecvt.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/time_members.h:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/messages_members.h:
+
+/usr/include/c++/4.0.2/bits/basic_ios.tcc:
+
+/usr/include/c++/4.0.2/bits/istream.tcc:
+
+/usr/include/c++/4.0.2/locale:
+
+/usr/include/c++/4.0.2/bits/locale_facets.tcc:
+
+/usr/include/c++/4.0.2/typeinfo:
+
+/usr/include/c++/4.0.2/ostream:
+
+/usr/include/c++/4.0.2/bits/ostream.tcc:
+
+/usr/include/c++/4.0.2/bits/sstream.tcc:
+
+../../CLU/source/xgaext2.h:
+
+../../CLU/source/xgalib2.h:
+
+../../CLU/source/cga.h:
+
+../../CLU/source/base.h:
+
+../../CLU/source/cstr.h:
+
+../../CLU/source/mem.h:
+
+../../CLU/source/MemBase.h:
+
+../../CLU/source/makestr.h:
+
+../../CLU/source/blade.h:
+
+../../CLU/source/bladelist.h:
+
+../../CLU/source/dynlist.h:
+
+../../CLU/source/mvs.h:
+
+../../CLU/source/multiv.h:
+
+../../CLU/source/memobj.h:
+
+../../CLU/source/xmalib.h:
+
+../../CLU/source/matrix.h:
+
+../../CLU/source/mathelp.h:
+
+../../CLU/source/tensor.h:
+
+../../CLU/source/rand.h:
+
+../../CLU/source/statistic.h:
+
+../../CLU/source/clu.h:
+
+../../CLU/source/StaticArray.h:
+
+../../CLU/source/Point.h:
+
+../../CLU/source/Array2DObj.h:
+
+../../CLU/source/Array2D.h:
+
+../../CLU/source/matinst.h:
+
+../../CLU/source/tensinst.h:
+
+../../CLU/source/ringbuf.h:
+
+../../CLU/source/cgainst.h:
+
+../../CLU/source/MVInfo.h:
+
+../../CLU/source/pga.h:
+
+../../CLU/source/xutlib.h:
+
+../../CLU/source/MessageList.h:
+
+../../CLU/source/StrMessageList.h:
+
+../../CLU/source/Notify.h:
+
+../../CLU/source/ringbinst.h:
+
+../../CLU/source/sta.h:
+
+../../CLU/source/e3ga.h:
+
+../../CLU/source/GA1p2m.h:
+
+../../CLU/source/confga.h:
+
+../../CLU/source/Cl22.h:
+
+../../CLU/source/el2ga.h:
+
+../../CLU/source/pgainst.h:
+
+../../CLU/source/stainst.h:
+
+../../CLU/source/e3gainst.h:
+
+../../CLU/source/GA1p2mInst.h:
+
+../../CLU/source/confgainst.h:
+
+../../CLU/source/el2gainst.h:
+
+../../CLU/source/xoplib.h:
+
+../../CLU/source/Macopt.h:
+
+../../CLU/source/MinFuncBase.h:
+
+../../CLUDraw/source/cludraw.h:
+
+/usr/include/GL/gl.h:
+
+/usr/include/GL/glext.h:
+
+/usr/include/GL/glu.h:
+
+/usr/include/GL/gl.h:
+
+../../CLUDraw/source/CLUDrawBase.h:
+
+../../CLUDraw/source/OGLColor.h:
+
+../../CLUDraw/source/OGLBaseElement.h:
+
+../../CLU/source/cstr.h:
+
+../../CLUDraw/source/OGLLight.h:
+
+../../CLUDraw/source/OGLMaterial.h:
+
+../../CLUDraw/source/IOGLWinBase.h:
+
+/usr/include/c++/4.0.2/vector:
+
+/usr/include/c++/4.0.2/bits/stl_vector.h:
+
+/usr/include/c++/4.0.2/bits/stl_bvector.h:
+
+/usr/include/c++/4.0.2/bits/vector.tcc:
+
+../../CLUDraw/source/OGLMVFilterBase.h:
+
+../../CLUDraw/source/OGLVertex.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+../../CLUDraw/source/OGLVertexList.h:
+
+../../CLUDraw/source/OGLDisplayList.h:
+
+../../CLUDraw/source/OGLFilterE3.h:
+
+../../CLUDraw/source/OGLVexListE3.h:
+
+../../CLUDraw/source/OGLFilterP2.h:
+
+../../CLUDraw/source/OGLVexListP2.h:
+
+../../CLUDraw/source/OGLFilterP3.h:
+
+../../CLUDraw/source/OGLVexListP3.h:
+
+../../CLUDraw/source/OGLFilterN3.h:
+
+../../CLUDraw/source/OGLVexListN3.h:
+
+../../CLUDraw/source/OGLMVFilter.h:
+
+../../CLUDraw/source/OGLFilterEl2.h:
+
+../../CLUDraw/source/OGLLatexText.h:
+
+/usr/include/c++/4.0.2/map:
+
+/usr/include/c++/4.0.2/bits/stl_tree.h:
+
+/usr/include/c++/4.0.2/bits/stl_map.h:
+
+/usr/include/c++/4.0.2/bits/stl_multimap.h:
+
+/usr/include/c++/4.0.2/fstream:
+
+/usr/include/c++/4.0.2/i586-suse-linux/bits/basic_file.h:
+
+/usr/include/c++/4.0.2/bits/fstream.tcc:
+
+../../CLUDraw/source/OGLBitmap.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/il.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilut.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/ilu.h:
+
+/home/xray/chp/progs/CLUCalcSource/CLUdevil/include/IL/config.h:
+
+/usr/include/GL/glu.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+../../CLUDraw/source/OGLBitmapText.h:
+
+../../CLUDraw/source/OGLObjColorCube.h:
+
+../../CLUDraw/source/OGLBaseElementList.h:
+
+../../CLUDraw/source/OGLBaseTransform.h:
+
+ObjectClass.h:

@@ -1,0 +1,33 @@
+// Define the basis variables for Euclidean space
+DefVarsE3();
+
+// Define a multivector variable as e1
+A = e1;
+
+// Generate the multivector product matrix of A
+// for the inner product
+MA = GetMVProductMatrix(A, MVOP_INNER);
+
+// Find the null space of MA with a 
+// singular value decomposition
+W = SVD(MA);
+
+// Transform the diagonal matrix of the
+// singular values to a row vector and
+// display it
+?Diag = DiagToRow(W(2));
+
+// Transform the singular vectors to multivectors
+V = Matrix2MV(W(3));
+
+// Print the first four (singular) multivector which
+// span the basis of the null space of e1 
+// w.r.t. the inner product.
+?V(1);
+?V(2);
+?V(3);
+?V(4);
+
+// Test the caluculation by evaluating the
+// inner product with all singular multivectors.
+?A . V;

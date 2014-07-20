@@ -1,0 +1,35 @@
+// CodeLabel.cpp: Implementierung der Klasse CCodeBreak.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "StdAfx.h"
+#include "CodeBreak.h"
+#include "CodeBase.h"
+#include "CodeVar.h"
+
+//////////////////////////////////////////////////////////////////////
+// Konstruktion/Destruktion
+//////////////////////////////////////////////////////////////////////
+
+CCodeBreak::CCodeBreak()
+{
+}
+
+CCodeBreak::~CCodeBreak()
+{
+
+}
+
+
+//////////////////////////////////////////////////////////////////////
+/// Apply
+
+bool CCodeBreak::Apply(CCodeBase* pCodeBase, SCodeData *pData)
+{
+	if (!pCodeBase)
+		return false;
+
+	pCodeBase->m_ErrorList.Break();
+	return false;
+}
+

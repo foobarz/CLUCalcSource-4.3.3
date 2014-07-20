@@ -1,0 +1,239 @@
+/** \page page_Images Working with Images
+
+\attention
+The scripts discussed in the following can all be found in the <tt>Images</tt> subdirectory of the <tt>ExampleScripts</tt> directory. 
+
+In CLUScript v2.0 a number of new functions are introduced to deal with images. In particular, the new variable type <code>image</code> is defined, which contains an image reference. Note that if you assign an image variable to another variable, the image itself is not copied, but only a reference to it.
+
+An image can be read in or written to a file with the functions ReadImg() and WriteImg(), respectively. The function ReadImg() returns a variable of type \c image. This image can be drawn by simply using the operator \c : . Note that drawing an image in this way has nothing to do with texture mapping. The image is simply drawn pixel by pixel in the visualization window. Nevertheless, it is possible to draw images at different depths. This does not change the image itself, but it sets whether an image occludes another element or not. 
+
+\attention
+Note that there is no explicit function to extract an area of an image. This can be done with the bracket operator (). For example, if \c I is an image variable, you can extract the part of the image starting at coordinates \c x and \c y with width \c w and height \c h via <tt>I(x, y, w, h)</tt>.
+
+You can write image variables to a file using the function WriteImg(). The extension of the given filename specifies the file type. This allows you, for example, to transform images from one format into another, as is shown in the following example (<tt>ImageEx7.clu</tt>).
+
+\code
+	// Read an image
+	Img = ReadImg("cog_siegel.bmp");
+
+	// Write the image in a different format
+	WriteImg("cog_siegel.png", Img);
+\endcode
+
+
+In the following example (<tt>ImageEx1.clu</tt>), an image is loaded and then drawn at different positions and with different alignements.
+
+\code
+	// Read an image
+	Img = ReadImg("Surf2.bmp");
+
+	// Draw the image
+	// By default an image will be drawn with
+	// its bottom left corner at the origin
+	:Img;
+
+	// You can also set the position of images.
+	// The position set will remain the position
+	// at which images are drawn until it is
+	// changed.
+	SetImgPos(-1,-1,0);
+	:Img;
+
+	// Use the function SetImgAlign to set
+	// the alignment of the image relative
+	// to the drawing position.
+	SetImgAlign(0.5, 0.5);  // centered
+	:Img;
+\endcode
+
+This produces the following visualization.
+
+\image html Images_Ex1.jpg
+
+Note that external properties of images like the position and alignment, are applied to all images drawn until changed. Hence, the third time the image is drawn in the above example, it is centered on the position <tt>(-1,-1,0)</tt>, since this position setting is still active.
+
+
+The following example (<tt>ImageEx2.clu</tt>) shows the effect of changing the z-position of an image.
+
+\code
+	_FrameBoxSize = 0;
+	_BGColor = White;
+
+	// Read an image
+	Img = ReadImg("Surf2.bmp");
+
+	// This time we work in an overlay 
+	// coordinate system
+	StartOverlay();
+
+	SetImgAlign(0,1);	// top-left align
+	SetImgPos(5,5,0);
+
+	// Draw Image
+	:Img;
+
+	// Get bottom-left-near and top-right-far coordinates
+	// of image in the current coordinate system.
+	P = GetImgCoords(Img);
+
+	// Need to increase the z-component of the line
+	// by a bit, so that the line is drawn on top 
+	// of the image.
+	DrawLine(P(1), P(2), P(3)+1, P(4), P(5), P(6)+1);
+
+	// Want to draw the same image behind the
+	// previous image at a larger scale.
+
+	// Set new scale
+	SetImgScale(2);
+	// Set Position behind previous position
+	SetImgPos(5,5,-1);
+	:Img;
+
+	// Again get the coordinates of the image 
+	// and draw a line from its bottom left to
+	// top right corner.
+	P = GetImgCoords(Img);
+	DrawLine(P(1), P(2), P(3)+1, P(4), P(5), P(6)+1);
+
+	EndOverlay();
+\endcode
+
+The result of this script is the following.
+
+\image html Images_Ex2.jpg
+
+Another useful feature is that of making a certain color of an image appear transparent. Here is an example,
+
+\code
+	_FrameBoxSize = 0;
+	_BGColor = White;
+
+	// Read an image
+	Img = ReadImg("Surf2.bmp");
+
+	// This time we work in an overlay 
+	// coordinate system
+	StartOverlay();
+
+	SetImgAlign(0,1);	// top-left align
+	SetImgPos(5,5,0);
+	SetImgScale(2);
+
+	// Draw Image
+	:Img;
+
+	// Get Coordinates of image
+	P = GetImgCoords(Img);
+
+	/////////////////////////////////////////
+	// Draw logo on top of the image
+
+	// Transparency options are only applied
+	// to images when they are loaded, not
+	// every time they are displayed.
+
+	// Enable color transparency for images
+	EnableImgTransparency(1);
+	// Set a color that is to be made transparent
+	SetImgTransparentColor(White);
+
+	Logo = ReadImg("cog_siegel.bmp");
+
+	// Set alignment to bottom right
+	SetImgAlign(1,0);
+
+	// Set position into bottom right corner of image
+	SetImgPos(P(4), P(2), P(3)+1);
+
+	// Set Scale to 1
+	SetImgScale(1);
+
+	// Draw the logo
+	:Logo;
+
+	EndOverlay();
+\endcode
+
+This script generates the following visualization.
+
+\image html Images_Ex3.jpg
+
+
+If you want to apply mathematical operations to images, you first have to transform them to matrices. This can be done with the function Img2Matrix(). The inverse operation is achieved with Matrix2Img(). Here is a simple example (<tt>ImageEx4.clu</tt>),
+
+\code
+	_FrameBoxSize = 0;
+	_BGColor = White;
+
+	// Read an image
+	Img = ReadImg("Surf2.bmp");
+
+	// This time we work in an overlay 
+	// coordinate system
+	StartOverlay();
+
+	SetImgAlign(0,1);	// top-left align
+	SetImgPos(5,5,0);
+
+	:Img;
+
+	// Get Coordinates of image
+	P = GetImgCoords(Img);
+
+	// Create matrix from luminance value of image
+	M = Img2Matrix(Img);
+	Img2 = Matrix2Img(M);
+
+	SetImgPos(P(4) + 5, P(5), P(3));
+	:Img2;
+	P = GetImgCoords(Img2);
+
+	// Do some operation on the image
+	fac = Slider("Factor", 0.1, 2, 0.1, 1);
+	M = exp(-(- M.*M + 1) / fac);
+	Img3 = Matrix2Img(M);
+
+	SetImgPos(P(4) + 5, P(5), P(3));
+	:Img3;
+
+	EndOverlay();
+\endcode
+
+This produces as output,
+
+\image html Images_Ex4.jpg
+
+You can also extract the separate color channels of an image using Img2Matrix() and also construct an image from a set of color planes with Matrix2Img().
+
+In CLUScript v2.2 the operators <code>==</code> and <code>!=</code> have also been defined between images and colors. The result is again an image with white pixels where the image contains the given color and black pixels where this is not the case. Here is an example script that uses this functionality.
+
+\code
+	_FrameBoxSize = 0;
+	_BGColor = MWhite;
+
+	// Read an image
+	Img = ReadImg("cog_siegel.bmp");
+
+	StartOverlay();
+
+	SetImgAlign(0,1);
+	SetImgPos(5,5,0);
+	:Img;
+	lC = GetImgCoords(Img);
+
+	SetImgPos(lC(4)+5, 5, 0);
+	:Img == White;
+
+	SetImgPos(2*lC(4)+5, 5, 0);
+	:Img != White;
+
+	EndOverlay();
+\endcode
+
+The output is
+
+\image html ImgEx6_1.png
+
+**/
+

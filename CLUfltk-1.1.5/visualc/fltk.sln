@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fltk", "fltk.lib.vcproj", "{E3203D04-A94F-483C-87A0-21FAEF7A4A55}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fltkgl", "fltkgl.vcproj", "{E271053C-C42F-467F-B8AB-B296AA96DF3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fltkimages", "fltkimages.vcproj", "{70C13FC4-BC80-405C-912E-B7CD4A776CE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{E3203D04-A94F-483C-87A0-21FAEF7A4A55}.Debug.ActiveCfg = Debug|Win32
+		{E3203D04-A94F-483C-87A0-21FAEF7A4A55}.Debug.Build.0 = Debug|Win32
+		{E3203D04-A94F-483C-87A0-21FAEF7A4A55}.Release.ActiveCfg = Release|Win32
+		{E3203D04-A94F-483C-87A0-21FAEF7A4A55}.Release.Build.0 = Release|Win32
+		{E271053C-C42F-467F-B8AB-B296AA96DF3D}.Debug.ActiveCfg = Debug|Win32
+		{E271053C-C42F-467F-B8AB-B296AA96DF3D}.Debug.Build.0 = Debug|Win32
+		{E271053C-C42F-467F-B8AB-B296AA96DF3D}.Release.ActiveCfg = Release|Win32
+		{E271053C-C42F-467F-B8AB-B296AA96DF3D}.Release.Build.0 = Release|Win32
+		{70C13FC4-BC80-405C-912E-B7CD4A776CE2}.Debug.ActiveCfg = Debug|Win32
+		{70C13FC4-BC80-405C-912E-B7CD4A776CE2}.Debug.Build.0 = Debug|Win32
+		{70C13FC4-BC80-405C-912E-B7CD4A776CE2}.Release.ActiveCfg = Release|Win32
+		{70C13FC4-BC80-405C-912E-B7CD4A776CE2}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		Item:1 = ..\CLUfltk_Install.txt
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

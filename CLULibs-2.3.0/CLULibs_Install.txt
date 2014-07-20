@@ -1,0 +1,178 @@
+------------------------------------------------------------------------
+Important additional information for compiling the CLU-Project libraries
+------------------------------------------------------------------------
+
+This text is for the CLULibs distribution version 2.3.0.
+
+MOST IMPORTANT: 
+From version 2.0.0 the CLU-Project libraries collated under
+CLULibs, are distributed under the GNU General Public License (GPL) and NOT anymore under
+the GNU Library General Public License (LGPL).
+
+
+IMPORTANT: The Windows distribution includes the binaries and header files of GLUT v3.7.
+	   See www.opengl.org for the most up-to-date version of GLUT.
+	   You need the GLUT library if you want to display the OpenGL rendering
+	   of multivectors. The GLUT library was NOT written by me and is 
+	   copyright (c) Mark J. Kilgard, 1994, 1995, 1996, 1998. However,
+	   it is freely distributable without licensing fees. All other software
+	   included in this package is distributed under the GNU Public 
+	   License. 
+
+
+The CLUProject library consists of the following components:
+
+    - CLU, the basis library
+    - CLUDraw, the drawing library which uses OpenGL
+    - CLUParse, the library which implements parsing of CLUScripts.
+
+
+
+
+Windows Install:
+================
+
+Start Visual Studio and open the workspace 'CLUProject.sln'.
+Make sure that you restarted Visual Studio after installing CLULibs.
+Now compile the whole workspace in 'Debug' and 'Release' mode to obtain 
+the CLU-Project libraries 'CLU.lib', 'CLUDraw.lib' and 'CLUParse.lib'. 
+If you want to compile CLUCalc as well and CLUfltk is installed, also
+compile the workspace under the modes 'Debug_FLTK' and 'Release_FLTK'.
+Your installation of CLULibs may already have compiled versions
+of these libraries.
+
+Note that this distribution does not contain any executable programs. It is just the
+libraries. Example programs using the CLU-Project libraries may be found on
+
+		http://www.clucalc.info
+		
+
+
+Linux/UNIX Install:
+===================
+
+You need to install GLUT and/or FLTK before you can compile CLUDraw. 
+It probably comes already with your Linux distribution but 
+Solaris users will have to go to
+
+   http://www.opengl.org/developers/documentation/glut/index.html
+
+and download GLUT 3.6 or higher.
+
+If you are working on a UNIX of Linux system, do not despair, compiling the
+library and programs that use the CLU-Project libraries is now easier than
+ever. In order to compile the CLU-Project libraries follow these steps:
+
+1. Create a directory which will contain all CLU-Project libraries and
+   programs. Call it, for example, 'CLUProject'. In the following we
+   will assume that the absolute path to this directory is /home/foo/CLUProject.
+
+2. Unpack CLULibs-2.0.0.tar.gz in the CLUProject directory, which creates 
+   a subdirectory CLULibs-2.0.0 with all the files.
+
+3. Make sure you have OpenGL and/or GLUT installed. You can get both from
+   www.opengl.org. 
+   
+4. All of the component libraries of the CLUProject are compiled 
+   at once from the CLULibs directory. In order for the compile 
+   process to work properly, you must set a number of environment 
+   variables. 
+
+	CLU_HOME : This is the path to the directory where you want 
+	   the libraries and the include files to be installed.
+
+	FLTK_HOME: If you want to compile the support for FLTK, which
+	   is needed by CLUCalc, you need to set this variable.
+	   Usually it should be set to the path of the 'CLUfltk'
+	   library, which is a slightly modified version of FLTK
+	   for the CLUProject.
+
+	CLU_GLUT : If you have glut installed under /usr, i.e. /usr/include/GL/glut.h 
+	   then you do not need to set this variable. Otherwise
+	   set it to the path from where the header and the library
+	   can be reached.
+
+	CLU_OPENGL: Same as above. If OpenGL header and library are installed
+	    under /usr, you do not need to set this. Otherwise,
+	    set it to the appropriate path.
+
+	PKG_CONFIG_PATH: You should set this to ${CLU_HOME}/lib/pkgconfig, since
+		 CLUCalc and the CLU example programs use pkg-config
+		 to get the correct compiler and linker settings.
+
+	For example, if you have installed the CLULibs under 
+
+		/home/foo/CLUProject/CLULibs-2.3.0, 
+
+	and CLUfltk under
+
+		/home/foo/CLUProject/CLUfltk-1.1.5
+
+	then you should add the following lines to your .bashrc:
+
+		 export CLU_HOME=/home/foo/CLUProject
+		 export FLTK_HOME=${CLU_HOME}/CLUfltk-1.1.5
+		 export PKG_CONFIG_PATH=${CLU_HOME}/lib/pkgconfig
+	
+		 # Optionally
+		 export CLU_GLUT=/[My GLUT directory]
+		 export CLU_OPENGL=/[My OpenGL directory]
+
+	For a .tcshrc this would look like this
+	
+		 setenv CLU_HOME /home/foo/CLUProject
+		 setenv FLTK_HOME ${CLU_HOME}/CLUfltk-1.1.5
+		 setenv PKG_CONFIG_PATH ${CLU_HOME}/lib/pkgconfig
+	
+		 # Optionally
+		 setenv CLU_GLUT /[My GLUT directory]
+		 setenv CLU_OPENGL /[My OpenGL directory]
+
+	If you do not need FLTK, then do not define FLTK_HOME. If you
+	want FLTK then you must first build the fltk library. See the
+	CLUfltk package for more info on this.
+
+
+
+5. Enter the 'CLULibs-2.3.0' directory and execute the
+   script 'BUILD'. This should now compile the CLU-Libraries and install
+   them under 'CLU_HOME' together with the header files. 
+
+6. The previous step also installs a 'cluproject.pc' file in 'CLU_HOME/lib/pkgconfig', 
+   which has to be accesible to the program 'pkg-config'. In order to make 
+   it accesible add 'CLU_HOME' to the path given in 'PKG_CONFIG_PATH'. For example,
+
+        setenv PKG_CONFIG_PATH ${PKG_CONFIG_PATH}:${CLU_HOME}/lib/pkgconfig
+		
+	or
+	
+		export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${CLU_HOME}/lib/pkgconfig
+
+   Test it by entering your main directory and executing 'pkg-config cluproject --libs'. 
+   You should now get a string of strange commands which are in fact the linker 
+   flags when you want to link against the CLU-Project libraries. If this does 
+   not work you will not be able to compile and run any of the example and 
+   tutorial programs.
+
+Once the library is installed correctly, compiling programs that use the
+CLU-Project library is very simple. For example, in order to compile any of
+the example or tutorial programs, unpack them to any directory and execute
+their 'BUILD' script. The binaries are also installed to '${CLU_HOME}/bin'. 
+For your own programs simply adapt the 'Makefile.am' and 'configure.in' files.
+
+In any case, if you have any problems, send me an email to 
+
+	help@clucalc.info.
+
+
+------------------------------------------------------------------------
+The automake files and the source code was tested on the following
+systems:
+ 
+- SUN Workstation with SUN OS 5.8 using c++-compiler: egcs-gcc 3.0.3 
+  and automake 1.5
+
+- Linux (SUSE Linux 10.0) with 
+	c++ compiler gcc (GCC) 4.0.2 20050901 (prerelease) (SUSE Linux)
+	automake (GNU automake) 1.9.6
+

@@ -1,0 +1,103 @@
+/** \page page_Info User Interactive Text
+
+	User interactive text or <b>info text</b> has been introduced in version 2.1. This text is displayed in the visualization window, right next to the visualization. Just as for tools you can change the size of the info text window by dragging its border. This automatically descreases the size of the visualization window.
+	
+	The function SetInfoText() sets the info text and the function SetInfoWidth() sets the width of the info text window. Here is a simple example to start with.
+	
+	\code
+	SetInfoWidth(0.3);
+	SetInfoText("Hello World");
+	\endcode
+	
+	The visualization window then looks like this.
+	
+	\image html InfoEx1.jpg
+
+	This in itself is not so amazing. The great feature of the info text window is that the user can interact through it with the script. First of all, the info text window understands simple HTML code. Here are some tags it understands:
+\code
+	<body size="12">: starts an info text and 
+					  sets the global font size.
+					  
+	<b>: switches to bold font.
+	<i>: switches to italic font.
+	<font size="12">: sets font size.
+	<a href="[link]">: starts a hyperlink.
+	<h1>: Heading 1
+	<h2>: Heading 2
+	<h3>: Heading 3
+	
+	<table>: starts a table.
+		<tr>: starts a row.
+		<td>: starts a table element.
+		
+	<ul>: start unordered list.
+		<li>: start list element.
+		
+	<br>: insert a line break.
+	<p>: start a new paragraph.
+\endcode	
+	
+	\attention Note that nested tables are not possible.
+	
+	Of course, you also need to close the tags with the appropriate </...> tags. If you print variables in the info text window, they will be displayed much like in the output window. Here is another example.
+	
+	\code
+	Text = "<body size=\"14\">";
+	Text << "<h1>Hello World</h1>";
+
+	M = Matrix([[1,2],[3,4]]);
+	Text << "This <i>is</i> a <b>matrix</b>: " + M + "<br>";
+	Text << "Select one of the follwing:";
+	Text << "<ul><li>Hello <li>World </ul>";
+	Text << "</body>";
+
+	SetInfoWidth(0.4);
+	SetInfoText(Text);
+	
+	\endcode
+
+	This produces the follwing output.
+	
+	\image html InfoEx2.jpg
+
+	All this can be made user interactive by inserting particular links using the \<a\> tag. Such a link has to be of the following form:
+	
+	\code
+	clu://data/[the data]
+	\endcode
+	
+	whereby <tt>[the data]</tt> is the string that is written to #LinkData when the user clicks on the link. Here is an example of how this can be used.
+	
+	\code
+	if (ExecMode & EM_CHANGE)
+	{
+		// Only need to do this once	
+		Text = "<body size=\"14\">";
+		Text << "<h1>Hello World</h1>";
+		
+		M = Matrix([[1,2],[3,4]]);
+		Text << "This <i>is</i> a <b>matrix</b>: " + M + "<br>";
+		Text << "Select one of the follwing:";
+		Text << "<ul>"
+			<< "<li><a href=\"clu://data/hello/\">Hello</a>"
+			<< "<li><a href=\"clu://data/world/\">World</a>"
+			<< "</ul>";
+		Text << "</body>";
+		
+		SetInfoWidth(0.4);
+		SetInfoText(Text);
+	}
+
+	if (ExecMode & EM_LINK)
+	{
+		?LinkData;	
+	}
+	\endcode
+	
+	Now the visualization window looks like this.
+	
+	\image html InfoEx3.jpg
+	
+	When the user now clicks on the <tt>Hello</tt> link, the script is re-executed in execution mode #EM_LINK and with #LinkData set to '<tt>hello/</tt>'. This can, of course, been used to develop user interactive tutorials. See for example the introduction script '<tt>Info_4_1.clu</tt>' for an example of this.
+	
+**/

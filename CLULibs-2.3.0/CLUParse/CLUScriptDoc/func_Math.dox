@@ -1,0 +1,776 @@
+
+/* \file func_Math.dox
+	\brief Documentation for mathematical function in CLUScript.
+	
+**/
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_MathFunc Mathematical Functions
+
+	These are mathematical functions.
+	
+	\{
+**/
+
+/*
+*/
+
+/** 
+	\brief Evaluates the absolute value of the given scalar.
+	
+	\param Val Value of which absolute (magnitude) is to be evaluated.
+	\return The absolute value.
+	\since v1.0
+**/
+scalar abs(scalar Val);
+
+/** 
+	\brief Evaluates the absolute value of the magnitude of a blade.
+	
+	\param A Multivector (blade) of which absolute magnitude is to be evaluated.
+	\return The absolute magnitude value.
+	\since v1.0
+	
+	The magnitude of the multivector A is evaluated via the formula 
+	\f$ \sqrt{|A\cdot \tilde{A}|} \f$.
+**/
+scalar abs(multivector A);
+
+/** 
+	\brief Evaluates the magnitude of the components of a list.
+	
+	\param L The list of whose components the magnitude is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list abs(list L);
+
+/** 
+	\brief Evaluates the magnitude of the components of a matrix.
+	
+	\param M The matrix of whose components the magnitude is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix abs(matrix M);
+
+
+
+
+/** 
+	\brief Evaluates the arc cosine of an angle.
+	
+	\param x The value between -1 and 1 of which the arc cosine is to be evaluated.
+	\return The value \f$ \cos^{-1}(x) \f$.
+	\since v1.0
+**/
+scalar acos(scalar x);
+
+/** 
+	\brief Evaluates the arcus cosine of the components of a list.
+	
+	\param L The list of whose components the arcus cosine is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list acos(list L);
+
+/** 
+	\brief Evaluates the arcus cosine of the components of a matrix.
+	
+	\param M The matrix of whose components the arcus cosine is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix acos(matrix M);
+
+
+
+
+
+
+/** 
+	\brief Evaluates the arc sine of an angle.
+	
+	\param x The value between -1 and 1 of which the arc sine is to be evaluated.
+	\return The value \f$ \sin^{-1}(x) \f$.
+	\since v1.0
+**/
+scalar asin(scalar x);
+
+/** 
+	\brief Evaluates the arcus sine of the components of a list.
+	
+	\param L The list of whose components the arcus sine is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list asin(list L);
+
+/** 
+	\brief Evaluates the arcus sine of the components of a matrix.
+	
+	\param M The matrix of whose components the arcus sine is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix asin(matrix M);
+
+
+
+
+/** 
+	\brief Evaluates the arc tangent of an angle.
+	
+	\param x The value between -1 and 1 of which the arc tangent is to be evaluated.
+	\return The value \f$ \tan^{-1}(x) \f$.
+	\since v1.0
+**/
+scalar atan(scalar x);
+
+/** 
+	\brief Evaluates the arcus tangens of the components of a list.
+	
+	\param L The list of whose components the arcus tangens is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list atan(list L);
+
+/** 
+	\brief Evaluates the arcus tangens of the components of a matrix.
+	
+	\param M The matrix of whose components the arcus tangens is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix atan(matrix M);
+
+
+/** 
+	\brief Evaluates the smallest integer value that is larger or equal to
+			the given value.
+	
+	\param x The scalar value.
+	\return The smallest integer value \f$ n \f$ with \f$ n\ge x \f$.
+	\since v1.0
+**/
+scalar ceil(scalar x);
+
+/** 
+	\brief Evaluates the smallest integer value that is larger or equal to
+			the given value for each element of a multivector.
+	
+	\param A The multivector.
+	\return The adjusted multivector.
+	\since v2.1
+**/
+scalar ceil(multivector A);
+
+/** 
+	\brief Evaluates the ceiling of the components of a list.
+	
+	\param L The list of whose components the ceiling is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list ceil(list L);
+
+
+/** 
+	\brief Evaluates the cosine of the given angle.
+	
+	\param Rad Angle in Radians.
+	\return The cosine of the angle Rad.
+	\since v1.0
+**/
+scalar cos(scalar Rad);
+
+/** 
+	\brief Evaluates the cosine of the components of a list.
+	
+	\param L The list of whose components the cosine is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list cos(list L);
+
+/** 
+	\brief Evaluates the cosine of the components of a matrix.
+	
+	\param M The matrix of whose components the cosine is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix cos(matrix M);
+
+
+/** 
+	\brief Evaluates the exponential of a value.
+	
+	\param x The scalar value.
+	\return The exponential of \a x, i.e. \f$ \exp(x) \f$.
+	\since v1.0
+**/
+scalar exp(scalar x);
+
+/** 
+	\brief Approximates the exponential of a multivector.
+	
+	\param A The multivector.
+	\return The approximated exponential of \a A.
+	\since v1.0
+	
+	 The exponential is approximated by evaluating the taylor
+	 series of the exponential of a multivector up to order 12. For
+	 multivectors of small magnitude this may produce large errors!
+**/
+multivector exp(multivector A);
+
+/** 
+	\brief Evaluates the exponential of the components of a list.
+	
+	\param L The list of whose components the exponential is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list exp(list L);
+
+/** 
+	\brief Evaluates the exponential of the components of a matrix.
+	
+	\param M The matrix of whose components the exponential is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix exp(matrix M);
+
+
+/** 
+	\brief Evaluates the factorial of an integer number.
+	
+	\param n The value of which the factorial is to be taken.
+	\return The value \f$ !n \f$.
+	\since v1.0
+	
+	The value of \a x has be an element of \f$ \{0, 1, \ldots, 170\} \f$. 
+	
+	For example,
+	\code
+	
+	?fact(170);
+	\endcode
+	
+	produces the output,
+	\code
+	
+	Constant = 7.25742e+306
+	\endcode
+**/
+scalar fact(counter n);
+
+/** 
+	\brief Evaluates the largest integer value that is smaller or equal to
+			the given value.
+	
+	\param x The scalar value.
+	\return The largest integer value \f$ n \f$ with \f$ n\le x \f$.
+	\since v1.0
+**/
+scalar floor(scalar x);
+
+/** 
+	\brief Evaluates the largest integer value that is smaller or equal to
+			the given value for each component of the multivector \a A.
+	
+	\param A The multivector.
+	\return The adjusted multivector.
+	\since v2.1
+**/
+scalar floor(multivector A);
+
+/** 
+	\brief Evaluates the floor of the components of a list.
+	
+	\param L The list of whose components the floor is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list floor(list L);
+
+
+/** 
+	\brief Inverts all nonzero components of a matrix separately.
+	
+	\param M A matrix.
+	
+	\return A matrix with entries \f$ a_{ij}^{-1} \f$  \a iff  \f$ a_{ij}\neq 0\f$.
+	
+	\since v2.0
+
+For example,
+\code	
+? M = inv( Matrix( [[5,0], [0,2]] ));
+\endcode
+
+produces the output
+\code
+M = (| 0.2 0|, | 0 0.5|)
+\endcode
+
+**/
+matrix inv(matrix M);
+
+/** 
+	\brief Evaluates the inner product of a list.
+	
+	\param L A (nested) list of multivectors.
+	
+	\return A list in which each elementary sublist is replaced by the inner product of its elements.
+	
+	\since v2.1
+	
+	The evaluation of the inner product of an elementary sublist is simply defined as the inner product of all contributing multivectors.
+	The expression <tt>P = iprod([e1,e1])</tt> is for example equal to <tt>P = e1.e1;</tt>. 
+**/
+list iprod(list L);
+
+
+
+
+/** 
+	\brief Evaluates the natural logarithm of a value.
+	
+	\param x The scalar value.
+	\return The natural logarithm of \a x, i.e. \f$ \log_e(x) \f$.
+	\since v1.0
+**/
+scalar log(scalar x);
+
+/** 
+	\brief Evaluates the natural logarithm of the components of a list.
+	
+	\param L The list of whose components the natural logarithm is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list log(list L);
+
+/** 
+	\brief Evaluates the natural logarithm of the components of a matrix.
+	
+	\param M The matrix of whose components the natural logarithm is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix log(matrix M);
+
+
+/** 
+	\brief Evaluates the outer product of a list.
+	
+	\param L A (nested) list of multivectors.
+	
+	\return A list in which each elementary sublist is replaced by the outer product of its elements.
+	
+	\since v2.1
+	
+	The evaluation of the outer product of an elementary sublist is simply defined as the outer product of all contributing multivectors.
+	The expression <tt>P = oprod([e1,e2,e3])</tt> is for example equal to <tt>P = e1^e2^e3;</tt>. 
+**/
+list oprod(list L);
+
+
+/** 
+	\brief Evaluates a value raised to a particular power.
+	
+	\param x The value that is to be raised to the power of \a a.
+	\param a The power.
+	\return The value \f$ x^a \f$.
+	\since v1.0
+	
+	Note that <tt>pow(a,b)</tt> is equivalent to <tt>a^^b</tt>, in CLUScript v2.2 and higher.
+**/
+scalar pow(scalar x, scalar a);
+
+/** 
+	\brief Evaluates a multivector raised to an integer power.
+	
+	\param A the multivector to be raised to the power of \a n.
+	\param n An integer number.
+	\return The value \f$ A^n \f$.
+	\since v1.0
+	
+	This function simply evaluates \a n times the geometric product of \a A.
+	Note that <tt>pow(A,n)</tt> is equivalent to <tt>A^^n</tt>, in CLUScript v2.2 and higher.
+**/
+multivector pow(multivector A, counter n);
+
+/** 
+	\brief Evaluates all values in a list raised to a particular power.
+	
+	\param L The list of values that are to be raised to the power of \a a.
+	\param a The power.
+	
+	\return A list of the results.
+	
+	\since v1.0
+	
+	This function basically applies one of the other versions of the pow function to
+	each element of the list. This also works for nested lists. For example,
+	
+	\code
+	
+	DefVarsE3();
+
+	?L = (2, e1^e2, (3, 4));
+	?pow(L, 2);
+	\endcode
+	
+	produces the output
+	\code
+	
+	L = (2, [ 1^e12 ], (3, 4))
+	Constant = (4, [ -1 ], (9, 16))
+	\endcode
+
+	Note that <tt>pow(L,2)</tt> is equivalent to <tt>L^^2</tt>, in CLUScript v2.2 and higher.
+**/
+scalar pow(list L, scalar a);
+
+/** 
+	\brief Raises the components of a matrix to a given power.
+	
+	\param M The matrix whose components are to be raised to the power of \a a.
+	\param a The power.
+
+	\return The resultant matrix.
+	\since v2.0
+	
+	Note that <tt>pow(M,a)</tt> is equivalent to <tt>M^^a</tt>, in CLUScript v2.2 and higher.
+**/
+matrix pow(matrix M, scalar a);
+
+
+
+/** 
+	\brief Evaluates the product of a list.
+	
+	\param L A (nested) list of scalars, multivectors or matrices.
+	
+	\return A list in which each elementary sublist is replaced by it's product.
+	
+	\since v2.0
+	
+	The evaluation of the product of an elementary sublist is simply defined as the product of all contributing scalars.
+	The expression <tt>P = prod([1,2,3,4])</tt> is for example equal to <tt>P = fact(4);</tt>. This function is subject to the
+	same restrictions as the function <tt>sum</tt>.
+**/
+list prod(list L);
+
+
+/** 
+	\brief Evaluates the product of every row for a given matrix.
+	
+	\param M A matrix.
+	
+	\return A list of products.
+	
+	\since v2.0
+	
+	This function evaluates the products of the matrix rows. Each product is determined through the multiplication of all values within
+	the corresponding matrix row.
+**/
+list prod(matrix M);
+
+
+/** 
+	\brief Rounds a scalar to the given precision.
+	
+	\param X A scalar.
+	\param prec The precision.
+	
+	\return The rounded scalar.
+	
+	\since v2.1
+
+	This function rounds a scalar to the given precision. That is, the returned scalar will have at most \a prec digits behind the decimal point, if \a prec is positive. If \a prec is negative, this function rounds by \a prec digits before the decimal point.
+	
+	Here is an example.
+	\code
+	SetTextPrec(12);
+	?round(1.2344, 3);
+	?round(1.2345, 3);
+	?round(1.2345, 4);
+	\endcode
+	
+	This results in
+	
+	<b>Constant</b> = 1.234<br>
+	<b>Constant</b> = 1.235<br>
+	<b>Constant</b> = 1.2345<br>
+	
+**/
+scalar round(scalar X, counter prec);
+
+
+/** 
+	\brief Rounds the components of a multivector to the given precision.
+	
+	\param X A multivector.
+	\param prec The precision.
+	
+	\return The rounded multivector.
+	
+	\since v2.1
+
+	This function applies the function round() for scalars to all components of the multivector.	
+**/
+mutlivector round(multivector X, counter prec);
+
+
+/** 
+	\brief Rounds the components of a matrix to the given precision.
+	
+	\param X A matrix.
+	\param prec The precision.
+	
+	\return The rounded matrix.
+	
+	\since v2.1
+
+	This function applies the function round() for scalars to all components of the matrix.	
+**/
+matrix round(matrix X, counter prec);
+
+
+/** 
+	\brief Rounds the components of a list to the given precision.
+	
+	\param X A list.
+	\param prec The precision.
+	
+	\return The rounded list.
+	
+	\since v2.1
+
+	This function applies the function round() for scalars to all components of the list.	
+**/
+list round(list X, counter prec);
+
+
+/**
+	\brief Evaluates the sign of a scalar.
+	
+	\param dA The scalar.
+	
+	\return The sign of dA.
+**/
+scalar sign(scalar dA);
+
+
+/** 
+	\brief Evaluates the sine of an angle.
+	
+	\param rad The angle in radians of which the sine is to be evaluated.
+	\return The value \f$ \sin(rad) \f$.
+	\since v1.0
+**/
+scalar sin(scalar rad);
+
+/** 
+	\brief Evaluates the sine of the components of a list.
+	
+	\param L The list of whose components the sine is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list sin(list L);
+
+/** 
+	\brief Evaluates the sine of the components of a matrix.
+	
+	\param M The matrix of whose components the sine is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix sin(matrix M);
+
+
+
+
+/** 
+	\brief Evaluates the square root of a value.
+	
+	\param x The value of which the square root is to be taken.
+	\return The value \f$ \sqrt{x} \f$.
+	\since v1.0
+**/
+scalar sqrt(scalar x);
+
+/** 
+	\brief Evaluates the square root of the components of a list.
+	
+	\param L The list of whose components the square root is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list sqrt(list L);
+
+/** 
+	\brief Evaluates the square root of the components of a matrix.
+	
+	\param M The matrix of whose components the square root is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix sqrt(matrix M);
+
+
+/** 
+	\brief Evaluates the difference of the elements of a list.
+	
+	\param L A (nested) list of object that can be subtracted.
+	
+	\return A list in which each elementary sublist is replaced by the first element minus the sum of the rest.
+	
+	\since v2.1
+	
+	\attention If list \a L is an elementary list, i.e. \a L doesn't containt any sublists, then the return will be a \b scalar.
+	
+**/
+list sub(list L);
+
+
+/** 
+	\brief Evaluates the difference of the row elements of a matrix.
+	
+	\param M A matrix.
+	
+	\return A matrix in which each row of the initial matrix is replaced by the first element of each row minus the sum of the rest in the respective row.
+	
+	\since v2.1
+	
+	Here is a simple example.
+	
+	\code
+	?sub(Matrix([[1,2],[2,3]]));
+	\endcode	
+	
+	This results in the following.
+	
+	<b>Constant</b> <font size="12"><i>(2x1)</i></font> = <font size="12"><table><tr><td>
+-1</td></tr><tr><td>
+-1
+</td></tr></table>
+.<br></font><br>
+
+**/
+matrix sub(matrix M);
+
+
+/** 
+	\brief Evaluates the sum of a list.
+	
+	\param L A (nested) list of scalars.
+	
+	\return A list in which each elementary sublist is replaced by it's sum.
+	
+	\since v2.0
+	
+	\attention If list \a L is an elementary list, i.e. \a L doesn't containt any sublists, then the return will be a \b scalar.
+	
+	
+	In the subsequent example it can be seen that this operation retains the structure of a nested list.
+	Note that a list can be regarded as a tree where the scalars represent the leaves. A list can therefore be denoted as 'regular',
+	if each scalar has the same depth within the associated tree.
+	Thus a list should be regular to perform the summation via function <tt>sum</tt>. The following code also gives two brief counter-examples.
+	\code
+
+	? L = [ [ [1],[2,2],[3,3,3] ],[ 1,2,3,4,5 ] ];
+	? S = sum( L );
+	// Error = sum( S );
+	// Error = sum( [ [1, [2,3] ],[ 4,5 ] ] );
+	\endcode
+	
+	which yields
+	
+	\code
+	L = [[[1], [2, 2], [3, 3, 3]], [1, 2, 3, 4, 5]]
+	S = [[1, 4, 9], 15]
+	\endcode
+**/
+list sum(list L);
+
+
+/** 
+	\brief Evaluates the sum of every row for a given matrix.
+	
+	\param M A matrix.
+	
+	\return A column vector of row sums.
+	
+	\since v2.0
+	
+	This function evaluates the sums of the matrix rows. Here's an example,
+	
+	\code
+	?M = Matrix( [ [10, 2, 3, 13], [5, 11, 2, 8], [9, 7, 6, 1], [4, 14, 5, 1] ] );
+	?S = sum(M);	
+	\endcode
+	The output will then be
+
+<b>M</b> = <font size="12"><table><tr><td>
+10</td><td>2</td><td>3</td><td>13</td></tr><tr><td>
+5</td><td>11</td><td>2</td><td>8</td></tr><tr><td>
+9</td><td>7</td><td>6</td><td>1</td></tr><tr><td>
+4</td><td>14</td><td>5</td><td>1
+</td></tr></table>
+</font><br><b>S</b> = <font size="12"><table><tr><td>
+28</td></tr><tr><td>
+26</td></tr><tr><td>
+23</td></tr><tr><td>
+24
+</td></tr></table>
+</font><br>
+**/
+matrix sum(matrix M);
+
+
+/** 
+	\brief Evaluates the tangent of an angle.
+	
+	\param rad The angle in radians of which the tangent is to be evaluated.
+	\return The value \f$ \tan(rad) \f$.
+	\since v1.0
+**/
+scalar tan(scalar rad);
+
+/** 
+	\brief Evaluates the tangent of the components of a list.
+	
+	\param L The list of whose components the tangent is to be taken.
+	\return The resultant list.
+	\since v2.0
+**/
+list tan(list L);
+
+/** 
+	\brief Evaluates the tangent of the components of a matrix.
+	
+	\param M The matrix of whose components the tangent is to be taken.
+	\return The resultant matrix.
+	\since v2.0
+**/
+matrix tan(matrix M);
+
+
+
+/** \}
+**/
+
+/** \}
+**/

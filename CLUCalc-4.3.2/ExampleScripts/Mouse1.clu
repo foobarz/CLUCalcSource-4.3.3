@@ -1,0 +1,28 @@
+DefVarsE3();
+
+// Mouse(Mode, Rot(1)/Trans(2), Axis)
+
+// Read Rotation variables
+?RX = Mouse(1,1,1);
+?RY = Mouse(1,1,2);
+?RZ = Mouse(1,1,3);
+
+// Read Translation variables
+?TX = Mouse(1,2,1);
+?TY = Mouse(1,2,2);
+?TZ = Mouse(1,2,3);
+
+// Construct Rotor
+R = RotorE3(1, 0, 0, RX);
+R = R * RotorE3(0, 1, 0, RY);
+R = R * RotorE3(0, 0, 1, RZ);
+
+// Draw Rotor
+:R:DBlue;
+
+// Rotate/Translate vector
+:X = VecE3(TX, TY, TZ) + e1:Red;
+:*X;
+:Y = R * X * ~R:Blue;
+:*Y;
+

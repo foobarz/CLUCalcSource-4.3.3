@@ -1,0 +1,60 @@
+_2dView = 0;
+DefVarsE3();
+
+func1 = 
+{
+	_x = _P(1);
+	_a = _P(2);
+	_d = _x - _a;
+	_x + (_d._d - 0.2)*e2 - fac*(pow(abs(_x), 4) + pow(abs(_a), 4))*e2
+}
+
+dx = 0.1;
+dy = 0.1;
+max_x = 1;
+min_x = -1;
+max_y = 1;
+min_y = -1;
+xc = yc = 0;
+first = 1;
+x = min_x;
+y = min_y;
+
+fac = 1;
+:Green;
+:A = VecE3(Mouse(1,2,1),0,Mouse(1,2,3));
+X = VecE3(x,0,y);
+
+loop
+{
+	y = min_y;
+	if (x > max_x)
+		break;
+
+	loop
+	{
+		if (y > max_y)
+			break;
+		
+		X = VecE3(x,0,y);
+		if (first == 1)
+		{
+			Lp = func1(X, A);
+			first = 0;
+		}
+		else
+			Lp << func1(X, A);
+			
+		y = y + dy;
+	}
+	x = x + dx;
+	xc = xc + 1;
+}
+//?Lp;
+:Blue;
+//?xc*xc;
+?Len(Lp);
+DrawPointSurface(xc, xc, Lp);
+
+:Color(1,0,0,0.8);
+DrawPlane(VecE3(0,0,0), 3*e1, 3*e3);

@@ -1,0 +1,26 @@
+DefVarsE3();
+
+:orig = VecP3(0,0,0);
+
+:Red;
+:a = VecP3(1,0,0);
+ae = VecE3(a) - VecE3(orig);
+:an = ae / sqrt(ae.ae);
+
+:Blue;
+:b = VecP3(1) + DirVecP3(0,0,1);
+be = VecE3(b) - VecE3(orig);
+:bn = be / sqrt(be.be);
+
+?an.bn;
+:ab = an^bn;
+:*ab;
+?sqrt(-(ab.ab));
+
+
+:Green;
+DrawArc(orig, b, a, 1, 0);
+
+:White;
+DrawLine(orig, a);
+DrawLine(orig, b);

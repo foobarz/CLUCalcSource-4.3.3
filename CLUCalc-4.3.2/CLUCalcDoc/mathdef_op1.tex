@@ -1,0 +1,54 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Mathematical Environment Macros Definitions
+%%%
+%%% Operator Definitions
+%%%
+
+
+\providecommand{\bold}[1]{{\bfseries #1}}
+\newcommand{\eref}[1]{equation (\ref{#1})}
+\newcommand{\Eref}[1]{Equation (\ref{#1})}
+
+\renewcommand{\o}{\wedge}
+\renewcommand{\i}{\cdot}
+\renewcommand{\j}{\dot{\wedge}}
+\newcommand{\ip}[2]{\,#1\i#2\,}
+\newcommand{\op}[2]{\,#1\o#2\,}
+\newcommand{\opt}[3]{\,#1\o#2\o#3\,}
+\newcommand{\meet}[2]{\,#1\vee#2\,}
+\newcommand{\join}[2]{\,#1\j#2\,}
+
+\newcommand{\ctimes}{%
+ \raisebox{0.3mm}{\makebox[0pt][l]{$\D\times$}\raisebox{-1.2mm}{$\D-$}}}
+\newcommand{\actimes}{%
+ \raisebox{0.3mm}{\makebox[0pt][l]{$\D\times$}\raisebox{1.2mm}{$\D-$}}}
+
+\newcommand{\cp}[2]{\,#1 \ctimes #2\,}
+\newcommand{\acp}[2]{\,#1 \actimes #2\,}
+
+\newcommand{\dual}[1]{#1^*}
+\newcommand{\dualb}[1]{#1^*}
+\newcommand{\rev}[1]{\tilde{#1}}
+\newcommand{\revb}[1]{#1\,\tilde{}}
+
+\newcommand{\comp}[2]{\left< #1 \right> _#2}
+\newcommand{\scomp}[1]{\left< #1 \right>}
+
+\newcommand{\proj}[1]{\stackrel{#1}{\longrightarrow}}
+
+\newcommand{\grp}[1]{\ensuremath{\{#1\}}}
+\newcommand{\grpd}[2]{\ensuremath{\{#1\}^{#2}}}
+
+\newcommand{\NegS}{\hspace{-1.5pt}}
+\newcommand{\BNegS}{\hspace{-3.3pt}}
+
+\newcommand{\OB}{[\NegS[}
+\newcommand{\CB}{]\NegS]}
+\newcommand{\BigOB}{\Big[\BNegS\Big[}
+\newcommand{\BigCB}{\Big]\BNegS\Big]}
+
+\newcommand{\bra}{\langle}
+\newcommand{\ket}{\rangle}
+\newcommand{\bbra}{\Big\langle}
+\newcommand{\bket}{\Big\rangle}

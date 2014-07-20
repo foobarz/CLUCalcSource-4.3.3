@@ -1,0 +1,62 @@
+// This script displays a robot arm.
+
+// Use Mouse Modes 1, 2 and 3,
+// with the right mouse button to move the robot arm
+
+
+_FrameBoxSize = 0;
+
+DefVarsN3();
+:N3_SOLID;
+
+Circle =
+{
+	_rad = _P(1);
+	_z = _P(2);
+	VecN3(-_rad,0,_z) ^ VecN3(0,_rad,_z) ^ VecN3(_rad,0,_z)
+}
+
+CirclePair =
+{
+	_rad = _P(1);
+	::LC = ::Circle(_rad, 0);
+	::LC << ::Circle(_rad, _P(2));
+}
+
+Cylinder =
+{
+	_idx = _P(1);
+
+	::CirclePair(::rad(_idx), ::len(_idx));
+
+	::M = ::M*TranslatorN3(0,0,::len(_idx-1))*RotorN3(0,1,0, ::angle(_idx));
+	::LC = ::M*::LC*~::M;
+	:MGray;
+	DrawCircleSurface(::LC);
+
+	:Magenta;
+	:*(::LC(2)/(::LC(2)^e));
+}
+
+:DGreen;
+DrawPlane(VecE3(0,0,0), VecE3(0,0,10), VecE3(10,0,0));
+
+len = [1.5, 1.3, 1.2];
+rad = [0.2, 0.15, 0.1];
+angle = [Mouse(1,2,1), Mouse(2,2,1), Mouse(3,2,1)];
+
+CirclePair(rad(1), len(1));
+
+M = RotorN3(0,1,0, angle(1)) * RotorN3(1,0,0, -Pi/2);
+:MGray;
+LC = M*LC*~M;
+
+:Magenta;
+//:*(LC(1)/(LC(1)^e));
+:*(LC(2)/(LC(2)^e));
+
+:MGray;
+DrawCircleSurface(LC);
+
+Cylinder(2);
+Cylinder(3);

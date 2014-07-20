@@ -1,0 +1,54 @@
+// Example of how to use key input.
+// Written by C. Perwass, 04.08.04
+
+// Animate this script
+_DoAnimate = 1;
+
+// Some help for the user in the output window
+?"Fly around with keys 'a', 'd', 'w' and 's'"
+?"Select mouse mode 1 and use left mouse button to rotate view.";
+
+// Define E3 basis variables
+DefVarsE3();
+
+// If script is reparsed then initialize variables.
+if (ExecMode & EM_CHANGE)
+{
+	x = VecE3(0,0,0); 	// position vector
+	a = 0;
+}
+// If user has pressed key down then...
+else if (ExecMode & EM_KEYDOWN)
+{
+	// Set dx depending on which key has
+	// been pressed.
+	if (ToolName == "a")
+		dx = -0.1*e1;
+	else if (ToolName == "d")
+		dx = 0.1*e1;
+	else if (ToolName == "w")
+		dx = -0.1*e3;
+	else if (ToolName == "s")
+		dx = 0.1*e3;
+}
+// If key goes up, reset dx.
+else if (ExecMode & EM_KEYUP)
+{
+	dx = VecE3(0,0,0);
+}
+
+	
+// Add changes to position of box
+ay = -Mouse(1,1,1);
+Ry = RotorE3(0,1,0, ay);
+
+ax = -Mouse(1,1,3);
+Rx = RotorE3(1,0,0, ax);
+
+x = x + Ry*Rx*dx*~Rx*~Ry;
+
+RotateView(Ry*Rx);
+TranslateView(x);
+
+// Draw the box
+DrawBox(VecE3(0,0,0), e1,e2,0.2);

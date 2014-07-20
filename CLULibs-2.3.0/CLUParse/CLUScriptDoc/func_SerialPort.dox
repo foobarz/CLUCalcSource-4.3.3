@@ -1,0 +1,68 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_Serial Serial Port Access Functions
+
+	Functions that allow you to access the serial port.
+	
+	\{
+**/
+
+
+/** 
+	\brief This function opens a serial port for reading and writing.
+	
+	\param sPort Name of the serial port.
+	\param iBaudRate Baud rate of serial port connection.
+	\param iTimeOut The time-out time in milliseconds.
+	\param iBits (optional) Bits per byte. Has to be 7 or 8 (default).
+	\param iStopBits (optional) Stop bits. Has to be 1 (default) or 2.
+	\param sParity (optional) Parity. Has to be either "none" (default), "even" or "odd".
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	See \ref page_SerialPort for a detailed description.
+**/
+void OpenSP(string sPort, counter iBaudRate, counter iTimeOut, counter iBits, counter iStopBits, string sParity);
+
+/**
+	\brief This functions reads from the serial port.
+	
+	\param sPort Name of the serial port to read from.
+	
+	\return String of characters read.
+	
+	\since v2.2
+	
+	See \ref page_SerialPort for a detailed description.
+**/
+string ReadSP(string sPort);
+
+
+/**
+	\brief This functions writes a string of characters to the serial port.
+	
+	\param sPort Name of the serial port to write to.
+	\param sData String to write to the port.
+	
+	\return Nothing.
+	
+	\since v2.2
+	
+	See \ref page_SerialPort for a detailed description.
+**/
+void WriteSP(string sPort, string sData);
+
+
+
+/** \}
+**/
+
+/** \}
+**/
+

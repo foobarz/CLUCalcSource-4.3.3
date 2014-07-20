@@ -1,0 +1,49 @@
+_2dView = 1;
+DefVarsE3();
+
+func1 = 
+{
+	_x = _P(1);
+	_d = _P(1) - _P(2);
+	_x*e1 + _d*_d*e2
+}
+
+func2 = 
+{
+	_x = _P(1);
+	_a = _P(2);
+	_x*e1 + (_x*_x*_x + _a*_a*_a + 1)*e2
+}
+
+
+dx = 0.1;
+max_x = 2;
+min_x = -2;
+
+x = min_x;
+a = Mouse(1,2,1);
+
+u = func1(x, a);
+v = func2(x, a);
+Lpx1 = u;
+Lpx2 = v;
+Lpxd = (u.e1)*e1 + (u.e2 - v.e2)*e2;
+loop
+{
+	if (x > max_x)
+		break;
+
+	u = func1(x, a);
+	v = func2(x, a);
+	Lpx1 << u;
+	Lpx2 << v;
+	Lpxd << (u.e1)*e1 + (u.e2 - v.e2)*e2;
+	x = x + dx;
+}
+
+DrawPointList(Lpx1);
+DrawPointList(Lpx2);
+:Red;
+DrawPointList(Lpxd);
+:Green;
+DrawLine(-2*e1, 2*e1);

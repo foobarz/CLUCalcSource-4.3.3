@@ -1,0 +1,23 @@
+_FrameBoxSize = 0;
+
+// Only read image from file when script is parsed
+if (ExecMode & EM_CHANGE)
+{
+	imgTex = ReadImg("tex_brick.png");
+}
+
+// Set image as texure
+SetTexture(imgTex);
+// Draw the texture twice in each direction
+SetTextureRepeat(0.5);
+
+// Draw plane with texture
+:White;
+DrawPlane(VecE3(0,0,0), VecE3(1,0,0), VecE3(0,1,0));
+
+// Disable texture mapping
+SetTexture();
+
+// Draw plane without texture
+:DWhite;
+DrawPlane(VecE3(0,0,-0.5), VecE3(1,0,0), VecE3(0,1,0));

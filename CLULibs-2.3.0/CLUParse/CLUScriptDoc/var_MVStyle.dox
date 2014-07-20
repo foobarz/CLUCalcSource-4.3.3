@@ -1,0 +1,201 @@
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+
+/** \defgroup grp_MVStyle_Global Multivector Visualization Global Settings
+	\{
+**/
+
+/** 
+	\brief Switch the visualization of multivectors to their inner product null space (IPNS).
+	
+	\since v1.4
+	
+	This switch influences Eucliden, projective and conformal space visualizations at the same time. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter IPNS;
+
+/** 
+	\brief Switch the visualization of multivectors to their outer product null space (OPNS).
+	
+	\since v1.4
+	
+	This switch influences Eucliden, projective and conformal space visualizations at the same time. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter OPNS;
+
+
+/** 
+	\brief Draw points as dots (default).
+	
+	\since v1.5
+	
+	This mode is set by default. Points are drawn as dots, which do not increase in size when the user moves closer to them. This simulates the idea of points being infinitesimal objects.	
+**/
+counter DRAW_POINT_AS_DOT;
+
+
+/** 
+	\brief Draw points as sphere.
+	
+	\since v1.5
+	
+	In this mode points are drawn as spheres, whose size is given by SetPointSize(). In this mode the points increase in size when the user moves closer to them. This mode is useful to increase the visibility of intersection points.
+**/
+counter DRAW_POINT_AS_SPHERE;
+
+/** \}
+**/
+
+/** \}
+**/
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+/** \defgroup grp_MVStype_E3  Multivector Visualization in E3
+	\{
+**/
+
+/** 
+	\brief Switch to set visualization of a bivector to a circular plane.
+	
+	\since v1.4
+	
+	Use this variable to switch the drawing mode of Euclidean bivector to circular planes.
+	This may be done using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter E3_DRAW_PLANE_AS_DISK;
+
+/** 
+	\brief Switch to set visualization of a bivector to a rectangular plane.
+	
+	\since v1.4
+	
+	Use this variable to switch the drawing mode of Euclidean bivector to rectangular planes.
+	This may be done using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter E3_DRAW_PLANE_AS_RECT;
+
+/** 
+	\brief Switch to set visualization of a vector to arrow visualization.
+	
+	\since v1.4
+	
+	Use this variable to switch the drawing mode of Euclidean vectors to arrow visualization.
+	This may be done using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter E3_DRAW_VEC_AS_ARROW;
+
+/** 
+	\brief Switch to set visualization of a vector to line visualization.
+	
+	\since v1.4
+	
+	This is the default setting.
+	Use this variable to switch the drawing mode of Euclidean vectors to line visualization.
+	This may be done using either the function <tt>SetMode</tt> or the operator ':'. 
+**/
+counter E3_DRAW_VEC_AS_LINE;
+
+
+/** 
+	\brief Switch to set visualization of a vector to point visualization.
+	
+	\since v1.4
+	
+	Use this variable to switch the drawing mode of Euclidean vectors to point visualization.
+	This may be done using either the function <tt>SetMode</tt> or the operator ':'. For example,
+	\code 
+	
+	:E3_DRAW_VEC_AS_POINT; 
+	\endcode
+	
+**/
+counter E3_DRAW_VEC_AS_POINT;
+
+
+/** \}
+**/
+
+/** \}
+**/
+
+
+/** \addtogroup grp_VarAll Predefined Variables
+	\{
+**/
+
+/** \defgroup grp_MVStype_N3  Multivector Visualization in N3
+	\{
+**/
+
+/** 
+	\brief Switch the visualization of multivectors to their inner product null space (IPNS).
+	
+	\since v1.0
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_IPNS;
+
+/** 
+	\brief Switch the visualization of multivectors to their outer product null space (OPNS).
+	
+	\since v1.0
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_OPNS;
+
+
+/** 
+	\brief Switch the visualization of spheres to wire-frame (default).
+	
+	\since v1.3
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_WIRE;
+
+
+/** 
+	\brief Switch the visualization of spheres to solid spheres.
+	
+	\since v1.3
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_SOLID;
+
+
+/** 
+	\brief Enable the visualization of imaginary objects.
+	
+	\since v1.3
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_SHOW_IMAG;
+
+/** 
+	\brief Disable the visualization of imaginary objects.
+	
+	\since v1.3
+	
+	This switch influences only conformal space visualizations. This style may be applied using either the function <tt>SetMode</tt> or the operator ':'. 	
+**/
+counter N3_HIDE_IMAG;
+
+
+
+/** \}
+**/
+
+/** \}
+**/

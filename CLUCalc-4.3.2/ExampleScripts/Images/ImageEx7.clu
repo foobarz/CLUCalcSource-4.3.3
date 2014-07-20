@@ -1,0 +1,15 @@
+// Image Function Example 7
+
+// Read an image
+Img = ReadImg("cog_siegel.bmp");
+
+// Write the image in a different format
+WriteImg("cog_siegel.bmp", Img);
+WriteImg("cog_siegel.jpg", Img);
+WriteImg("cog_siegel.pcx", Img);
+WriteImg("cog_siegel.png", Img);
+WriteImg("cog_siegel.raw", Img);
+WriteImg("cog_siegel.sgi", Img);
+WriteImg("cog_siegel.tga", Img);
+WriteImg("cog_siegel.tif", Img);
+

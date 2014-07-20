@@ -1,0 +1,187 @@
+/** \page page_Tools User Interaction with Tools
+
+	Tools are a feature introduced with version 1.5 of CLUScript. The basic idea is that there exist CLUScript functions which create a kind of dialog box in the visualization window, through which the user can control aspects of the visualization. The actual tool functions are described in \ref grp_ToolFunc. This text gives a general overview and example of how to use tools.
+	
+	When CLUCalc starts up, the tool window is nearly hidden at the bottom of the visualization window. Only a line a few pixels thick can be seen, as shown in the following screenshot. The white arrow points to this line.
+	
+	\image html ToolWindowClosed1.jpg
+	
+	By placing the mouse pointer over the top end of this line, the mouse pointer should change its form to indicate that this line may be dragged up and down. By dragging this line up, another window appears, which is initially grey, while the OpenGL window is reduced in size. A screenshot may now look like this, where the white arrow points to the window where the tools will appear.
+	
+	\image html ToolWindowOpen1.jpg
+	
+	The following script will now place a number of tools in the tool window. Whenever a tool is changed by the user, the script is re-executed.
+	
+	\code
+		
+	?r = Slider("Radius", 
+				0 	/* min. val. */, 
+				2 	/* max. val. */,
+				0.1 /* step size */,
+				1	/* init. val. */);
+
+	?bShow = CheckBox("Show Sphere", 
+						1 /* init. val. */);
+
+	?xval = Input("x pos.",			
+				0 	/* min. val. */, 
+				2 	/* max. val. */,
+				0.5	/* init. val. */);
+
+	lYPos = [ -1, 0, 1 ]; // A list of y positions
+	?choice_val = Choice("y pos.",
+						lYPos,	/* A list of choices */
+						2		/* Initial choice index */);
+
+	if (bShow)
+	{
+		:Red;
+		:SphereN3(xval, lYPos(choice_val), 0, r);
+	}
+	
+	\endcode
+	
+	Here is a screenshot of the result.
+	
+	\image html ToolExample1.jpg
+	
+	Depending on the size of the window, the tools are organized differently in the tool window. For example,
+	
+	\image html ToolExample2.jpg
+	
+	If the tool window is too small to show all tools at the same time, a scroll bar apears on the right hand side of the window, which can be used to scroll through the tools.
+	
+	\image html ToolExample3.jpg
+	
+	The first time a tool command is encountered, a corresponding tool is created and displayed in the tool window. Subsequent executions of the same tool command, for example when the script is re-executed, do not change the current value of the tools, but can change their parameters, like the minimum and maximum allowed values. If a tool has already been created and you would like to extract its value at a later stage in the same script, it is enough to simply execute the tool command with the name of the tool. This is particularly useful, when the tool is created after loading the script, and in subsequent executions only the value of the tool is of interest. Here is an example of this.
+	
+	\code
+	
+	// Has code changed?
+	if (ExecMode & EM_CHANGE)
+	{
+		// if yes, then either the script was just loaded,
+		// or the user has changed the script.
+		
+		// Create a slider tool
+		Slider("Radius", 0, 2, 0.1, 0);
+	}
+	
+	// This part of the code is always executed.
+	
+	// Now get value of slider
+	?rad = Slider("Radius");
+	
+	\endcode
+	
+	A tool is automatically removed from the tool window when it is no longer needed. CLUCalc determines whether a tool is still needed by checking after each execution of the script, whether the value of the tool was asked by the script. If this is not the case, the tool is removed. Therefore, the following script will only display the tool once, after it is loaded or changed. It will disappear as soon as the script is executed for any other reason than a change of the script. In particular, it will disappear as soon as the user tries to use the tool, which is not nice. Try to avoid such scripts.
+
+	\code
+	
+	// Has code changed?
+	if (ExecMode & EM_CHANGE)
+	{
+		// if yes, then either the script was just loaded,
+		// or the user has changed the script.
+		
+		// Create a slider tool and get the value
+		rad = Slider("Radius", 0, 2, 0.1, 1);
+	}
+	
+	// This part of the code is always executed.
+	
+	// Print the value of the slider
+	?rad;
+	
+	\endcode
+
+	The tool functions currently available are
+	<ul>
+		<li>Slider() A slider tool, with minimum, maximum value and step size.
+		<li>Input() An input tool, which allows the user to type in a value. Also has minimum and maximum value.
+		<li>CheckBox() A boolean input tool, which returns either 1 or 0 depending on whether the check box is checked or not.
+		<li>Button() (<b>new in version 2.0</b>) Simply a button that does not return any value.
+		<li>Choice() (<b>new in version 2.0</b>) A list box that allows the user to choose between a number of elements.
+	</ul>
+	While the slider and the input tool are very useful to change scalar values of a script, the check box tool can be used quite effectively together with if-clauses to remove and add additional parts to a visualization. Here is an example,
+	
+	\code
+	
+	:N3_SOLID;
+	:DRAW_POINT_AS_SPHERE;
+	SetPointSize(6);
+	SetLineWidth(4);
+
+	DefVarsN3();
+
+	// A slider for the radius
+	?rad = Slider("1. Radius", 0.1, 3, 0.1, 1);
+
+	:MRed;
+	// Create a sphere
+	:S = SphereN3(VecE3(1), rad);
+
+	:Color(0.587, 0.922, 1.000, 0.8);
+	// Create a plane 
+	:P = 20 * VecN3(0,0,0) ^ VecN3(1,0,0) ^ VecN3(0,0,1) ^ e;
+
+	if (CheckBox("2. Show 2nd Sphere", 0))
+	{
+		:MWhite;
+		:S2 = SphereN3(0.5,0,0, 1);
+
+		if (CheckBox("3. Sphere1 v Sphere2", 0))
+		{
+			:Green;
+			// Evaluate the intersection circle
+			:C = S & S2;
+
+			if (CheckBox("4. Circle v Plane", 0))
+			{
+				:Cyan;
+				// Evaluate the intersection points
+				:X = C & P;
+			}
+		}
+	}
+
+	\endcode
+
+	The reason to start the names of the tools with a number is that the tools are automatically ordered alphabetically in the tool window. The script produces the following visualizations.
+	
+	\image html ToolIntersect1.jpg
+	\image html ToolIntersect2.jpg
+	\image html ToolIntersect3.jpg
+	\image html ToolIntersect4.jpg
+	
+	
+The Button() tool is useful when an action defined by the script should simply be executed. For example, suppose you do some processing with a set of randomly chosen points. The user should be able to generate a new set of random points without re-parsing the script. This is achieved by the following script.
+
+\code
+	// Create a tool button "New Points"
+	Button("New Points");
+	
+	// Check whether script is executed for the first time,
+	// or whether the tool button "New Points" was pressed.
+	if (ExecMode & EM_CHANGE ||
+		(ExecMode & EM_TOOL && ToolName == "New Points"))
+	{
+		// Generate a set of random vectors
+		lPoints = [];
+		i = 1;
+		loop
+		{
+			if (i > 50) break;
+			
+			lPoints << VecP3(Ran(), Ran(), Ran());
+			
+			i = i + 1;
+		}
+	}
+	
+	// Draw the set of random points.
+	:lPoints;
+\endcode
+
+Every time the user presses the button "New Points", the script is re-executed and a new set of random points is generated.
+**/

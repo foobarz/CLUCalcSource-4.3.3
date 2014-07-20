@@ -1,0 +1,82 @@
+// This script displays a robot arm.
+
+// Use Mouse Modes 1, 2 and 3,
+// with the right mouse button to move the robot arm
+
+//// Function to draw a robot.
+// Expects data structure. See main program for details.
+
+DrawRobot =
+{
+	// Use a reference to the first parameter.
+	// In this way the data need not be copied
+	Robot -> _P(1); 
+	
+	:N3_SOLID; // Need this so the spheres are drawn solid
+	DefVarsN3();
+	
+	iJointCount = Size(Robot("len"));
+	
+	M = id;
+	Plane = VecN3(0,0,0)^VecN3(1,0,0)^VecN3(0,0,1)^e;
+	Line = VecN3(0,0,0)^VecN3(0,1,0)^e;
+	i = 1;
+	loop
+	{
+		if (i > iJointCount) break;
+	
+		len = Robot("len")(i);
+		T = TranslatorN3(0, len, 0);
+		R = RotorN3(Robot("joint_axis")(i), Robot("angle")(i));
+	
+		if (len > 0)
+		{			
+			Sphere = SphereN3(0,0,0, Robot("rad")(i));
+			Circle = *Plane . Sphere;
+			Circle_list = M*[Circle, T*Circle*~T]*~M;
+				
+			:MGray;
+			DrawCircleSurface(Circle_list);
+			
+			:Blue;
+			:*(Circle_list(2)/(Circle_list(2)^e));
+		}
+	
+		:Red;
+		:M*T*R*~T*~M;
+		
+		M = M * T * R;
+		
+		i = i + 1;
+	}
+
+}
+
+////////////////////////////////////////////////////////7
+/// Main Program
+
+_FrameBoxSize = 0;
+
+if (ExecMode & EM_CHANGE ||
+	ExecMode & EM_LINK)
+{
+	SetFrameOrigin(1,-1,0);
+}
+
+:DGreen;
+DrawPlane(VecE3(0,-0.1,0), VecE3(0,-0.1,10), VecE3(10,-0.1,0));
+
+// This is a new way of setting up a list. 
+// This structure describes the robot
+Robot = ["Robot"];
+Robot("len") = [0, 1, 1.5, 1.3, 0.3];
+Robot("rad") = [0.1, 0.2, 0.15, 0.1, 0.1];
+Robot("angle") = 
+[ Mouse(1,2,1)-1.4*Pi, Mouse(2,2,1)+Pi/3, Mouse(3,2,1)+Pi/3, Mouse(4,2,1)+Pi/3, 0 ];
+Robot("joint_axis") = [ VecN3(0,1,0), VecN3(0,0,1), VecN3(0,0,1), VecN3(0,0,1), VecN3(0,0,1) ];
+//?Robot;
+
+//?DrawRobot;
+
+// Now draw the robot
+DrawRobot(Robot);

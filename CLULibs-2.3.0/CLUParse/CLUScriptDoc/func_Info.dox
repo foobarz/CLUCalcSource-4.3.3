@@ -1,0 +1,48 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_InfoFunc Info Functions
+
+	The functions described here help you to generate and display user interactive info text. For more details on how to use info text see \ref page_Info.
+
+	\{
+**/
+
+/**
+	\brief Display some info text.
+	
+	\param Text The info text to be displayed.
+	
+	\return nothing.
+	
+	\since v2.1
+
+	This function sets and displays the given info text. Note that by default the info text window width is zero, such that the text set with this function will not be visible until either the user increases the size of the window, or the width is set with the function SetInfoWidth().
+	
+**/
+void SetInfoText(string Text);
+
+
+/**
+	\brief Sets the width of the info text window.
+	
+	\param Width The width of the info text window.
+	
+	\return nothing.
+	
+	\since v2.1
+
+	By default the width of the info text window is zero. If \a Width is a number between 0 and 1, it is taken as a percentage of the total width of the visualization window. If \a Width is larger than 1, it is taken as the width in pixels.
+	
+**/
+void SetInfoWidth(scalar Width);
+
+
+/** \}
+**/
+
+/** \}
+**/

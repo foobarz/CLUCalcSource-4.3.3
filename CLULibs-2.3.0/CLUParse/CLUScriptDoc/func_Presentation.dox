@@ -1,0 +1,62 @@
+
+
+/** \addtogroup grp_Functions Functions
+	\{
+**/
+
+/** \defgroup grp_PresentationFunc Presentation Functions
+
+	These functions allow you to prepare presentations with CLUCalc. They are not directly part of CLUScript and depend on the implementation of the parser and the visualization.
+
+	\{
+**/
+
+
+/**
+	\brief Clear all CLUScript filenames in the script list.
+	
+	\since v1.4
+
+**/
+void _ClearScriptList(void);
+
+/**
+	\brief Add a CLUScript filename to the list of presentation slides.
+	
+	\param Title The title of the slide.
+	\param Filename The filename of the CLUScript.
+	
+	\since v1.4
+
+	The first slide of a presentation should contain a number of calls to _AddScriptToList(), where all CLUScripts are listed in the order in which they should appear in the presentation. In CLUCalc you can then move between the slides using the "Presentation" menu or the short cut keys.
+	
+	For example, the first slide could look like this.
+	\code
+	
+	// Make sure you only create the list of slides
+	// when this file has just been loaded.
+	if (ExecMode == EM_NEW)
+	{
+		// Clear the script list.
+		_ClearScriptList();
+		
+		// Now add all the slides
+		_AddScriptToList("The first slide", "Slide1.clu");
+		_AddScriptToList("And yet another one", "Slide2.clu");
+	}
+	
+	// Here you could now draw the title of your talk
+	// ...
+	
+	\endcode
+	
+**/
+void _AddScriptToList(string Title, string Filename);
+
+
+
+/** \}
+**/
+
+/** \}
+**/
